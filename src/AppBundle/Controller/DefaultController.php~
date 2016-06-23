@@ -1,0 +1,70 @@
+<?php
+
+namespace AppBundle\Controller;
+
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+
+use Symfony\Component\HttpFoundation\JsonResponse;
+
+use AppBundle\Entity\Product;
+
+class DefaultController extends Controller
+{
+    /**
+     * @Route("/", name="homepage")
+     */
+    public function indexAction(Request $request)
+    {
+        $page_title = 'My Printer Shop';
+        return $this->render('home.html.twig', ['page_title' => $page_title]);
+    }
+
+    /**
+     * @Route("/programmator", name="programmator")
+     */
+    public function createAction()
+    {	
+    	$product = new Product();
+    	$product->setCategory('Прочее');
+    	$product->setSubCategory('Программаторы');
+    	$product->setName('Программатор микросхем 24CXX EEPROM');
+    	$product->setCount(58);
+    	$product->setRetailPrice(300);
+
+    	$em = $this->getDoctrine()->getManager();
+    	$em->persist($product);
+
+    	$em->flush();
+
+    	return new Response('Saved new product with id '.$product->getId());
+    }
+
+    /**
+     * @Route("/show/{productId}", name="show")
+     */
+    public function showAction($productId)
+    {
+    	$product = $this->getDoctrine()->getRepository('AppBundle:Product')->find($productId);
+
+    	if (!$product) {
+    		throw $this->createNotFountException('No product fount for id'.$productId);
+    	}
+
+ 		$page_title = 'My Printer Shop: showsads';
+ 		//$db = json_encode($product->expose());
+
+ 		$data = array(
+ 			'id' 			=> $product->getId(),
+ 			'category' 		=> $product->getCategory(), 
+ 			'subcategory' 	=> $product->getSubCategory(),
+ 			'good'			=> $product->getName(),
+ 			'count' 		=> $product->getCount(),
+ 			'retail_price'	=> $product->getRetailPrice(),
+ 			);
+ 		return new JsonResponse($data);
+       // return $this->render('show.html.twig', ['page_title' => $page_title, 'db' => json_encode($data)]);
+    }
+}
