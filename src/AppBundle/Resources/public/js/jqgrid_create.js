@@ -2,7 +2,7 @@ $(document).ready(function(){
 	$("#list").jqGrid({
 		datatype: "local",
 		data: data,	
-		height: 420,
+        height: "auto",
 			colNames: [
 				"id",
 				"Категория",
@@ -17,11 +17,11 @@ $(document).ready(function(){
 			{ name: "SubCategory", width: 150 },
 			{ name: "Name", width: 400 },
 			{ name: "Count", width: 100 },
-			{ name: "RetailPrice", width: 100 }
+			{ name: "RetailPrice", width: 70 }
 		],
 		pager: "#pager",
-		rownum: 20,
-		rowList: [ 20, 50, 100 ],
+		rownum: 30,
+		rowList: [ 30, 50, 100, 200 ],
 		sortname: "category",
 		sortorder: "subcategory",
 		viewrecords: true,

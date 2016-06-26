@@ -15,11 +15,33 @@
 	<script src="{{ asset_url }}"></script>
 {% endjavascripts %}
 </head>
-<body style="padding-left:50px;">
-	<h2 style="color:#333366;">{{ header }}</h2>
-	<table id="list"><tr><td></td></tr></table>
-    <div id="pager"></div>
-    {% javascripts '@AppBundle/Resources/public/js/jqgrid_create.js' %}
+<body>
+	<img src=""></img>
+	<ul class="entrance">
+		<li><a href="registration">Регистрация</a></li>
+		<li><a href="registration">Вход</a></li>
+	</ul>
+	<div id="header">
+		<div class="site_name_block">
+			<span class="site_name">{{ site_name }}<span><br>
+			<span class="site_phrase">Всё для принтера</span>
+		</div>
+		{% image '@AppBundle/Resources/public/images/printer.png' %}
+		    <img src="{{ asset_url }}"/>
+		{% endimage %}
+	</div>
+	<div id="content">
+		<div id="menu_block">
+		{{ knp_menu_render('AppBundle:Builder:mainMenu') }}
+		</div>
+		<div id="grid_block">
+		<h4>{{ path|raw }}</h4>
+			<table id="list"><tr><td></td></tr></table>
+		    <div id="pager"></div>
+	    </div>
+    </div>
+    {% javascripts '@AppBundle/Resources/public/js/jqgrid_create.js'
+    	'@AppBundle/Resources/public/js/generate_menu.js' %}
 		<script src="{{ asset_url }}"></script>
 	{% endjavascripts %}
 </body>

@@ -30,80 +30,14 @@ class Category
     private $Name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Product", mappedBy="Category")
+     * @ORM\OneToMany(targetEntity="SubCategory", mappedBy="Category")
      */
-    private $Products;
+    private $SubCategory;
 
     public function __construct()
     {
-        $this->Products = new ArrayCollection();
+        $this->SubCategory = new ArrayCollection();
     }
 
-    /**
-     * Get id
-     *
-     * @return int
-     */
-    public function getId()
-    {
-        return $this->id;
-    }
 
-    /**
-     * Set name
-     *
-     * @param string $name
-     *
-     * @return Category
-     */
-    public function setName($name)
-    {
-        $this->Name = $name;
-
-        return $this;
-    }
-
-    /**
-     * Get name
-     *
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->Name;
-    }
-
-    /**
-     * Add product
-     *
-     * @param \AppBundle\Entity\Product $product
-     *
-     * @return Category
-     */
-    public function addProduct(\AppBundle\Entity\Product $product)
-    {
-        $this->Products[] = $product;
-
-        return $this;
-    }
-
-    /**
-     * Remove product
-     *
-     * @param \AppBundle\Entity\Product $product
-     */
-    public function removeProduct(\AppBundle\Entity\Product $product)
-    {
-        $this->Products->removeElement($product);
-    }
-
-    /**
-     * Get products
-     *
-     * @return \Doctrine\Common\Collections\Collection
-     */
-    public function getProducts()
-    {
-        return $this->Products;
-    }
 }

@@ -30,19 +30,19 @@ class Category
     private $Name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Product", mappedBy="Category")
+     * @ORM\OneToMany(targetEntity="SubCategory", mappedBy="Category")
      */
-    private $Products;
+    private $SubCategory;
 
     public function __construct()
     {
-        $this->Products = new ArrayCollection();
+        $this->SubCategory = new ArrayCollection();
     }
 
     /**
      * Get id
      *
-     * @return int
+     * @return integer
      */
     public function getId()
     {
@@ -74,36 +74,36 @@ class Category
     }
 
     /**
-     * Add product
+     * Add subCategory
      *
-     * @param \AppBundle\Entity\Product $product
+     * @param \AppBundle\Entity\SubCategory $subCategory
      *
      * @return Category
      */
-    public function addProduct(\AppBundle\Entity\Product $product)
+    public function addSubCategory(\AppBundle\Entity\SubCategory $subCategory)
     {
-        $this->Products[] = $product;
+        $this->SubCategory[] = $subCategory;
 
         return $this;
     }
 
     /**
-     * Remove product
+     * Remove subCategory
      *
-     * @param \AppBundle\Entity\Product $product
+     * @param \AppBundle\Entity\SubCategory $subCategory
      */
-    public function removeProduct(\AppBundle\Entity\Product $product)
+    public function removeSubCategory(\AppBundle\Entity\SubCategory $subCategory)
     {
-        $this->Products->removeElement($product);
+        $this->SubCategory->removeElement($subCategory);
     }
 
     /**
-     * Get products
+     * Get subCategory
      *
      * @return \Doctrine\Common\Collections\Collection
      */
-    public function getProducts()
+    public function getSubCategory()
     {
-        return $this->Products;
+        return $this->SubCategory;
     }
 }

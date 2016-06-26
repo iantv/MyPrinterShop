@@ -21,12 +21,12 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
 					->getResult();
 	}
 
-	public function findOneByIdJoinedToCategory($productId)
+	public function findOneByIdJoinedToSubCategory($productId)
 	{
 	    $query = $this->getEntityManager()
 	        ->createQuery(
-	            'SELECT p, c FROM AppBundle:Product p
-	            JOIN p.Category c
+	            'SELECT p, s FROM AppBundle:Product p
+	            JOIN p.SubCategory s
 	            WHERE p.id = :id'
 	        )->setParameter('id', $productId);
 

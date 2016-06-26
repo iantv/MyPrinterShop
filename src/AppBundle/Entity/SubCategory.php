@@ -3,7 +3,6 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
 use Doctrine\Common\Collections\ArrayCollection;
 
 /**
@@ -29,6 +28,12 @@ class SubCategory
      * @ORM\Column(name="Name", type="string", length=255)
      */
     private $Name;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Category", inversedBy="SubCategory")
+     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
+     */
+    private $Category;   
 
     /**
      * @ORM\OneToMany(targetEntity="Product", mappedBy="SubCategory")
@@ -106,5 +111,29 @@ class SubCategory
     public function getProducts()
     {
         return $this->Products;
+    }
+
+    /**
+     * Set category
+     *
+     * @param \AppBundle\Entity\Category $category
+     *
+     * @return SubCategory
+     */
+    public function setCategory(\AppBundle\Entity\Category $category = null)
+    {
+        $this->Category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \AppBundle\Entity\Category
+     */
+    public function getCategory()
+    {
+        return $this->Category;
     }
 }

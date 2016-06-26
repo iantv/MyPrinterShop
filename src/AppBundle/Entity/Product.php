@@ -17,12 +17,6 @@ class Product
 	private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Category", inversedBy="Products")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
-     */
-    private $Category;
-
-    /**
      * @ORM\ManyToOne(targetEntity="SubCategory", inversedBy="Products")
      * @ORM\JoinColumn(name="subcategory_id", referencedColumnName="id")
      */
@@ -44,6 +38,12 @@ class Product
     private $RetailPrice;
 
     /**
+     * @ORM\Column(type="string", length=100)
+     */
+    private $Path; // category_id.subcategory_id
+
+
+    /**
      * Get id
      *
      * @return integer
@@ -51,54 +51,6 @@ class Product
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set category
-     *
-     * @param string $category
-     *
-     * @return Product
-     */
-    public function setCategory($category)
-    {
-        $this->Category = $category;
-
-        return $this;
-    }
-
-    /**
-     * Get category
-     *
-     * @return string
-     */
-    public function getCategory()
-    {
-        return $this->Category;
-    }
-
-    /**
-     * Set subCategory
-     *
-     * @param string $subCategory
-     *
-     * @return Product
-     */
-    public function setSubCategory($subCategory)
-    {
-        $this->SubCategory = $subCategory;
-
-        return $this;
-    }
-
-    /**
-     * Get subCategory
-     *
-     * @return string
-     */
-    public function getSubCategory()
-    {
-        return $this->SubCategory;
     }
 
     /**
@@ -171,5 +123,53 @@ class Product
     public function getRetailPrice()
     {
         return $this->RetailPrice;
+    }
+
+    /**
+     * Set path
+     *
+     * @param string $path
+     *
+     * @return Product
+     */
+    public function setPath($path)
+    {
+        $this->Path = $path;
+
+        return $this;
+    }
+
+    /**
+     * Get path
+     *
+     * @return string
+     */
+    public function getPath()
+    {
+        return $this->Path;
+    }
+
+    /**
+     * Set subCategory
+     *
+     * @param \AppBundle\Entity\SubCategory $subCategory
+     *
+     * @return Product
+     */
+    public function setSubCategory(\AppBundle\Entity\SubCategory $subCategory = null)
+    {
+        $this->SubCategory = $subCategory;
+
+        return $this;
+    }
+
+    /**
+     * Get subCategory
+     *
+     * @return \AppBundle\Entity\SubCategory
+     */
+    public function getSubCategory()
+    {
+        return $this->SubCategory;
     }
 }

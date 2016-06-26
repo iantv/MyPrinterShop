@@ -15,10 +15,7 @@ use AppBundle\Entity\Category;
 use AppBundle\Entity\SubCategory;
 use AppBundle\Entity\Product;
 
-/*use Symfony\Component\Serializer\Serializer;
-use Symfony\Component\Serializer\Encoder\JsonEncoder;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
-*/
+use AppBundle\Menu\Menu;
 
 class DefaultController extends Controller
 {
@@ -37,20 +34,20 @@ class DefaultController extends Controller
 
         foreach ($products as $product) {
            $result[] = [
-                'Category'    => $product->getCategory()->getName(),
+                'Category'    => $product->getSubCategory()->getCategory()->getName(),
                 'SubCategory' => $product->getSubCategory()->getName(),
                 'Name'        => $product->getName(),
                 'Count'       => $product->getCount(),
                 'RetailPrice' => $product->getRetailPrice()
             ];
         }
-        
-        return $this->render('show.html.twig', [
-            'page_title' => 'Интернет-магазин | Все продукты', 
-            'header'     => 'Все продукты',
-            'db'         => '<script type="text/javascript">var data = '.
-                             json_encode($result, JSON_UNESCAPED_UNICODE).
-                            ';</script>']);
+        return $this->render(
+            'show.html.twig', 
+            $this->generateArrayForTwigRender(
+                'Интернет-магазин | Все продукты', 
+                $this->makeHtmlCurCategory('Все продукты'), 
+                $result
+            ));
     }
 
     /**
@@ -60,23 +57,23 @@ class DefaultController extends Controller
     {
         $product = $this->getDoctrine()
                         ->getRepository('AppBundle:Product')
-                        ->findOneByIdJoinedToCategory($productId);
-
+                        ->findOneByIdJoinedToSubCategory($productId);
+        
         if (!$product){
             return new Response('No product found for id = '.$productId);
         }
         
         $result[] = [
-            'Category'    => $product->getCategory()->getName(),
+            'Category'    => $product->getSubCategory()->getCategory()->getName(),
             'SubCategory' => $product->getSubCategory()->getName(),
             'Name'        => $product->getName(),
             'Count'       => $product->getCount(),
             'RetailPrice' => $product->getRetailPrice()
         ];
-    
+        
         return $this->render('show.html.twig', 
-            ['page_title' => 'Интернет-магазин | Продукты | Продукт: '.$product->getName(), 
-             'header'     => $product->getName(),
+            ['page_title' => 'Интернет-магазин | '.$product->getName(), 
+             'path'       => $product->getName(),
              'db'         => '<script type="text/javascript">var data = '.
                               json_encode($result, JSON_UNESCAPED_UNICODE).
                              ';</script>']);
@@ -94,23 +91,27 @@ class DefaultController extends Controller
         if (!$category){
             return new Response('No category found for id = '.$categoryId);
         }
-
-        foreach ($category->getProducts() as $product) {
-            $result[] = [
-                'Category'    => $category->getName(),
-                'SubCategory' => $product->getSubCategory()->getName(),
-                'Name'        => $product->getName(),
-                'Count'       => $product->getCount(),
-                'RetailPrice' => $product->getRetailPrice()
-            ];
+        $result = [];
+        foreach ($category->getSubCategory() as $subCategory) {
+            foreach ($subCategory->getProducts() as $product){
+                $result[] = [
+                    'Category'    => $category->getName(),
+                    'SubCategory' => $subCategory->getName(),
+                    'Name'        => $product->getName(),
+                    'Count'       => $product->getCount(),
+                    'RetailPrice' => $product->getRetailPrice()
+                ];
+            }
         }
-        
-        return $this->render('show.html.twig', [
-            'page_title' => 'Интернет-магазин | Продукты | Категория: '.$category->getName(), 
-            'header'     => 'Категория: '.$category->getName(),
-            'db'         => '<script type="text/javascript">var data = '.
-                             json_encode($result, JSON_UNESCAPED_UNICODE).
-                            ';</script>']);
+
+        return $this->render(
+            'show.html.twig', 
+            $this->generateArrayForTwigRender(
+                'Интернет-магазин | '. $category->getName(), 
+                $this->generatePath(0, $product->getPath()).
+                $this->makeHtmlCurCategory($category->getName()), 
+                $result
+            ));
     }
 
     /**
@@ -126,9 +127,9 @@ class DefaultController extends Controller
             return new Response('No subcategory found for id = '.$subcategoryId);
         }
 
-        foreach ($subcategory->getProducts() as $product) {
+        foreach ($subcategory->getProducts() as $product){
             $result[] = [
-                'Category'    => $product->getCategory()->getName(),
+                'Category'    => $subcategory->getCategory()->getName(),
                 'SubCategory' => $subcategory->getName(),
                 'Name'        => $product->getName(),
                 'Count'       => $product->getCount(),
@@ -136,39 +137,13 @@ class DefaultController extends Controller
             ];
         }
         
-        return $this->render('show.html.twig', [
-            'page_title' => 'Интернет-магазин | Продукты | Подкатегория: '.$subcategory->getName(), 
-            'header'     => 'Подкатегория: '.$subcategory->getName(),
-            'db'         => '<script type="text/javascript">var data = '.json_encode($result, JSON_UNESCAPED_UNICODE).';</script>']);
-    }
-
-    /**
-     * @Route("/create", name="create")
-     */
-    public function createProductAction()
-    {
-        $category = new Category();
-        $category->setName('Прочее');
-
-        $subcategory = new SubCategory();
-        $subcategory->setName('Программаторы');
-        
-        $product = new Product();
-        $product->setName('Программатор микросхем 24CXX EEPROM');
-        $product->setCount(58);
-        $product->setRetailPrice(300);
-
-        $product->setCategory($category);
-        $product->setSubCategory($subcategory);
-
-        $em = $this->getDoctrine()->getManager();
-        $em->persist($category);
-        $em->persist($subcategory);
-        $em->persist($product);
-        $em->flush();
-
-        return new Response(
-            'Saved new product with id: '.$product->getId().' and new category with id: '.$category->getId().' and new subcategory with id: '.$subcategory->getId());
+        return $this->render('show.html.twig', 
+            $this->generateArrayForTwigRender(
+                'Интернет-магазин | '. $subcategory->getName(), 
+                $this->generatePath(1, $product->getPath()).
+                $this->makeHtmlCurCategory($subcategory->getName()), 
+                $result
+            ));
     }
 
     /**
@@ -184,15 +159,10 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();        
         $category = NULL; $subCategory = NULL; $resultCategory = []; $resultSubCategory = [];
         
-        //return new JsonResponse($productsArr);
         $cnt = 0;
         foreach ($productsArr as $productElem){
-            echo $cnt++;
+            $cnt++;
 
-            /*if ($cnt == 2){
-                echo $category->getName().":".$productElem['Category'];
-                //echo strnatcmp($category->getName(), $productElem['Category']) == 0;
-            }*/
             if ($cnt > 1 && (strnatcmp($category->getName(), $productElem['Category']) == 0)){
                 $queryCategory = $em->createQuery(
                     'SELECT c FROM AppBundle:Category c WHERE c.Name = :Name'
@@ -218,6 +188,7 @@ class DefaultController extends Controller
             if (empty($resultSubCategory)){
                 $subCategory = new SubCategory();
                 $subCategory->setName($productElem['SubCategory']);
+                $subCategory->setCategory($category);
             } else {
                 $subCategory = $resultSubCategory[0];
                 $resultSubCategory = [];
@@ -229,9 +200,9 @@ class DefaultController extends Controller
             $product->setCount($productElem['Count']);
             $product->setRetailPrice($productElem['RetailPrice']);
 
-            $product->setCategory($category);
+           // $product->setCategory($category);
             $product->setSubCategory($subCategory);
-
+            $product->setPath($category->getId().'.'.$subCategory->getId());
             $em->persist($category);
             $em->persist($subCategory);
             $em->persist($product);
@@ -251,5 +222,43 @@ class DefaultController extends Controller
         $em->flush();
 
         return new Response('Removed product with id '.$productId);
+    }
+
+    private function makeHtmlLink($src, $itemName){
+        return "<a class='path_link' href='/".$src."'>".$itemName."</a>";
+    }
+
+    private function makeHtmlCurCategory($itemName){
+        return "<span class='cur_subcategory'>".$itemName."</span>";
+    }
+
+    private function generatePath($level, $path){
+        $pathElements = explode('.', $path);
+        $result = "";
+        if ($level > 0){
+            $category = $this->getDoctrine()
+                ->getRepository('AppBundle:Category')
+                ->find($pathElements[0]);
+            if ($level > 1){
+                $subCategory = $this->getDoctrine()
+                    ->getRepository('AppBundle:SubCategory')
+                    ->find($pathElements[1]);
+                $result = ">".$this->makeHtmlLink('subcategory/'.$subCategory->getId(), $subCategory->getName());
+            }
+            $result = ">".$this->makeHtmlLink('category/'.$category->getId(), $category->getName()).$result;
+        }
+
+        return $this->makeHtmlLink('', 'Все продукты').$result.">";
+    }
+
+    private function generateArrayForTwigRender($page_title, $header, $result){
+        $site_name = 'Интернет-магазин';
+        return [
+            'page_title' => $page_title, 
+            'site_name'  => $site_name,
+            'path'       => $header,
+            'db'         => '<script type="text/javascript">var data = '.
+                             json_encode($result, JSON_UNESCAPED_UNICODE).
+                            ';</script>'];
     }
 }
