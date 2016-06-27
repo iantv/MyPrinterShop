@@ -10,7 +10,7 @@ parameters:
 
 framework:
     #esi:             ~
-    #translator:      { fallbacks: ["%locale%"] }
+    translator:       ~ #{ fallbacks: ["%locale%"] }
     secret:          "%secret%"
     router:
         resource: "%kernel.root_dir%/config/routing.yml"
@@ -26,11 +26,19 @@ framework:
     trusted_proxies: ~
     session:
         # http://symfony.com/doc/current/reference/configuration/framework.html#handler-id
-        handler_id:  session.handler.native_file
+        handler_id:  session.handler.pdo #session.handler.native_file
         save_path:   "%kernel.root_dir%/../var/sessions/%kernel.environment%"
     fragments:       ~
     http_method_override: true
     assets: ~
+
+services:
+    session.handler.pdo:
+        class:     Symfony\Component\HttpFoundation\Session\Storage\Handler\PdoSessionHandler
+        public:    false
+        arguments:
+            - 'mysql:host=%database_host%;dbname=%database_name%'
+            - { db_table: sessions, db_username: '%database_user%', db_password: '%database_password%' }
 
 # Twig Configuration
 twig:

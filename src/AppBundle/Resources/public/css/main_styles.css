@@ -51,11 +51,29 @@ html, body {
 }
 
 .ui-jqgrid tr.jqgrow td {
-	padding: 8px;
+	padding: 20px;
 	white-space: normal !important; 
 }
 
 .ui-menu { width: 200px; }
+
+/*
+.ui-jqgrid-hdiv {
+  display:none !important;
+}*/
+/*
+.ui-jqgrid tr.jqgrow td {
+	font-size:12px;
+}*/
+
+.price_class{
+	font-size: 20px;
+}
+
+.product_name_class{
+	font-size: 14px;
+	font-weight: bold;
+}
 
 #grid_block{
 	float: left;
@@ -107,4 +125,16 @@ html, body {
 
 .entrance li > a:hover {
 	text-decoration: underline;
+}
+
+.buy_button{
+	background-color: #33CC66;
+	border: none;
+	color:white;
+	padding: 10px 26px;
+	font-weight: bold;
+}
+
+.count_of_product_class{
+	font-size: 12px;
 }

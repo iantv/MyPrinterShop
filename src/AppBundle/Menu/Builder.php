@@ -22,7 +22,7 @@ class Builder implements ContainerAwareInterface
 		$categoryArr = $em->getRepository('AppBundle:Category')->findAll();
 
 		foreach ($categoryArr as $category) {
-			if ($category->getId() == 24 || $category->getId() == 25 ||
+			if ($category->getId() == 23 || $category->getId() == 24 || $category->getId() == 25 ||
 				($category->getId() > 7 && $category->getId() < 14)){ 
 				continue;
 				/* This cond is temporary. It's for stop generate menuItems with this Id.

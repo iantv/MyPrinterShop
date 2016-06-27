@@ -2,6 +2,7 @@ $(document).ready(function(){
 	$("#list").jqGrid({
 		datatype: "local",
 		data: data,	
+		//width: '100%',
         height: "auto",
 			colNames: [
 				"id",
@@ -9,15 +10,17 @@ $(document).ready(function(){
 				"Подкатегория",
 				"Товар",
 				"В наличии",
-				"Цена"
+				"Цена",
+				"В корзину"
 			],
 		colModel: [
 			{ name: 'id', width: 0, hidden: true },
-			{ name: "Category", width: 150 },
-			{ name: "SubCategory", width: 150 },
-			{ name: "Name", width: 400 },
-			{ name: "Count", width: 100 },
-			{ name: "RetailPrice", width: 70 }
+			{ name: "Category", width: 150, hidden: true },
+			{ name: "SubCategory", width: 150, hidden: true },
+			{ name: "Name", width: 400, classes: "product_name_class" },
+			{ name: "Count", width: 70, align: "center", classes: "count_of_product_class" },
+			{ name: "RetailPrice", width: 100, align: "center", classes: "price_class"},
+			{ name: "ToBucket", width: 150, align: "center", formatter: genToBucketButton}
 		],
 		pager: "#pager",
 		rownum: 30,
@@ -27,6 +30,11 @@ $(document).ready(function(){
 		viewrecords: true,
 		gridview: true,
 		autoencode: true,
-		caption: "Прайс-лист"
+		/*toppager: true*/
+		/*caption: "Прайс-лист",*/
 	});
 });
+
+function genToBucketButton(cellvalue, options, rowObject){
+	return "<button type='button' class='buy_button'>КУПИТЬ</button>";
+}
