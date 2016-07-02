@@ -3,7 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\EntityRepository;
-
+ 
 /**
  * ProductRepository
  *
@@ -32,6 +32,20 @@ class ProductRepository extends \Doctrine\ORM\EntityRepository
 
 	    try {
 	        return $query->getSingleResult();
+	    } catch (\Doctrine\ORM\NoResultException $e) {
+	        return null;
+	    }
+	}
+
+	public function findByIds($Ids)
+	{
+	    $query = $this->getEntityManager()
+	        ->createQuery(
+	            "SELECT p FROM AppBundle:Product p WHERE p.id IN (:ids)"
+	        )//->setParameter('ids', implode(", ", $Ids));
+	        ->setParameters(array('ids' => $Ids));
+	    try {
+	        return $query->getResult();
 	    } catch (\Doctrine\ORM\NoResultException $e) {
 	        return null;
 	    }

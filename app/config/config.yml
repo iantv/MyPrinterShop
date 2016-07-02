@@ -91,6 +91,9 @@ assetic:
                 - '@AppBundle/Resources/public/js/jqGrid/js/i18n/grid.locale-en.js'
                 - '@AppBundle/Resources/public/js/jqGrid/js/jquery.jqGrid.min.js'
                 - '@AppBundle/Resources/public/js/jquery-ui/jquery-ui.min.js'
+        jquery_cookie:
+            inputs:
+                - '@AppBundle/Resources/public/js/jquery-cookie/jquery.cookie.js'
 
 # Configuration for extension with alias: "knp_menu"
 knp_menu:

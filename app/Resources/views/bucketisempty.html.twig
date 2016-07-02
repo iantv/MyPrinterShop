@@ -44,18 +44,14 @@
 		</a></button>
 	</div>
 	<div id="content">
-		<div id="menu_block">
-		{{ knp_menu_render('AppBundle:Builder:mainMenu') }}
-		</div>
+		
 		<div id="grid_block">
-		<h4>{{ path|raw }}</h4>
-			<div id="pager"></div>
-			<table id="list"><tr><td></td></tr></table>
-		    <div id="pager"></div>
+			<h4>{{ path|raw }}</h4>
+			<span class="tohome">Добавьте товары из <a href="/">каталога</a></span>
+			<!--<button onclick="clear_bucket()"> Очистить корзину </button>-->
 	    </div>
     </div>
-    {% javascripts '@AppBundle/Resources/public/js/jqgrid_create.js'
-    	'@AppBundle/Resources/public/js/generate_menu.js' %}
+    {% javascripts '@AppBundle/Resources/public/js/jqgrid_bucket_create.js'%}
 		<script src="{{ asset_url }}"></script>
 	{% endjavascripts %}
 </body>

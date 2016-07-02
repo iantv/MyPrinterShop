@@ -34,6 +34,7 @@ class DefaultController extends Controller
 
         foreach ($products as $product) {
            $result[] = [
+                'id'          => $product->getId(),
                 'Category'    => $product->getSubCategory()->getCategory()->getName(),
                 'SubCategory' => $product->getSubCategory()->getName(),
                 'Name'        => $product->getName(),
@@ -43,7 +44,7 @@ class DefaultController extends Controller
         }
         return $this->render(
             'show.html.twig', 
-            $this->generateArrayForTwigRender(
+            $this->generateArrayForShowTwigRender(
                 'Интернет-магазин | Все продукты', 
                 $this->makeHtmlCurCategory('Все продукты'), 
                 $result
@@ -64,6 +65,7 @@ class DefaultController extends Controller
         }
         
         $result[] = [
+            'id'          => $product->getId(),
             'Category'    => $product->getSubCategory()->getCategory()->getName(),
             'SubCategory' => $product->getSubCategory()->getName(),
             'Name'        => $product->getName(),
@@ -95,6 +97,7 @@ class DefaultController extends Controller
         foreach ($category->getSubCategory() as $subCategory) {
             foreach ($subCategory->getProducts() as $product){
                 $result[] = [
+                    'id'          => $product->getId(),
                     'Category'    => $category->getName(),
                     'SubCategory' => $subCategory->getName(),
                     'Name'        => $product->getName(),
@@ -106,7 +109,7 @@ class DefaultController extends Controller
 
         return $this->render(
             'show.html.twig', 
-            $this->generateArrayForTwigRender(
+            $this->generateArrayForShowTwigRender(
                 'Интернет-магазин | '. $category->getName(), 
                 $this->generatePath(0, $product->getPath()).
                 $this->makeHtmlCurCategory($category->getName()), 
@@ -129,6 +132,7 @@ class DefaultController extends Controller
 
         foreach ($subcategory->getProducts() as $product){
             $result[] = [
+                'id'          => $product->getId(),
                 'Category'    => $subcategory->getCategory()->getName(),
                 'SubCategory' => $subcategory->getName(),
                 'Name'        => $product->getName(),
@@ -138,7 +142,7 @@ class DefaultController extends Controller
         }
         
         return $this->render('show.html.twig', 
-            $this->generateArrayForTwigRender(
+            $this->generateArrayForShowTwigRender(
                 'Интернет-магазин | '. $subcategory->getName(), 
                 $this->generatePath(1, $product->getPath()).
                 $this->makeHtmlCurCategory($subcategory->getName()), 
@@ -146,82 +150,46 @@ class DefaultController extends Controller
             ));
     }
 
-    /**
-     * @Route("/createdbfromjson", name="createdb")
-     */
-    public function createdb(){
-        return new Response('Comment first line in createdb()');
-        $string = file_get_contents(
-            "/home/iantv/Documents/WEB/MyPrinterShop/src/AppBundle/Resources/public/js/data.json");
-        $data = json_decode($string, true, JSON_UNESCAPED_UNICODE);
-        $productsArr = $data['Products'];
-
-        $em = $this->getDoctrine()->getManager();        
-        $category = NULL; $subCategory = NULL; $resultCategory = []; $resultSubCategory = [];
-        
-        $cnt = 0;
-        foreach ($productsArr as $productElem){
-            $cnt++;
-
-            if ($cnt > 1 && (strnatcmp($category->getName(), $productElem['Category']) == 0)){
-                $queryCategory = $em->createQuery(
-                    'SELECT c FROM AppBundle:Category c WHERE c.Name = :Name'
-                )->setParameter('Name',$productElem['Category']);
-                $resultCategory = $queryCategory->getResult();
-                //echo "resultCategory";
-            }
-            if (empty($resultCategory)){
-                $category = new Category();
-                $category->setName($productElem['Category']);
-            } else {
-                $category = $resultCategory[0];
-                $resultCategory = [];
-            }
-
-            if ($cnt > 1 && (strnatcmp($subCategory->getName(), $productElem['SubCategory']) == 0)){
-                $querySubCategory = $em->createQuery(
-                    'SELECT c FROM AppBundle:SubCategory c WHERE c.Name = :Name'
-                )->setParameter('Name', $productElem['SubCategory']);
-                $resultSubCategory = $querySubCategory->getResult();
-                //echo "resultSubCategory: ";
-            }
-            if (empty($resultSubCategory)){
-                $subCategory = new SubCategory();
-                $subCategory->setName($productElem['SubCategory']);
-                $subCategory->setCategory($category);
-            } else {
-                $subCategory = $resultSubCategory[0];
-                $resultSubCategory = [];
-            }
-            //echo $category->getName()."|\n".$subCategory->getName()."|\n".$productElem['Name']."|\n".$productElem['Count']."|\n".$productElem['RetailPrice'];
- 
-            $product = new Product();
-            $product->setName($productElem['Name']);
-            $product->setCount($productElem['Count']);
-            $product->setRetailPrice($productElem['RetailPrice']);
-
-           // $product->setCategory($category);
-            $product->setSubCategory($subCategory);
-            $product->setPath($category->getId().'.'.$subCategory->getId());
-            $em->persist($category);
-            $em->persist($subCategory);
-            $em->persist($product);
-            $em->flush();
-        }
-        return new Response('$products ok');
-    }
 
     /**
-     * @Route("/remove/{productId}", name="remove")
+     * @Route("/bucket", name="bucket")
      */
-    public function removeAction($productId)
+    public function bucketAction(Request $request)
     {   
-        $em = $this->getDoctrine()->getManager();
-        $product = $this->getDoctrine()->getRepository('AppBundle:Product')->find($productId);
-        $em->remove($product);
-        $em->flush();
+        if (!array_key_exists('bucket_list', $_COOKIE)){
+            return $this->render(
+                'bucketisempty.html.twig', 
+                $this->generateArrayForShowTwigRender(
+                    'Интернет-магазин | Корзина', 
+                    $this->makeHtmlCurHeader('Корзина'), 
+                    []
+                ));
+        }
+        $arr = json_decode($_COOKIE['bucket_list'], true);
+        $ids = array_keys($arr);
 
-        return new Response('Removed product with id '.$productId);
+        $products = $this->getDoctrine()
+                        ->getRepository('AppBundle:Product')
+                        ->findByIds($ids);
+        
+        $result = [];
+        foreach ($products as $product){
+           $result[] = [
+                'id'          => $product->getId(),
+                'Name'        => $product->getName(),
+                'RetailPrice' => $product->getRetailPrice(),
+                'Count'       => $arr[$product->getId()],
+                'Sum'         => $arr[$product->getId()]*$product->getRetailPrice()
+            ];
+        }
+
+        return $this->render(
+            'bucket.html.twig', 
+            $this->generateArrayForShowTwigRender(
+                'Интернет-магазин | Корзина', 
+                $this->makeHtmlCurHeader('Корзина'), 
+                $result
+            ));
     }
 
     private function makeHtmlLink($src, $itemName){
@@ -229,6 +197,10 @@ class DefaultController extends Controller
     }
 
     private function makeHtmlCurCategory($itemName){
+        return "<span class='cur_subcategory'>".$itemName."</span>";
+    }
+
+    private function makeHtmlCurHeader($itemName){
         return "<span class='cur_subcategory'>".$itemName."</span>";
     }
 
@@ -251,7 +223,7 @@ class DefaultController extends Controller
         return $this->makeHtmlLink('', 'Все продукты').$result.">";
     }
 
-    private function generateArrayForTwigRender($page_title, $header, $result){
+    private function generateArrayForShowTwigRender($page_title, $header, $result = []){
         $site_name = 'Интернет-магазин';
         return [
             'page_title' => $page_title, 

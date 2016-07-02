@@ -44,18 +44,21 @@
 		</a></button>
 	</div>
 	<div id="content">
-		<div id="menu_block">
-		{{ knp_menu_render('AppBundle:Builder:mainMenu') }}
-		</div>
-		<div id="grid_block">
 		<h4>{{ path|raw }}</h4>
+		<span class="green_button"><a href="/">Перейти в каталог</a></span>
+		<button class="red_button" onclick="clear_bucket()"> Очистить корзину </button>
+		<div id="grid_block">
 			<div id="pager"></div>
-			<table id="list"><tr><td></td></tr></table>
+			<table id="bucket_list"><tr><td></td></tr></table>
 		    <div id="pager"></div>
+		    <div class="total_block">
+		    	<label class='total'>ИТОГО:</label>
+		    	<div id="total_sum"></div>
+		    	<span class='total'>рублей</span>
+		    </div>
 	    </div>
     </div>
-    {% javascripts '@AppBundle/Resources/public/js/jqgrid_create.js'
-    	'@AppBundle/Resources/public/js/generate_menu.js' %}
+    {% javascripts '@AppBundle/Resources/public/js/jqgrid_bucket_create.js' %}
 		<script src="{{ asset_url }}"></script>
 	{% endjavascripts %}
 </body>
