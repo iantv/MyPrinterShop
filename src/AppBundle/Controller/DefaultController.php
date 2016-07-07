@@ -7,6 +7,8 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
+
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 use Doctrine\Common\Collections\ArrayCollection;
@@ -14,11 +16,20 @@ use Doctrine\Common\Collections\ArrayCollection;
 use AppBundle\Entity\Category;
 use AppBundle\Entity\SubCategory;
 use AppBundle\Entity\Product;
+use AppBundle\Entity\User;
 
 use AppBundle\Menu\Menu;
 
 class DefaultController extends Controller
 {
+    /**
+     * @Route("/admin")
+     */
+    public function adminAction()
+    {
+        return new Response('<html><body>Admin page!</body></html>');
+    }
+
     /**
      * @Route("/", name="homepage")
      */

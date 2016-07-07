@@ -20,8 +20,16 @@
 <body>
 	<img src=""></img>
 	<ul class="entrance">
-		<li><a href="/register">Регистрация</a></li>
-		<li><a href="#">Вход</a></li>
+		{% if is_granted('ROLE_ADMIN') %}
+			<li>Админ </li>
+			<li><a href="/logout">Выйти</a></li>
+		{% elseif is_granted('ROLE_USER')%}
+			<li><a href="/">Личный кабинет</a></li>
+			<li><a href="/logout">Выйти</a></li>
+		{% else %}
+			<li><a href="/register">Регистрация</a></li>
+			<li><a href="/login">Войти</a></li>
+		{% endif %}
 	</ul>
 	<div id="header">
 		<div class="site_name_block">
@@ -54,6 +62,16 @@
 		    <div id="pager"></div>
 	    </div>
     </div>
+    {% if is_granted('ROLE_ADMIN') %}
+    	{% javascripts '@AppBundle/Resources/public/js/jqgrid_for_admin.js' %}
+			<script src="{{ asset_url }}"></script>
+		{% endjavascripts %}
+	{% else %}
+		{% javascripts '@AppBundle/Resources/public/js/jqgrid_for_not_admin.js' %}
+			<script src="{{ asset_url }}"></script>
+		{% endjavascripts %}
+    {% endif %}
+
     {% javascripts '@AppBundle/Resources/public/js/jqgrid_create.js'
     	'@AppBundle/Resources/public/js/generate_menu.js' %}
 		<script src="{{ asset_url }}"></script>

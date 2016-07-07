@@ -9,6 +9,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity
  * @ORM\Table(name="app_users")
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\UserRepository")
  * @UniqueEntity(fields="email", message="Email already taken")
  * @UniqueEntity(fields="username", message="Username already taken")
  */
@@ -100,7 +101,9 @@ class User implements UserInterface
 
     public function getRoles()
     {
-        return array('ROLE_USER');
+        if (strcmp($this->username, 'admin') == 0)
+            return  array('ROLE_ADMIN');
+        else return array('ROLE_USER');
     }
 
     public function eraseCredentials()

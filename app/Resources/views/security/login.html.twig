@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Интернет - магазин | Войти в личный кабинет</title>
+	{% stylesheets 
+		'bundles/app/css/main_styles.css'
+		'bundles/app/css/form.css'
+		filter='cssrewrite' %}
+		<link rel="stylesheet" href="{{ asset_url }}" />
+	{% endstylesheets %}
+</head>
+<body>
+		<form id="form" action="{{ path('user_login') }}" method="post">
+			<div id="header">
+				<div class="site_name_block">
+					<a href="/" class="site_name">Интернет - магазин</a><br>
+					<a href="/" class="site_phrase">Всё для принтера</a>
+				</div>
+			</div>
+			<div class="input_and_label_block">
+				<div class="label_block">
+			    	<label for="username" class="form_label">Логин :</label><p>
+			    	<label for="password" class="form_label">Пароль :</label>
+			    </div>
+			    <div>
+			    	<input type="text" id="username" name="_username" value="{{ last_username }}" /><p>
+			    	<input type="password" id="password" name="_password" />
+			    </div>
+			    {% if error %}
+				    <div class="error_msg">Некорректный ввод данных</div>
+				{% endif %}
+			    <p>
+			    <button type="submit" class="green_button">Войти</button><p>
+		    </div>
+		    <div class="entrance"><ul><li><a href="/register">Регистрация</a></li></ul></div>
+		</form>
+</body>
+</html>

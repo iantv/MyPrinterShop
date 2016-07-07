@@ -1,10 +1,11 @@
 var addToBucketFlag = false;
-
+var deleteProductFlagFromDB = false;
+var lastPressedButton;
 $('#bucket_count').html($.cookie('bucket_count') || 0);
 $('#bucket_sum').html($.cookie('bucket_sum') || 0);
-//$.cookie('bucket_list', '{}');
 
 $(document).ready(function(){
+	var lastSel;
 	$("#list").jqGrid({
 		datatype: "local",
 		data: data,	
@@ -16,16 +17,18 @@ $(document).ready(function(){
 				"Товар",
 				"В наличии",
 				"Цена",
-				"В корзину"
+				"В корзину", 
+				"Удалить"
 			],
 		colModel: [
-			{ name: 'id', width: 50, hidden: false },
-			{ name: "Category", width: 150, hidden: true },
-			{ name: "SubCategory", width: 150, hidden: true },
-			{ name: "Name", width: 400, classes: "product_name_class" },
-			{ name: "Count", width: 70, align: "center", classes: "count_of_product_class" },
-			{ name: "RetailPrice", width: 120, align: "center", classes: "price_class", formatter: "number"},
-			{ name: "ToBucket", width: 150, align: "center", formatter: genToBucketButton}
+			{ name: 'id', width: 50, hidden: false, editable:false },
+			{ name: "Category", width: 150, hidden: true, editable:true },
+			{ name: "SubCategory", width: 150, hidden: true, editable:true },
+			{ name: "Name", width: 400, classes: "product_name_class", editable:true, edittype:'text' },
+			{ name: "Count", width: 70, align: "center", classes: "count_of_product_class", editable:true },
+			{ name: "RetailPrice", width: 120, align: "center", classes: "price_class", formatter: "number", editable:true},
+			{ name: "ToBucket", width: 180, align: "center", formatter: genToBucketButton, hidden: toBuy, editable:false },
+			{ name: "Delete", width: 100, align: "center", formatter: genDeleteProductButton, hidden: toDelete, editable:false }
 		],
 		pager: "#pager",
 		rownum: 30,
@@ -37,6 +40,11 @@ $(document).ready(function(){
 		autoencode: true,
 		/*toppager: true*/
 		beforeSelectRow: function(rowid, e){
+			if (deleteProductFlagFromDB){
+				var productId = $('#list').jqGrid('getCell',rowid, 'id');
+				$('#list').jqGrid('delRowData', rowid);
+				deleteProductFlagFromDB = false;
+			}
 			if (!addToBucketFlag)
 				return;
 			/* Add to bucket */
@@ -55,21 +63,59 @@ $(document).ready(function(){
 			$('#bucket_sum').html(sum);
 
 			addToBucketList($('#list').jqGrid('getCell', rowid, 'id'));
+			incProductCountOnButton(rowid);
+
+			
+		},
+		ondblClickRow: function(id){
+			if (!toEdit)
+				return;
+	    	if(id && id!==lastSel){ 
+	        	jQuery('#list').restoreRow(lastSel);
+	        	lastSel=id; 
+	     	}
+	     	jQuery('#list').editRow(id, true); 
 		}
 	});
 });
 
 function genToBucketButton(cellvalue, options, rowObject){
-	return "<button type='button' class='green_button' onclick='addToBucket()'>КУПИТЬ</button>";
+	var products = getJSONProductsFromBucketList();
+	var buttonName = products[rowObject['id']] ? 'В корзине (' + products[rowObject['id']] + ')' : 'Купить';
+	return "<button id='addToBucketBtn' class='green_button' onclick='addToBucket(this)'>" + 
+		buttonName + "</button>";
 }
 
-function addToBucket(event){
+function addToBucket(button){
 	addToBucketFlag = true;
+	lastPressedButton = button;
+}
+
+function genDeleteProductButton(){
+	return "<button class='red_button2' onclick='deleteProductFromDB(this)'>X</button>";
+}
+
+function deleteProductFromDB(button){
+	if (!toEdit) return;
+	deleteProductFlagFromDB = true;
+}
+
+function incProductCountOnButton(rowid){
+	curCount = getProductCountFromBucketListByRowId(rowid);
+	$(lastPressedButton).html('В корзине (' + curCount + ')');
 }
 
 function addToBucketList(productId){
-	var bucket_list = $.cookie('bucket_list') || '{}'; //json string
-	var products = JSON.parse(bucket_list);
+	var products = getJSONProductsFromBucketList();
 	products[productId] = products[productId] ? products[productId] + 1 : 1;
 	$.cookie('bucket_list', JSON.stringify(products), {path: "/", domain: "127.0.0.1"});
+}
+
+function getJSONProductsFromBucketList(){
+	return JSON.parse($.cookie('bucket_list') || '{}');
+}
+
+function getProductCountFromBucketListByRowId(rowid){
+	var id = $('#list').jqGrid('getCell', rowid, 'id');
+	return getJSONProductsFromBucketList()[id];
 }
