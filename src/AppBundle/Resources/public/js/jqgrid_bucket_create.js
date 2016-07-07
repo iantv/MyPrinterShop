@@ -2,10 +2,6 @@ $('#bucket_count').html($.cookie('bucket_count') || 0);
 $('#bucket_sum').html($.cookie('bucket_sum') || 0);
 $('#total_sum').html($.cookie('bucket_sum') || 0);
 
-var updateDataFlag = false;
-var deleteProductFlag = false;
-var updatedValue = 0;
-
 $(document).ready(function(){
 	$("#bucket_list").jqGrid({
 		datatype: "local",
@@ -34,27 +30,20 @@ $(document).ready(function(){
 		sortorder: "subcategory",
 		viewrecords: true,
 		gridview: true,
-		autoencode: true,
-		
-		beforeSelectRow: function(rowid, e){
-			if (deleteProductFlag){
-				deleteProductFromBucketList(rowid);
-			}
-			if (updateDataFlag){
-				updateBucketList(rowid, updatedValue);
-			}
-		}
+		autoencode: true
 	});
 });
 
 function genInputElement(cellvalue, options, rowObject){
-	return "<input class='count_of_product_class' step='1' min='0' type='number' value='" + 
-		cellvalue + "' onchange='updateData(this.value)'/>";
+	return "<input id='editingInput_" + options['rowId'] +
+		"' class='count_of_product_class' step='1' min='0' type='number' value='" + 
+		cellvalue + "' onchange='updateData(this)'/>";
 }
 
-function updateData(val){
-	updateDataFlag = true;
-	updatedValue = val;
+function updateData(input){
+	var buttonId = $(input).attr('id');
+	var rowid = buttonId.substr(buttonId.indexOf("_") + 1)*1;
+	updateBucketList(rowid, input.value);
 }
 
 function clear_bucket(){
@@ -79,12 +68,16 @@ function updateBucketInfoByBucketList(products_json){
 }
 
 function genDeleteButton(cellvalue, options, rowObject){
-	return "<button class='red_button2' onclick='deleteProductFromBucket()'>X</button>";
+	return "<button id='deleteFromBucketBtn_" +
+		options['rowId'] +
+		"' class='red_button2' onclick='deleteProductFromBucket(this)'>X</button>";
 }
 
 
-function deleteProductFromBucket(){
-	deleteProductFlag = true;
+function deleteProductFromBucket(button){
+	var buttonId = $(button).attr('id');
+	var rowid = buttonId.substr(buttonId.indexOf("_") + 1)*1;
+	deleteProductFromBucketList(rowid);
 }
 
 var clearedBucket = false;
@@ -120,5 +113,4 @@ function updateBucketList(rowid, newval){
 	$.cookie('bucket_sum', sum);
 	$('#bucket_sum').html(sum);
 	$('#total_sum').html(sum);
-	updateDataFlag = false;
 }

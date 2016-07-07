@@ -1,6 +1,4 @@
-var addToBucketFlag = false;
 var deleteProductFlagFromDB = false;
-var lastPressedButton;
 $('#bucket_count').html($.cookie('bucket_count') || 0);
 $('#bucket_sum').html($.cookie('bucket_sum') || 0);
 
@@ -39,34 +37,13 @@ $(document).ready(function(){
 		gridview: true,
 		autoencode: true,
 		/*toppager: true*/
-		beforeSelectRow: function(rowid, e){
+/*		beforeSelectRow: function(rowid, e){
 			if (deleteProductFlagFromDB){
 				var productId = $('#list').jqGrid('getCell',rowid, 'id');
 				$('#list').jqGrid('delRowData', rowid);
 				deleteProductFlagFromDB = false;
 			}
-			if (!addToBucketFlag)
-				return;
-			/* Add to bucket */
-			addToBucketFlag = false;
-
-			var count = $.cookie('bucket_count') || 0;
-			count = count*1 + 1;
-			$.cookie('bucket_count', count, {path: "/", domain: "127.0.0.1"});
-			$('#bucket_count').html(count);
-			
-			var celValue = $('#list').jqGrid('getCell', rowid, 'RetailPrice');
-
-		    var sum = $.cookie('bucket_sum') || 0;
-		    sum = sum*1 + celValue*1;
-		    $.cookie('bucket_sum', sum, {path: "/", domain: "127.0.0.1"});
-			$('#bucket_sum').html(sum);
-
-			addToBucketList($('#list').jqGrid('getCell', rowid, 'id'));
-			incProductCountOnButton(rowid);
-
-			
-		},
+		},*/
 		ondblClickRow: function(id){
 			if (!toEdit)
 				return;
@@ -82,13 +59,30 @@ $(document).ready(function(){
 function genToBucketButton(cellvalue, options, rowObject){
 	var products = getJSONProductsFromBucketList();
 	var buttonName = products[rowObject['id']] ? 'В корзине (' + products[rowObject['id']] + ')' : 'Купить';
-	return "<button id='addToBucketBtn' class='green_button' onclick='addToBucket(this)'>" + 
-		buttonName + "</button>";
+	return "<button id='addToBucketBtn_" + options['rowId'] +
+			"' class='green_button' onclick='addToBucket(this)'>" + 
+			buttonName + "</button>";
 }
 
 function addToBucket(button){
-	addToBucketFlag = true;
-	lastPressedButton = button;
+	var buttonId = $(button).attr('id');
+	var rowid = buttonId.substr(buttonId.indexOf("_") + 1)*1;
+	
+	var count = $.cookie('bucket_count') || 0;
+	count = count*1 + 1;
+	$.cookie('bucket_count', count, {path: "/", domain: "127.0.0.1"});
+	$('#bucket_count').html(count);
+	
+	var celValue = $('#list').jqGrid('getCell', rowid, 'RetailPrice');
+
+    var sum = $.cookie('bucket_sum') || 0;
+    sum = sum*1 + celValue*1;
+    $.cookie('bucket_sum', sum, {path: "/", domain: "127.0.0.1"});
+	$('#bucket_sum').html(sum);
+
+	addToBucketList($('#list').jqGrid('getCell', rowid, 'id'));
+
+	$(button).html('В корзине (' +  getProductCountFromBucketListByRowId(rowid) + ')');
 }
 
 function genDeleteProductButton(){
@@ -96,13 +90,7 @@ function genDeleteProductButton(){
 }
 
 function deleteProductFromDB(button){
-	if (!toEdit) return;
 	deleteProductFlagFromDB = true;
-}
-
-function incProductCountOnButton(rowid){
-	curCount = getProductCountFromBucketListByRowId(rowid);
-	$(lastPressedButton).html('В корзине (' + curCount + ')');
 }
 
 function addToBucketList(productId){
