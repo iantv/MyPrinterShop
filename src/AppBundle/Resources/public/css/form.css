@@ -1,18 +1,18 @@
 html, body{
-	background-color: #93c3cd;
+	background-color: #CCC; //#93c3cd;
 	width: 100%;
 	height: 100%;
 	
 }
 
-.form_label{
+.form_label, .required{
 	font-size: 14px;
 	color: #2c4359;
 }
 
 #form{
 	position: absolute;
-	top:30%;
+	top:20%;
 	left:37%;
 	background-color: white;
 	border: 1px solid black;
@@ -28,6 +28,7 @@ html, body{
 
 .input_and_label_block{
 	margin-top: 24px;
+	text-align: left;
 }
 
 .entrance{
@@ -36,4 +37,13 @@ html, body{
 
 .error_msg{
 	color: red;
+}
+
+input {
+	width: 100%;
+}
+
+.green_button{
+	display: block;
+	margin: 0 auto;
 }

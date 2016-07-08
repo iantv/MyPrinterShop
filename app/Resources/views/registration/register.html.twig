@@ -1,8 +1,33 @@
-{{ form_start(form) }}
-    {{ form_row(form.username) }}
-    {{ form_row(form.email) }}
-    {{ form_row(form.plainPassword.first) }}
-    {{ form_row(form.plainPassword.second) }}
-
-    <button type="submit">Register!</button>
-{{ form_end(form) }}
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Интернет - магазин | Войти в личный кабинет</title>
+	{% stylesheets 
+		'bundles/app/css/main_styles.css'
+		'bundles/app/css/form.css'
+		filter='cssrewrite' %}
+		<link rel="stylesheet" href="{{ asset_url }}" />
+	{% endstylesheets %}
+</head>
+<body>
+	<form id="form" action="{{ path('user_registration') }}" method="post">
+		<div id="header">
+			<div class="site_name_block">
+				<a href="/" class="site_name">Интернет - магазин</a><br>
+				<a href="/" class="site_phrase">Всё для принтера</a>
+			</div>
+		</div>
+		<div class="input_and_label_block">
+				{{ form_start(form) }}
+			    {{ form_row(form.username, { 'label': 'Логин' }) }}<p>
+			    {{ form_row(form.email, { 'label': 'Адрес электронной почты (e-mail)' }) }}<p>
+			    {{ form_row(form.plainPassword.first, { 'label': 'Пароль' }) }}<p>
+			    {{ form_row(form.plainPassword.second, { 'label': 'Пароль (ещё раз)'}) }}
+			    <p>
+			    <button type="submit" class="green_button">Зарегистрироваться</button>
+				{{ form_end(form) }}<p>
+		    <div class="entrance"><ul><li><a href="/login">Войти в личный кабинет</a></li></ul></div>
+	    </div>
+	</form>
+</body>
+</html>
