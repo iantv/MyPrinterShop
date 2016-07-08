@@ -6,3 +6,6 @@ user_registration:
     defaults: { _controller: AppBundle:Registration:register }
 logout:
     path: /logout
+admin_area:
+    resource: "@SonataAdminBundle/Resources/config/routing/sonata_admin.xml"
+    prefix: /admin
