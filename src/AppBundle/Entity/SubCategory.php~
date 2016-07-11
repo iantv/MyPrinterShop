@@ -112,4 +112,28 @@ class SubCategory
     {
         return $this->Products;
     }
+
+    /**
+     * Set category
+     *
+     * @param \AppBundle\Entity\Category $category
+     *
+     * @return SubCategory
+     */
+    public function setCategory(\AppBundle\Entity\Category $category = null)
+    {
+        $this->Category = $category;
+
+        return $this;
+    }
+
+    /**
+     * Get category
+     *
+     * @return \AppBundle\Entity\Category
+     */
+    public function getCategory()
+    {
+        return $this->Category;
+    }
 }

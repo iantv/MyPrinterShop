@@ -2,6 +2,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="AppBundle\Entity\ProductRepository")
@@ -42,6 +43,20 @@ class Product
      */
     private $Path; // category_id.subcategory_id
 
+    /**
+     * @ORM\OneToMany(targetEntity="BlogPost", mappedBy="product")
+     */
+    private $blogPosts;
+
+    public function __construct()
+    {
+        $this->blogPosts = new ArrayCollection();
+    }
+
+    public function getBlogPosts()
+    {
+        return $this->blogPosts;
+    }
 
     /**
      * Get id

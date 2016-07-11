@@ -24,7 +24,7 @@
 			<li><a href="/admin">Администрирование</a></li>
 			<li><a href="/logout">Выйти</a></li>
 		{% elseif is_granted('ROLE_USER')%}
-			<li><a href="/personal">Личный кабинет</a></li>
+			<li><a href="/personalx">Личный кабинет</a></li>
 			<li><a href="/logout">Выйти</a></li>
 		{% else %}
 			<li><a href="/register">Регистрация</a></li>
@@ -52,29 +52,7 @@
 		</a></button>
 	</div>
 	<div id="content">
-		<div id="menu_block">
-		{{ knp_menu_render('AppBundle:Builder:mainMenu') }}
-		</div>
-		<div id="grid_block">
-		<h4>{{ path|raw }}</h4>
-			<div id="pager"></div>
-			<table id="list"><tr><td></td></tr></table>
-		    <div id="pager"></div>
-	    </div>
-    </div>
-    {% if is_granted('ROLE_ADMIN') %}
-    	{% javascripts '@AppBundle/Resources/public/js/jqgrid_for_admin.js' %}
-			<script src="{{ asset_url }}"></script>
-		{% endjavascripts %}
-	{% else %}
-		{% javascripts '@AppBundle/Resources/public/js/jqgrid_for_not_admin.js' %}
-			<script src="{{ asset_url }}"></script>
-		{% endjavascripts %}
-    {% endif %}
 
-    {% javascripts '@AppBundle/Resources/public/js/jqgrid_create.js'
-    	'@AppBundle/Resources/public/js/generate_menu.js' %}
-		<script src="{{ asset_url }}"></script>
-	{% endjavascripts %}
+    </div>
 </body>
 </html>

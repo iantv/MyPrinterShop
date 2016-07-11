@@ -40,8 +40,19 @@ class SubCategory
      */
     private $Products;
 
+    /**
+    * @ORM\OneToMany(targetEntity="BlogPost", mappedBy="subcategory")
+    */
+    private $blogPosts;
+
+    public function getBlogPosts()
+    {
+        return $this->blogPosts;
+    }
+
     public function __construct()
     {
+        $this->blogPosts = new ArrayCollection();
         $this->Products = new ArrayCollection();
     }
 

@@ -34,9 +34,20 @@ class Category
      */
     private $SubCategory;
 
+    /**
+     * @ORM\OneToMany(targetEntity="BlogPost", mappedBy="category")
+     */
+    private $blogPosts;
+
     public function __construct()
     {
+        $this->blogPosts = new ArrayCollection();
         $this->SubCategory = new ArrayCollection();
+    }
+
+    public function getBlogPosts()
+    {
+        return $this->blogPosts;
     }
 
     /**
@@ -105,5 +116,29 @@ class Category
     public function getSubCategory()
     {
         return $this->SubCategory;
+    }
+
+    /**
+     * Add blogPost
+     *
+     * @param \AppBundle\Entity\BlogPost $blogPost
+     *
+     * @return Category
+     */
+    public function addBlogPost(\AppBundle\Entity\BlogPost $blogPost)
+    {
+        $this->blogPosts[] = $blogPost;
+
+        return $this;
+    }
+
+    /**
+     * Remove blogPost
+     *
+     * @param \AppBundle\Entity\BlogPost $blogPost
+     */
+    public function removeBlogPost(\AppBundle\Entity\BlogPost $blogPost)
+    {
+        $this->blogPosts->removeElement($blogPost);
     }
 }

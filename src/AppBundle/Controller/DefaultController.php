@@ -55,6 +55,19 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/personal", name="personal")
+     */
+    public function personalAction(Request $request)
+    {
+        return $this->render(
+            'personal/personal.html.twig', 
+            $this->generateArrayForShowTwigRender(
+                'Интернет-магазин | Личный кабинет', 
+                'Личный кабинет'
+            ));
+    }
+
+    /**
      * @Route("/product/{productId}", name="product")
      */
     public function showProductAction($productId)
