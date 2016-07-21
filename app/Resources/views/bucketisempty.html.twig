@@ -23,24 +23,26 @@
 		<li><a href="/login">Вход</a></li>
 	</ul>
 	<div id="header">
-		<div class="site_name_block">
+		<div id="site_name_block">
 			<a href="/" class="site_name">{{ site_name }}</a><br>
 			<a href="/" class="site_phrase">Всё для принтера</a>
 		</div>
 		<div class="search_line"></div>
-		<button class="bucket" value="0"><a href="/bucket">
+		<div id="bucket" onclick="location.replace('/bucket')">
 			{% image '@AppBundle/Resources/public/images/bucket.png' %}
 		    	<img src="{{ asset_url }}" class="bucket_icon"/>
 			{% endimage %}
-			<div class="bucket_labels">
-				<span>Товаров</span><br>
-				<span>Сумма(руб)</span>
-			</div>
-			<div class="bucket_values">
-				<span id="bucket_count">0</span><br>
-				<span id="bucket_sum">0</span>
-			</div>
-		</a></button>
+			<table id="bucket_table"'>
+				<tr>
+					<td>Товаров</td>
+					<td id="bucket_count">0</td>
+				</tr>
+				<tr>
+					<td>Сумма(руб)</td>
+					<td id="bucket_sum">0</td>
+				</tr>
+			</table>
+		</div>
 	</div>
 	<div id="content">
 		

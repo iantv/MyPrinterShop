@@ -95,8 +95,9 @@ function deleteProductFromDB(button){
 
 function addToBucketList(productId){
 	var products = getJSONProductsFromBucketList();
-	products[productId] = products[productId] ? products[productId] + 1 : 1;
+	products[productId] = (products[productId] ? (products[productId] + 1) : 1);
 	$.cookie('bucket_list', JSON.stringify(products), {path: "/", domain: "127.0.0.1"});
+	//console.log($.cookie('bucket_list'))
 }
 
 function getJSONProductsFromBucketList(){

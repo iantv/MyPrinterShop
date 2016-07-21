@@ -47,9 +47,9 @@ function updateData(input){
 }
 
 function clear_bucket(){
-	$.removeCookie('bucket_list');
-	$.removeCookie('bucket_count');
-	$.removeCookie('bucket_sum');
+	$.removeCookie('bucket_list', {path: "/", domain: "127.0.0.1"});
+	$.removeCookie('bucket_count', {path: "/", domain: "127.0.0.1"});
+	$.removeCookie('bucket_sum', {path: "/", domain: "127.0.0.1"});
 
 	$('#bucket_sum').html(0);
 	$('#bucket_count').html(0);

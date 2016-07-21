@@ -57,6 +57,20 @@ class Builder implements ContainerAwareInterface
 		}
 		return $menu;
 	}
+
+	function personalMenu(FactoryInterface $factory, array $options){
+		$menu = $factory->createItem('Profile');
+		$menu->setChildrenAttributes(['id' => 'menu']);
+
+		$menu->addChild('Мой профиль', array('route' => 'personal'));
+		$menu->addChild('Мой заказы', array('route' => 'homepage'));
+		$menu['Мой заказы']->addChild('Все заказы', array('route' => 'homepage'));
+		$menu['Мой заказы']->addChild('Открытые заказы', array('route' => 'homepage'));
+		$menu['Мой заказы']->addChild('Выкупленные заказы', array('route' => 'homepage'));
+		$menu['Мой заказы']->addChild('Отмененные заказы', array('route' => 'homepage'));
+
+		return $menu;
+	}
 }
 
 ?>

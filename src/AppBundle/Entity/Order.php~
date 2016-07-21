@@ -1,0 +1,49 @@
+<?php
+namespace AppBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="order")
+ */
+class Order{
+	/**
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+	private $id;
+
+	/**
+	 * @ORM\ManyToOne(targetEntity="User", inversedBy="Order")
+	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+	 */
+	private $userId;
+
+	/**
+     * @var string
+     *
+     * @ORM\Column(name="product_list", type="json_array")
+     */
+	private $productList;
+
+	/**
+	 * @ORM\Column(type="decimal", scale=0)
+	 */
+	private $sum;
+
+	/**
+	 * @ORM\Column(type="datetime")
+	 */
+	private $date;
+
+	/**
+	 * @ORM\ManyToOne(targetEntity="State", inversedBy="Order")
+	 * @ORM\JoinColumn(name="state_id", referencedColumnName="id")
+	 */
+	private $state;
+}
+
+?>

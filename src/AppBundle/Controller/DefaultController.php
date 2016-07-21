@@ -13,10 +13,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-use AppBundle\Entity\Category;
-use AppBundle\Entity\SubCategory;
-use AppBundle\Entity\Product;
-use AppBundle\Entity\User;
+use AppBundle\Entity;
 
 use AppBundle\Menu\Menu;
 
@@ -176,8 +173,8 @@ class DefaultController extends Controller
             return $this->render(
                 'bucketisempty.html.twig', 
                 $this->generateArrayForShowTwigRender(
-                    'Интернет-магазин | Корзина', 
-                    $this->makeHtmlCurHeader('Корзина'), 
+                    'Интернет-магазин | Моя корзина', 
+                    $this->makeHtmlCurHeader('Моя корзина'), 
                     []
                 ));
         }
@@ -202,8 +199,8 @@ class DefaultController extends Controller
         return $this->render(
             'bucket.html.twig', 
             $this->generateArrayForShowTwigRender(
-                'Интернет-магазин | Корзина', 
-                $this->makeHtmlCurHeader('Корзина'), 
+                'Интернет-магазин | Моя корзина', 
+                $this->makeHtmlCurHeader('Моя корзина'), 
                 $result
             ));
     }
