@@ -1,5 +1,6 @@
 $('#create_order').click(function(event){
-	console.log('ok');
+	alert("odsffsf");
+	//console.log('ok');
 	/*$.ajax({
 		url:"ajax/submit.php",
 		data: {

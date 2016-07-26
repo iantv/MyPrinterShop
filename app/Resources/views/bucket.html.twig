@@ -13,8 +13,7 @@
 {{ db|raw }}
 {% javascripts
 	'@jquery_and_jqGrid'
-	'@jquery_cookie'
-	'@bucket' %}
+	'@jquery_cookie' %}
 	<script src="{{ asset_url }}"></script>
 {% endjavascripts %}
 </head>
@@ -75,7 +74,8 @@
 	{% endif %}
 	    </div>
     </div>
-    {% javascripts '@AppBundle/Resources/public/js/jqgrid_bucket_create.js' %}
+    {% javascripts '@AppBundle/Resources/public/js/jqgrid_bucket_create.js' 
+    	'@bucket' %}
 		<script src="{{ asset_url }}"></script>
 	{% endjavascripts %}
 </body>
