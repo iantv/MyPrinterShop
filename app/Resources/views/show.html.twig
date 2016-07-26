@@ -38,19 +38,19 @@
 			<a href="/" class="site_name">{{ site_name }}</a><br>
 			<a href="/" class="site_phrase">Всё для принтера</a>
 		</div>
-		<div class="search_line"></div>
+		<div id="search_line"></div>
 		<div id="bucket" onclick="location.replace('/bucket')">
 			{% image '@AppBundle/Resources/public/images/bucket.png' %}
 		    	<img src="{{ asset_url }}" class="bucket_icon"/>
 			{% endimage %}
 			<table id="bucket_table"'>
 				<tr>
-					<td>Товаров</td>
-					<td id="bucket_count">0</td>
+					<td class="bucket_labels">Товаров</td>
+					<td width="100" id="bucket_count" class="bucket_values">0</td>
 				</tr>
 				<tr>
-					<td>Сумма(руб)</td>
-					<td id="bucket_sum">0</td>
+					<td class="bucket_labels">Сумма(руб)</td>
+					<td width="100" id="bucket_sum" class="bucket_values">0</td>
 				</tr>
 			</table>
 		</div>
