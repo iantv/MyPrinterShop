@@ -1,71 +1,17 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-<title>{{ page_title }}</title>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-{% stylesheets 
-	'bundles/app/css/jqGrid/css/ui.jqgrid.css'
-	'bundles/app/css/jquery-ui/themes/blitzer/jquery-ui.css'
-	'bundles/app/css/main_styles.css'
-	'bundles/app/css/user_profile.css'
- 	filter='cssrewrite' %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
-{% endstylesheets %}
-{{ db|raw }}
-{% javascripts
-	'@jquery_and_jqGrid'
-	'@jquery_cookie' %}
-	<script src="{{ asset_url }}"></script>
-{% endjavascripts %}
-</head>
-<body>
-	<img src=""></img>
-	<ul class="entrance">
-		{% if is_granted('ROLE_ADMIN') %}
-			<li><a href="/admin">Администрирование</a></li>
-			<li><a href="/logout">Выйти</a></li>
-		{% elseif is_granted('ROLE_USER')%}
-			<li><a href="/personal">Личный кабинет</a></li>
-			<li><a href="/logout">Выйти</a></li>
-		{% else %}
-			<li><a href="/register">Регистрация</a></li>
-			<li><a href="/login">Войти</a></li>
-		{% endif %}
-	</ul>
-	<div id="header">
-		<div id="site_name_block">
-			<a href="/" class="site_name">{{ site_name }}</a><br>
-			<a href="/" class="site_phrase">Всё для принтера</a>
-		</div>
-		<div class="search_line"></div>
-		<div id="bucket" onclick="location.replace('/bucket')">
-			{% image '@AppBundle/Resources/public/images/bucket.png' %}
-		    	<img src="{{ asset_url }}" class="bucket_icon"/>
-			{% endimage %}
-			<table id="bucket_table"'>
-				<tr>
-					<td>Товаров</td>
-					<td id="bucket_count">0</td>
-				</tr>
-				<tr>
-					<td>Сумма(руб)</td>
-					<td id="bucket_sum">0</td>
-				</tr>
-			</table>
-		</div>
-	</div>
-	<div id="content">
-		<div id="menu_block">
+{% extends 'base.html.twig' %}
+{% block content %}
+	<div id="menu_block">
 		{{ knp_menu_render('AppBundle:Builder:personalMenu') }}
-		</div>
-		<div>
-			<h3 class="h_user_name">{{ app.user.username }} </h3>
-			<label>	e-mail: </label>{{ app.user.email }}
-		</div>
-    </div>
+	</div>
+	<div>
+		<h3 id="h_user_name">{{ app.user.username }} </h3>
+		<label>	e-mail: </label>{{ app.user.email }}
+	</div>
+{% endblock %}
 
-    {% javascripts '@AppBundle/Resources/public/js/generate_menu.js' %}
+{% block scripts %}
+	{% javascripts '@AppBundle/Resources/public/js/generate_menu.js' %}
 		<script src="{{ asset_url }}"></script>
 	{% endjavascripts %}
-</body>
-</html>
+{% endblock %}
+
