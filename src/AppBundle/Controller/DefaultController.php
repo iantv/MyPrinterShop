@@ -95,7 +95,9 @@ class DefaultController extends Controller
         $em->flush();
 
 
-        return new Response('ok');
+        return new JsonResponse([
+            'id' => $order->getId(),
+            'date' => $order->getOrderDate()->format('Y-m-d H:i:s')]);
     }
     
     /**

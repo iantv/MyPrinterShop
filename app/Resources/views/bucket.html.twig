@@ -2,23 +2,25 @@
 
 {% block content %}
 	<h4>{{ path|raw }}</h4>
-		<div id="grid_block">
-			<div id="pager"></div>
-			<table id="bucket_list"><tr><td></td></tr></table>
-			<div id="pager"></div>
-			<div class="total_block">
-				<label class='total'>ИТОГО:</label>
-				<div id="total_sum"></div>
-				<span class='total'>рублей</span>
-			</div><p>
-		{% if is_granted('ROLE_ADMIN') %}
-			<!--button class="green_button center_position">Оформить заказ</button-->
-		{% elseif is_granted('ROLE_USER') %}
-			<button class="green_button center_position" id="create_order">Оформить заказ</button>
-		{% else %}
-			<button class="green_button center_position">Зарегистироваться</button>
-		{% endif %}
-		</div>
+	<div id="grid_block">
+		<div id="pager"></div>
+		<table id="bucket_list"><tr><td></td></tr></table>
+		<div id="pager"></div>
+		<div class="total_block">
+			<label class='total'>ИТОГО:</label>
+			<div id="total_sum"></div>
+			<span class='total'>рублей</span>
+		</div><p>
+	{% if is_granted('ROLE_ADMIN') %}
+		<!--button class="green_button center_position">Оформить заказ</button-->
+	{% elseif is_granted('ROLE_USER') %}
+		<button class="green_button center_position" id="create_order">Быстрый заказ</button>
+	{% else %}
+		<button class="green_button center_position">Зарегистироваться</button>
+	{% endif %}
+	</div>
+	<div id="dialog" title="Заказ успешно принят!">
+	</div>
 {% endblock %}
 
 {% block scripts %}
@@ -31,15 +33,24 @@
 		$('#create_order').click(function (event) {
 			$.ajax("{{ path('create_order') }}", {
 		        data: { 
-		                'order': JSON.stringify(data)
+		            'order': JSON.stringify(data)
 		        },
 		        success: function(data) {
-		        	alert(data);
-		                // change button color
+		        	$('#dialog').dialog({
+		        		modal: true
+		        	});
+		        	$("#dialog").html(
+		        		'Ваш заказ успешно принят. Мы свяжемся с вами в ближайшее время. Номер вашего заказа <b>#'+ 
+		        		data['id'] + '</b> от <b>' + data['date'] + '</b><br>' + 
+		        		'Вы можете следить за выполнением своего заказа через <a href="/personal">Личный кабинет </a>');
 		        },
 		        error: function() {
-		        	alert('error');
-		                // show alert or something
+		        	$('#dialog').dialog({
+		        		modal: true
+		        	});
+		        	$("#dialog").html(
+		        		'Не удалось отправить заказ. Попробуйте позже.'
+		        	);
 		        }
 		    });
 		});
