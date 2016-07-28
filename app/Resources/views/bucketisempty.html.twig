@@ -1,59 +1,15 @@
-<!DOCTYPE HTML>
-<html>
-<head>
-<title>{{ page_title }}</title>
-<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
-{% stylesheets 
-	'bundles/app/css/jqGrid/css/ui.jqgrid.css'
-	'bundles/app/css/main_styles.css'
- 	filter='cssrewrite' %}
-    <link rel="stylesheet" href="{{ asset_url }}" />
-{% endstylesheets %}
-{{ db|raw }}
-{% javascripts
-	'@jquery_and_jqGrid'
-	'@jquery_cookie' %}
-	<script src="{{ asset_url }}"></script>
-{% endjavascripts %}
-</head>
-<body>
-	<img src=""></img>
-	<ul class="entrance">
-		<li><a href="/register">Регистрация</a></li>
-		<li><a href="/login">Вход</a></li>
-	</ul>
-	<div id="header">
-		<div id="site_name_block">
-			<a href="/" class="site_name">{{ site_name }}</a><br>
-			<a href="/" class="site_phrase">Всё для принтера</a>
-		</div>
-		<div id="search_line"></div>
-		<div id="bucket" onclick="location.replace('/bucket')">
-			{% image '@AppBundle/Resources/public/images/bucket.png' %}
-		    	<img src="{{ asset_url }}" class="bucket_icon"/>
-			{% endimage %}
-			<table id="bucket_table"'>
-				<tr>
-					<td class="bucket_labels">Товаров</td>
-					<td width="100" id="bucket_count" class="bucket_values">0</td>
-				</tr>
-				<tr>
-					<td class="bucket_labels">Сумма(руб)</td>
-					<td width="100" id="bucket_sum" class="bucket_values">0</td>
-				</tr>
-			</table>
-		</div>
-	</div>
-	<div id="content">
-		
-		<div id="grid_block">
-			<h4>{{ path|raw }}</h4>
-			<span class="tohome">Добавьте товары из <a href="/">каталога</a></span>
-			<!--<button onclick="clear_bucket()"> Очистить корзину </button>-->
-	    </div>
+{% extends 'base.html.twig' %}
+
+{% block content %}
+	<div id="grid_block">
+		<h4>{{ path|raw }}</h4>
+		<span class="tohome">Добавьте товары из <a href="/">каталога</a></span>
+		<!--<button onclick="clear_bucket()"> Очистить корзину </button>-->
     </div>
-    {% javascripts '@AppBundle/Resources/public/js/jqgrid_bucket_create.js'%}
+{% endblock %}
+
+{% block scripts %}
+	{% javascripts '@AppBundle/Resources/public/js/jqgrid_bucket_create.js'%}
 		<script src="{{ asset_url }}"></script>
 	{% endjavascripts %}
-</body>
-</html>
+{% endblock %}
