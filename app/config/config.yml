@@ -97,9 +97,7 @@ assetic:
         main:
             inputs:
                 - '@AppBundle/Resources/public/js/main.js'
-        bucket:
-            inputs:
-                - '@AppBundle/Resources/public/js/bucket.js'
+                
 # Configuration for extension with alias: "knp_menu"
 knp_menu:
     # use "twig: false" to disable the Twig extension and the TwigRenderer

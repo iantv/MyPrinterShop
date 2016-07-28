@@ -187,4 +187,28 @@ class Product
     {
         return $this->SubCategory;
     }
+
+    /**
+     * Add blogPost
+     *
+     * @param \AppBundle\Entity\BlogPost $blogPost
+     *
+     * @return Product
+     */
+    public function addBlogPost(\AppBundle\Entity\BlogPost $blogPost)
+    {
+        $this->blogPosts[] = $blogPost;
+
+        return $this;
+    }
+
+    /**
+     * Remove blogPost
+     *
+     * @param \AppBundle\Entity\BlogPost $blogPost
+     */
+    public function removeBlogPost(\AppBundle\Entity\BlogPost $blogPost)
+    {
+        $this->blogPosts->removeElement($blogPost);
+    }
 }

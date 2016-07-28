@@ -44,18 +44,47 @@ class BlogPost
 
     /**
      * @ORM\ManyToOne(targetEntity="Category", inversedBy="blogPosts")
-     * @ORM\JoinColumn(name="category_id", referencedColumnName="id")
      */
     private $category;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="SubCategory", inversedBy="blogPosts")
+     */
+    private $subcategory;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Product", inversedBy="blogPosts")
+     */
+    private $product;
 
     public function setCategory(Category $category)
     {
         $this->category = $category;
     }
 
+    public function setSubCategory(SubCategory $subcategory)
+    {
+        $this->subcategory = $subcategory;
+    }
+
+    public function setProduct(Product $product)
+    {
+        $this->product = $product;
+    }
+
     public function getCategory()
     {
         return $this->category;
+    }
+
+    public function getSubCategory()
+    {
+        return $this->subcategory;
+    }
+
+    public function getProduct()
+    {
+        return $this->product;
     }
 
     /**

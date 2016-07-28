@@ -147,4 +147,28 @@ class SubCategory
     {
         return $this->Category;
     }
+
+    /**
+     * Add blogPost
+     *
+     * @param \AppBundle\Entity\BlogPost $blogPost
+     *
+     * @return SubCategory
+     */
+    public function addBlogPost(\AppBundle\Entity\BlogPost $blogPost)
+    {
+        $this->blogPosts[] = $blogPost;
+
+        return $this;
+    }
+
+    /**
+     * Remove blogPost
+     *
+     * @param \AppBundle\Entity\BlogPost $blogPost
+     */
+    public function removeBlogPost(\AppBundle\Entity\BlogPost $blogPost)
+    {
+        $this->blogPosts->removeElement($blogPost);
+    }
 }

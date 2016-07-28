@@ -35,7 +35,7 @@ class Category
     private $SubCategory;
 
     /**
-     * @ORM\OneToMany(targetEntity="BlogPost", mappedBy="Category")
+     * @ORM\OneToMany(targetEntity="BlogPost", mappedBy="category")
      */
     private $blogPosts;
 

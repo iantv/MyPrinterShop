@@ -24,8 +24,25 @@
 {% block scripts %}
 	{% javascripts
 		'@AppBundle/Resources/public/js/jqgrid_bucket_create.js' 
-		'@bucket' %}
+		%}
 		<script src="{{ asset_url }}"></script>
 	{% endjavascripts %}
+	<script>
+		$('#create_order').click(function (event) {
+			$.ajax("{{ path('create_order') }}", {
+		        data: { 
+		                'order': JSON.stringify(data)
+		        },
+		        success: function(data) {
+		        	alert(data);
+		                // change button color
+		        },
+		        error: function() {
+		        	alert('error');
+		                // show alert or something
+		        }
+		    });
+		});
+	</script>
 {% endblock %}
 

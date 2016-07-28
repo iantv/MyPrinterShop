@@ -6,7 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="order")
+ * @ORM\Table(name="app_orders")
  */
 class Order{
 	/**
@@ -17,33 +17,32 @@ class Order{
 	private $id;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="User", inversedBy="Order")
+	 * @ORM\ManyToOne(targetEntity="User", inversedBy="Orders")
 	 * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
 	 */
-	private $userId;
+	private $user;
 
 	/**
-     * @var string
-     *
-     * @ORM\Column(name="product_list", type="json_array")
+     * @ORM\Column(name="product_list", type="string", length=500)
      */
 	private $productList;
 
 	/**
-	 * @ORM\Column(type="decimal", scale=0)
+	 * @ORM\Column(type="decimal", scale=2)
 	 */
-	private $sum;
+	private $totalSum;
 
 	/**
 	 * @ORM\Column(type="datetime")
 	 */
-	private $date;
+	private $orderDate;
 
 	/**
-	 * @ORM\ManyToOne(targetEntity="State", inversedBy="Order")
+	 * @ORM\ManyToOne(targetEntity="OrderState", inversedBy="Orders")
 	 * @ORM\JoinColumn(name="state_id", referencedColumnName="id")
 	 */
 	private $state;
+
 
     /**
      * Get id
@@ -58,7 +57,7 @@ class Order{
     /**
      * Set productList
      *
-     * @param array $productList
+     * @param string $productList
      *
      * @return Order
      */
@@ -72,7 +71,7 @@ class Order{
     /**
      * Get productList
      *
-     * @return array
+     * @return string
      */
     public function getProductList()
     {
@@ -80,85 +79,61 @@ class Order{
     }
 
     /**
-     * Set sum
+     * Set totalSum
      *
-     * @param string $sum
+     * @param string $totalSum
      *
      * @return Order
      */
-    public function setSum($sum)
+    public function setTotalSum($totalSum)
     {
-        $this->sum = $sum;
+        $this->totalSum = $totalSum;
 
         return $this;
     }
 
     /**
-     * Get sum
+     * Get totalSum
      *
      * @return string
      */
-    public function getSum()
+    public function getTotalSum()
     {
-        return $this->sum;
+        return $this->totalSum;
     }
 
     /**
-     * Set date
+     * Set user
      *
-     * @param \DateTime $date
+     * @param \AppBundle\Entity\User $user
      *
      * @return Order
      */
-    public function setDate($date)
+    public function setUser(\AppBundle\Entity\User $user = null)
     {
-        $this->date = $date;
+        $this->user = $user;
 
         return $this;
     }
 
     /**
-     * Get date
-     *
-     * @return \DateTime
-     */
-    public function getDate()
-    {
-        return $this->date;
-    }
-
-    /**
-     * Set userId
-     *
-     * @param \AppBundle\Entity\User $userId
-     *
-     * @return Order
-     */
-    public function setUserId(\AppBundle\Entity\User $userId = null)
-    {
-        $this->userId = $userId;
-
-        return $this;
-    }
-
-    /**
-     * Get userId
+     * Get user
      *
      * @return \AppBundle\Entity\User
      */
-    public function getUserId()
+    public function getUser()
     {
-        return $this->userId;
+        return $this->user;
     }
 
     /**
      * Set state
      *
-     * @param \AppBundle\Entity\State $state
+     * @param \AppBundle\Entity\OrderState $state
      *
      * @return Order
      */
-    public function setState(\AppBundle\Entity\State $state = null)
+    public function setState(\AppBundle\Entity\OrderState $state = null)
     {
         $this->state = $state;
 
@@ -168,10 +143,34 @@ class Order{
     /**
      * Get state
      *
-     * @return \AppBundle\Entity\State
+     * @return \AppBundle\Entity\OrderState
      */
     public function getState()
     {
         return $this->state;
+    }
+
+    /**
+     * Set orderDate
+     *
+     * @param \DateTime $orderDate
+     *
+     * @return Order
+     */
+    public function setOrderDate($orderDate)
+    {
+        $this->orderDate = $orderDate;
+
+        return $this;
+    }
+
+    /**
+     * Get orderDate
+     *
+     * @return \DateTime
+     */
+    public function getOrderDate()
+    {
+        return $this->orderDate;
     }
 }

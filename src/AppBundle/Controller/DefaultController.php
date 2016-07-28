@@ -15,6 +15,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 
 use AppBundle\Entity;
 
+use AppBundle\Entity\Order;
+use AppBundle\Entity\OrderState;
+use AppBundle\Entity\User;
+
 use AppBundle\Menu\Menu;
 
 class DefaultController extends Controller
@@ -64,6 +68,36 @@ class DefaultController extends Controller
             ));
     }
 
+    /**
+     * @Route("/create_order", name="create_order")
+     */
+    public function orderAction(Request $request)
+    {
+
+        //return new Response($_GET['order']);
+        $user = $this->getDoctrine()
+                    ->getRepository('AppBundle:User')
+                    ->find($this->getUser()->getId());
+        $state = $this->getDoctrine()
+                    ->getRepository('AppBundle:OrderState')
+                    ->findOneByName('Выполняется');
+
+        $order = new Order();
+        
+        $order->setProductList($_GET['order']);
+        $order->setTotalSum(intval($_COOKIE['bucket_sum']));
+        $order->setOrderDate(new \DateTime("now"));
+        $order->setState($state);
+        $order->setUser($user);
+
+        $em = $this->getDoctrine()->getManager();
+        $em->persist($order);
+        $em->flush();
+
+
+        return new Response('ok');
+    }
+    
     /**
      * @Route("/product/{productId}", name="product")
      */
