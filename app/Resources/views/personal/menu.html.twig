@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+{% block content %}
+	<div id="menu_block">
+		{{ knp_menu_render('AppBundle:Builder:personalMenu') }}
+	</div>
+	{% block maincontent %}{% endblock %}
+{% endblock %}
+
+{% block scripts %}
+	{% javascripts '@AppBundle/Resources/public/js/generate_menu.js' %}
+		<script src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+{% endblock %}

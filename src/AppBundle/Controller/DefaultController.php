@@ -63,6 +63,19 @@ class DefaultController extends Controller
         return $this->render(
             'personal/personal.html.twig', 
             $this->generateArrayForShowTwigRender(
+                'Интернет-магазин | Мои заказы', 
+                'Мои заказы'
+            ));
+    }
+
+    /**
+     * @Route("/orders", name="orders")
+     */
+    public function ordersAction(Request $request)
+    {
+        return $this->render(
+            'personal/orders.html.twig', 
+            $this->generateArrayForShowTwigRender(
                 'Интернет-магазин | Личный кабинет', 
                 'Личный кабинет'
             ));

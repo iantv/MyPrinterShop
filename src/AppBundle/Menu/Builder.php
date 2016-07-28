@@ -63,7 +63,7 @@ class Builder implements ContainerAwareInterface
 		$menu->setChildrenAttributes(['id' => 'menu']);
 
 		$menu->addChild('Мой профиль', array('route' => 'personal'));
-		$menu->addChild('Мой заказы', array('route' => 'homepage'));
+		$menu->addChild('Мой заказы', array('route' => 'orders'));
 		$menu['Мой заказы']->addChild('Все заказы', array('route' => 'homepage'));
 		$menu['Мой заказы']->addChild('Открытые заказы', array('route' => 'homepage'));
 		$menu['Мой заказы']->addChild('Выкупленные заказы', array('route' => 'homepage'));
