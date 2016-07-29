@@ -60,6 +60,9 @@ class DefaultController extends Controller
      */
     public function personalAction(Request $request)
     {
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
         return $this->render(
             'personal/personal.html.twig', 
             $this->generateArrayForShowTwigRender(
@@ -73,6 +76,9 @@ class DefaultController extends Controller
      */
     public function ordersAction(Request $request)
     {
+        if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            throw $this->createAccessDeniedException();
+        }
         $arr = $this->generateArrayForShowTwigRender(
                 'Интернет-магазин | Личный кабинет', 
                 'Личный кабинет'
@@ -105,8 +111,6 @@ class DefaultController extends Controller
      */
     public function orderAction(Request $request)
     {
-
-        //return new Response($_GET['order']);
         $user = $this->getDoctrine()
                     ->getRepository('AppBundle:User')
                     ->find($this->getUser()->getId());
