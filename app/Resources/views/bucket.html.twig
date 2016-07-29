@@ -36,6 +36,9 @@
 		            'order': JSON.stringify(data)
 		        },
 		        success: function(data) {
+		        	$.removeCookie('bucket_list', {path: "/", domain: "127.0.0.1"});
+					$.removeCookie('bucket_count', {path: "/", domain: "127.0.0.1"});
+					$.removeCookie('bucket_sum', {path: "/", domain: "127.0.0.1"});
 		        	$('#dialog').dialog({
 		        		modal: true
 		        	});

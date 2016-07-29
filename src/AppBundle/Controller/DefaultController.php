@@ -73,12 +73,31 @@ class DefaultController extends Controller
      */
     public function ordersAction(Request $request)
     {
-        return $this->render(
-            'personal/orders.html.twig', 
-            $this->generateArrayForShowTwigRender(
+        $arr = $this->generateArrayForShowTwigRender(
                 'Интернет-магазин | Личный кабинет', 
                 'Личный кабинет'
-            ));
+            );
+
+        $orders = $this->getDoctrine()
+                    ->getRepository('AppBundle:Order')
+                    ->findAllByUserId($this->getUser()->getId());
+        
+        $res = [];
+        foreach ($orders as $order) {
+            $res[] = [
+                'id' => $order->getId(),
+                'productList' => $order->getProductList(),
+                'sum'  => $order->getTotalSum(),
+                'date' => $order->getOrderDate()->format('Y-m-d H:i:s'),
+                'state' => $order->getState()->getName()
+            ];
+        }
+
+        $arr['orders'] = $res;
+
+        return $this->render(
+            'personal/orders.html.twig', 
+            $arr);
     }
 
     /**
@@ -106,7 +125,6 @@ class DefaultController extends Controller
         $em = $this->getDoctrine()->getManager();
         $em->persist($order);
         $em->flush();
-
 
         return new JsonResponse([
             'id' => $order->getId(),
@@ -136,11 +154,10 @@ class DefaultController extends Controller
         ];
         
         return $this->render('show.html.twig', 
-            ['page_title' => 'Интернет-магазин | '.$product->getName(), 
-             'path'       => $product->getName(),
-             'db'         => '<script type="text/javascript">var data = '.
-                              json_encode($result, JSON_UNESCAPED_UNICODE).
-                             ';</script>']);
+             $this->generateArrayForShowTwigRender(
+                'Интернет-магазин | '.$product->getName(), 
+                $product->getName(),
+                $result));
     }
 
     /**

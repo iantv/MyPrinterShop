@@ -1,6 +1,46 @@
 {% extends 'personal/menu.html.twig' %}
+
+{% block stylesheets %}
+	{{ parent() }}
+	{% stylesheets 'bundles/app/css/personal.css' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
 {% block maincontent %}
-	<div>
-		
-	</div>
+	{% for orderElem in orders %}
+		<div class="order_elem">
+			<div class="order_header">Заказ <b>#{{ orderElem['id'] }}</b> от <b>{{ orderElem['date'] }}</b></div>
+			<div class="order_content">
+				<b>Статус: </b> {{ orderElem['state'] }}<p>
+				<b>Сумма к оплате: </b> {{ orderElem['sum'] }} руб.<p>
+				<b>Состав заказа: </b>
+				<div class="product_list">
+					{{ orderElem['productList'] }}
+				</div>
+			</div>
+			<div class="order_navig">
+				<button>Отменить заказ</button>
+			</div>
+		</div>
+	{% endfor %}
+{% endblock %}
+
+{% block scripts %}
+	{{ parent() }}
+	<script type="text/javascript">
+		$('.product_list').each(function(){
+			var product_list = JSON.parse($(this).html());
+			$(this).html('');
+			var product_list_div = $(this);
+			product_list.forEach(function(item, i, arr){
+				product_list_div.append(
+					++i  + '. <a href="/product/' + item['id'] + '" >' + item['Name'] + '</a> '
+					 + '<span class="price"> '
+					 + item['Count'] + 'шт. x ' + item['RetailPrice'] + 'руб. | ' + item['Sum'] + 'руб. '
+					 + '</span><p>'
+					);
+			});
+		});
+	</script>
 {% endblock %}
