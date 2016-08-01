@@ -16,7 +16,7 @@
 	{% elseif is_granted('ROLE_USER') %}
 		<button class="green_button center_position" id="create_order">Быстрый заказ</button>
 	{% else %}
-		<button class="green_button center_position">Зарегистироваться</button>
+		<a href="register" class="green_button center_position">Зарегистироваться</a>
 	{% endif %}
 	</div>
 	<div id="dialog" title="Заказ успешно принят!">

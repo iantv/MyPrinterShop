@@ -6,7 +6,9 @@
 {% block stylesheets %}
     {% stylesheets 
         'bundles/app/css/jqGrid/css/ui.jqgrid.css'
-        'bundles/app/css/jquery-ui/themes/blitzer/jquery-ui.css'
+        'bundles/app/css/jquery-ui/themes/pepper-grinder/jquery-ui.css'
+        'bundles/app/css/custom/jquery-ui.min.css'
+        'bundles/app/css/custom/jquery-ui.theme.min.css'
         'bundles/app/css/main_styles.css'
         filter='cssrewrite' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
@@ -23,23 +25,24 @@
 {% endjavascripts %}
 </head>
 <body>
-    <img src=""></img>
-    <ul class="entrance">
-        {% if is_granted('ROLE_ADMIN') %}
-            <li><a href="/admin">Администрирование</a></li>
-            <li><a href="/logout">Выйти</a></li>
-        {% elseif is_granted('ROLE_USER')%}
-            <li><a href="/personal">Личный кабинет</a></li>
-            <li><a href="/logout">Выйти</a></li>
-        {% else %}
-            <li><a href="/register">Регистрация</a></li>
-            <li><a href="/login">Войти</a></li>
-        {% endif %}
-    </ul>
+    <div id="high_head">
+        <ul class="entrance">
+            {% if is_granted('ROLE_ADMIN') %}
+                <li><a href="/admin">Администрирование</a></li>
+                <li><a href="/logout">Выйти</a></li>
+            {% elseif is_granted('ROLE_USER')%}
+                <li><a href="/personal">Личный кабинет</a></li>
+                <li><a href="/logout">Выйти</a></li>
+            {% else %}
+                <li><a href="/register">Регистрация</a></li>
+                <li><a href="/login">Войти</a></li>
+            {% endif %}
+        </ul>
+    </div>
     <div id="header">
         <div id="site_name_block">
             <a href="/" class="site_name">{{ site_name }}</a><br>
-            <a href="/" class="site_phrase">Всё для принтера</a>
+            <a href="/" class="site_phrase">все для принтера</a>
         </div>
         <div id="search_line"></div>
         <div id="bucket" onclick="location.replace('/bucket')">
@@ -71,6 +74,9 @@
         {% endjavascripts %}
     {% endif %}
 
-    {% block scripts %}{% endblock %}
+    {% block scripts %}
+       
+    {% endblock %}
+</script>
 </body>
 </html>
