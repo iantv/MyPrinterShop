@@ -1,10 +1,19 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+	{{ parent() }}
+	{% stylesheets 'bundles/app/css/personal.css' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
+{% endblock %}
+
 {% block content %}
 	<div id="menu_block">
 		{{ knp_menu_render('AppBundle:Builder:personalMenu') }}
 	</div>
+	<div id="main_content">
 	{% block maincontent %}{% endblock %}
+	</div>
 {% endblock %}
 
 {% block scripts %}
