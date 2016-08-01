@@ -56,6 +56,7 @@ $(document).ready(function(){
 	});
 });
 
+
 function genToBucketButton(cellvalue, options, rowObject){
 	var products = getJSONProductsFromBucketList();
 	var buttonName = products[rowObject['id']] ? 'В корзине (' + products[rowObject['id']] + ')' : 'Купить';

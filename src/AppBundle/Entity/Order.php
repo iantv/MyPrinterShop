@@ -23,7 +23,7 @@ class Order{
 	private $user;
 
 	/**
-     * @ORM\Column(name="product_list", type="string", length=500)
+     * @ORM\Column(name="product_list", type="string", length=5000)
      */
 	private $productList;
 
