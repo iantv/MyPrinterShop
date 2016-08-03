@@ -39,11 +39,6 @@ class Product
     private $RetailPrice;
 
     /**
-     * @ORM\Column(type="string", length=100)
-     */
-    private $Path; // category_id.subcategory_id
-
-    /**
      * @ORM\OneToMany(targetEntity="BlogPost", mappedBy="product")
      */
     private $blogPosts;
@@ -138,30 +133,6 @@ class Product
     public function getRetailPrice()
     {
         return $this->RetailPrice;
-    }
-
-    /**
-     * Set path
-     *
-     * @param string $path
-     *
-     * @return Product
-     */
-    public function setPath($path)
-    {
-        $this->Path = $path;
-
-        return $this;
-    }
-
-    /**
-     * Get path
-     *
-     * @return string
-     */
-    public function getPath()
-    {
-        return $this->Path;
     }
 
     /**

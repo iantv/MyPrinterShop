@@ -28,31 +28,18 @@ class DefaultController extends Controller
      */
     public function indexAction(Request $request)
     {
-        $products = $this->getDoctrine()
-                        ->getRepository('AppBundle:Product')
-                        ->findAll();
+        $products = $this->getDoctrine()->getRepository('AppBundle:Product')
+                         ->findAll();
        
-        if (!$products){
-            return new Response('No products found');
+        if (!$products) return new Response('No products found');
+
+        foreach ($products as $product){
+            $subcategory = $product->getSubCategory();
+            $result[] = $this->genProductInfo($subcategory->getCategory(), $subcategory, $product);
         }
 
-        foreach ($products as $product) {
-           $result[] = [
-                'id'          => $product->getId(),
-                'Category'    => $product->getSubCategory()->getCategory()->getName(),
-                'SubCategory' => $product->getSubCategory()->getName(),
-                'Name'        => $product->getName(),
-                'Count'       => $product->getCount(),
-                'RetailPrice' => $product->getRetailPrice()
-            ];
-        }
-        return $this->render(
-            'show.html.twig', 
-            $this->generateArrayForShowTwigRender(
-                'Интернет-магазин | Все продукты', 
-                $this->makeHtmlCurCategory('Все продукты'), 
-                $result
-            ));
+        return $this->render('show.html.twig', 
+                $this->genArrayForTwigRender([], 'Все продукты', $result));
     }
 
     /**
@@ -63,12 +50,8 @@ class DefaultController extends Controller
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw $this->createAccessDeniedException();
         }
-        return $this->render(
-            'personal/personal.html.twig', 
-            $this->generateArrayForShowTwigRender(
-                'Интернет-магазин | Мои заказы', 
-                'Мои заказы'
-            ));
+        return $this->render('personal/personal.html.twig', 
+            $this->genArrayForTwigRender([], 'Мой профиль'));
     }
 
     /**
@@ -79,14 +62,9 @@ class DefaultController extends Controller
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw $this->createAccessDeniedException();
         }
-        $arr = $this->generateArrayForShowTwigRender(
-                'Интернет-магазин | Личный кабинет', 
-                'Личный кабинет'
-            );
 
-        $orders = $this->getDoctrine()
-                    ->getRepository('AppBundle:Order')
-                    ->findAllByUserId($this->getUser()->getId());
+        $orders = $this->getDoctrine()->getRepository('AppBundle:Order')
+                       ->findAllByUserId($this->getUser()->getId());
         
         $res = [];
         foreach ($orders as $order) {
@@ -99,11 +77,10 @@ class DefaultController extends Controller
             ];
         }
 
+        $arr = $this->genArrayForTwigRender([],'Мои заказы');
         $arr['orders'] = $res;
 
-        return $this->render(
-            'personal/orders.html.twig', 
-            $arr);
+        return $this->render('personal/orders.html.twig', $arr);
     }
 
     /**
@@ -111,12 +88,10 @@ class DefaultController extends Controller
      */
     public function orderAction(Request $request)
     {
-        $user = $this->getDoctrine()
-                    ->getRepository('AppBundle:User')
-                    ->find($this->getUser()->getId());
-        $state = $this->getDoctrine()
-                    ->getRepository('AppBundle:OrderState')
-                    ->findOneByName('Выполняется');
+        $user = $this->getDoctrine()->getRepository('AppBundle:User')
+                     ->find($this->getUser()->getId());
+        $state = $this->getDoctrine()->getRepository('AppBundle:OrderState')
+                      ->findOneByName('Заказ принят');
 
         $order = new Order();
         
@@ -131,37 +106,9 @@ class DefaultController extends Controller
         $em->flush();
 
         return new JsonResponse([
-            'id' => $order->getId(),
-            'date' => $order->getOrderDate()->format('Y-m-d H:i:s')]);
-    }
-    
-    /**
-     * @Route("/product/{productId}", name="product")
-     */
-    public function showProductAction($productId)
-    {
-        $product = $this->getDoctrine()
-                        ->getRepository('AppBundle:Product')
-                        ->findOneByIdJoinedToSubCategory($productId);
-        
-        if (!$product){
-            return new Response('No product found for id = '.$productId);
-        }
-        
-        $result[] = [
-            'id'          => $product->getId(),
-            'Category'    => $product->getSubCategory()->getCategory()->getName(),
-            'SubCategory' => $product->getSubCategory()->getName(),
-            'Name'        => $product->getName(),
-            'Count'       => $product->getCount(),
-            'RetailPrice' => $product->getRetailPrice()
-        ];
-        
-        return $this->render('show.html.twig', 
-             $this->generateArrayForShowTwigRender(
-                'Интернет-магазин | '.$product->getName(), 
-                $product->getName(),
-                $result));
+                'id' => $order->getId(),
+                'date' => $order->getOrderDate()->format('Y-m-d H:i:s')
+            ]);
     }
 
     /**
@@ -169,35 +116,20 @@ class DefaultController extends Controller
      */
     public function showCategoryAction($categoryId)
     {
-        $category = $this->getDoctrine()
-            ->getRepository('AppBundle:Category')
-            ->find($categoryId);
+        $category = $this->getDoctrine()->getRepository('AppBundle:Category')
+                    ->find($categoryId);
 
-        if (!$category){
-            return new Response('No category found for id = '.$categoryId);
-        }
+        if (!$category) return new Response('No category found for id = '.$categoryId);
+
         $result = [];
-        foreach ($category->getSubCategory() as $subCategory) {
+        foreach ($category->getSubCategory() as $subCategory){
             foreach ($subCategory->getProducts() as $product){
-                $result[] = [
-                    'id'          => $product->getId(),
-                    'Category'    => $category->getName(),
-                    'SubCategory' => $subCategory->getName(),
-                    'Name'        => $product->getName(),
-                    'Count'       => $product->getCount(),
-                    'RetailPrice' => $product->getRetailPrice()
-                ];
+                $result[] = $this->genProductInfo($category, $subCategory, $product);
             }
         }
 
-        return $this->render(
-            'show.html.twig', 
-            $this->generateArrayForShowTwigRender(
-                'Интернет-магазин | '. $category->getName(), 
-                $this->generatePath(0, $product->getPath()).
-                $this->makeHtmlCurCategory($category->getName()), 
-                $result
-            ));
+        return $this->render('show.html.twig', 
+                $this->genArrayForTwigRender($this->genPath(), $category->getName(), $result));
     }
 
     /**
@@ -209,30 +141,39 @@ class DefaultController extends Controller
             ->getRepository('AppBundle:SubCategory')
             ->find($subcategoryId);
 
-        if (!$subcategory){
-            return new Response('No subcategory found for id = '.$subcategoryId);
-        }
+        if (!$subcategory) return new Response('No subcategory found for id = '.$subcategoryId);
 
         foreach ($subcategory->getProducts() as $product){
-            $result[] = [
-                'id'          => $product->getId(),
-                'Category'    => $subcategory->getCategory()->getName(),
-                'SubCategory' => $subcategory->getName(),
-                'Name'        => $product->getName(),
-                'Count'       => $product->getCount(),
-                'RetailPrice' => $product->getRetailPrice()
-            ];
+            $result[] = $this->genProductInfo($subcategory->getCategory(), $subcategory, $product);
         }
         
         return $this->render('show.html.twig', 
-            $this->generateArrayForShowTwigRender(
-                'Интернет-магазин | '. $subcategory->getName(), 
-                $this->generatePath(1, $product->getPath()).
-                $this->makeHtmlCurCategory($subcategory->getName()), 
-                $result
-            ));
+                $this->genArrayForTwigRender(
+                    $this->genPath($subcategory->getCategory()), $subcategory->getName(), $result
+                ));
     }
 
+    /**
+     * @Route("/product/{productId}", name="product")
+     */
+    public function showProductAction($productId)
+    {
+        $product = $this->getDoctrine()->getRepository('AppBundle:Product')
+                        ->findOneByIdJoinedToSubCategory($productId);
+        
+        if (!$product) return new Response('No product found for id = '.$productId);
+        
+        $subcategory = $product->getSubCategory();
+        $category = $product->getSubCategory()->getCategory();
+        $result[] = $this->genProductInfo($category, $subcategory, $product);
+
+        return $this->render('show.html.twig', 
+                $this->genArrayForTwigRender(
+                    $this->genPath($category, $subcategory), 
+                    $product->getName(), 
+                    $result
+                ));
+    }
 
     /**
      * @Route("/bucket", name="bucket")
@@ -242,18 +183,13 @@ class DefaultController extends Controller
         if (!array_key_exists('bucket_list', $_COOKIE)){
             return $this->render(
                 'bucketisempty.html.twig', 
-                $this->generateArrayForShowTwigRender(
-                    'Интернет-магазин | Моя корзина', 
-                    $this->makeHtmlCurHeader('Моя корзина'), 
-                    []
-                ));
+                $this->genArrayForTwigRender([], 'Моя корзина'));
         }
         $arr = json_decode($_COOKIE['bucket_list'], true);
         $ids = array_keys($arr);
 
-        $products = $this->getDoctrine()
-                        ->getRepository('AppBundle:Product')
-                        ->findByIds($ids);
+        $products = $this->getDoctrine()->getRepository('AppBundle:Product')
+                         ->findByIds($ids);
         
         $result = [];
         foreach ($products as $product){
@@ -266,54 +202,39 @@ class DefaultController extends Controller
             ];
         }
 
-        return $this->render(
-            'bucket.html.twig', 
-            $this->generateArrayForShowTwigRender(
-                'Интернет-магазин | Моя корзина', 
-                $this->makeHtmlCurHeader('Моя корзина'), 
-                $result
-            ));
+        return $this->render('bucket.html.twig', 
+            $this->genArrayForTwigRender([], 'Моя корзина', $result));
     }
 
-    private function makeHtmlLink($src, $itemName){
-        return "<a class='path_link' href='/".$src."'>".$itemName."</a>";
+    private function genProductInfo($category, $subcategory, $product){
+        return [
+            'id'          => $product->getId(),
+            'Category'    => $category->getName(),
+            'SubCategory' => $subcategory->getName(),
+            'Name'        => $product->getName(),
+            'Count'       => $product->getCount(),
+            'RetailPrice' => $product->getRetailPrice()
+        ];
     }
 
-    private function makeHtmlCurCategory($itemName){
-        return "<span class='cur_subcategory'>".$itemName."</span>";
-    }
-
-    private function makeHtmlCurHeader($itemName){
-        return "<span class='cur_subcategory'>".$itemName."</span>";
-    }
-
-    private function generatePath($level, $path){
-        $pathElements = explode('.', $path);
-        $result = "";
-        if ($level > 0){
-            $category = $this->getDoctrine()
-                ->getRepository('AppBundle:Category')
-                ->find($pathElements[0]);
-            if ($level > 1){
-                $subCategory = $this->getDoctrine()
-                    ->getRepository('AppBundle:SubCategory')
-                    ->find($pathElements[1]);
-                $result = ">".$this->makeHtmlLink('subcategory/'.$subCategory->getId(), $subCategory->getName());
-            }
-            $result = ">".$this->makeHtmlLink('category/'.$category->getId(), $category->getName()).$result;
-        }
-
-        return $this->makeHtmlLink('', 'Все продукты').$result.">";
-    }
-
-    private function generateArrayForShowTwigRender($page_title, $header, $result = []){
+    private function genArrayForTwigRender($path, $curPage, $result = []){
         $site_name = 'Интернет-магазин';
         return [
-            'page_title' => $page_title, 
+            'page_title' => $site_name." - ".$curPage, 
             'site_name'  => $site_name,
-            'path'       => $header,
+            'path'       => $path,
+            'curPage'    => $curPage,
             'db'         => '<script type="text/javascript">var data = '.
                              json_encode($result, JSON_UNESCAPED_UNICODE).
                             ';</script>'];
+    }
+
+    private function genPath($category = NULL, $subcategory = NULL){
+        $path[] = [ 'name' => 'Каталог', 'url'  => '/' ];
+        if (!$category) return $path;
+        $path[] = [ 'name' => $category->getName(), 'url' => '/category/'.$category->getId() ];
+        if (!$subcategory) return $path;
+        $path[] = [ 'name' => $subcategory->getName(), 'url' => '/subcategory/'.$subcategory->getId() ];
+        return $path;
     }
 }
