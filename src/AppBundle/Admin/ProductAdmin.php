@@ -27,22 +27,8 @@ class ProductAdmin extends AbstractAdmin
                             return $val->getCategory()->getName();
                         }
                     ])
-                   /*->add('path', 'entity', [
-                        'class'         => 'AppBundle\Entity\SubCategory',
-                        'choice_label'  => function($subCategory){
-                            return  $subCategory->getCategory()->getId().".".
-                                    $subCategory->getId().". ".
-                                    $subCategory->getName();
-                        },
-                        'group_by'      => function($val, $key, $index){
-                            return $val->getCategory()->getId();
-                        }
-                    ])*/
                    ->add('Count', 'number')
                    ->add('RetailPrice', 'number')
-                   /*->add('path', HiddenType::class, [
-                        'data'  =>  '1.1'
-                    ])*/
                    ;
     }
 
