@@ -11,10 +11,16 @@
 </head>
 <body>
 	<form id="form" action="{{ path('user_login') }}" method="post">
-		<div id="header">
-			<a href="/" class="site_name">Интернет - магазин</a><br>
-			<a href="/" class="site_phrase">Всё для принтера</a>
-		</div>
+		<!--div id="high_head"-->
+			<ul id="high_menu">
+	            <li>
+	                <a href="/">
+	                {% image '@AppBundle/Resources/public/images/icons/home_40.png' %}
+	                    <img src="{{ asset_url }}" id="bucket_icon"/>{% endimage %}
+	                Главная</a>
+	            </li>
+	        </ul>
+        <!--/div-->
 		<div class="input_and_label_block">
 		    	<label for="username" class="form_label">Логин</label><br>
 		    	<input type="text" id="username" name="_username" value="{{ last_username }}" /><p>

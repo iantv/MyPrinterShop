@@ -1,5 +1,5 @@
 var deleteProductFlagFromDB = false;
-$('#bucket_count').html($.cookie('bucket_count') || 0);
+$('.bucket_count').html($.cookie('bucket_count') || 0);
 $('#bucket_sum').html($.cookie('bucket_sum') || 0);
 
 $(document).ready(function(){
@@ -60,9 +60,9 @@ $(document).ready(function(){
 function genToBucketButton(cellvalue, options, rowObject){
 	var products = getJSONProductsFromBucketList();
 	var buttonName = products[rowObject['id']] ? 'В корзине (' + products[rowObject['id']] + ')' : 'Купить';
-	return "<button id='addToBucketBtn_" + options['rowId'] +
-			"' class='green_button' onclick='addToBucket(this)'>" + 
-			buttonName + "</button>";
+	return "<div class='green_button' id='addToBucketBtn_" + options['rowId'] +
+			"' onclick='addToBucket(this)'>" + 
+			buttonName + "</div>";
 }
 
 function addToBucket(button){
@@ -72,7 +72,7 @@ function addToBucket(button){
 	var count = $.cookie('bucket_count') || 0;
 	count = count*1 + 1;
 	$.cookie('bucket_count', count, {path: "/", domain: "127.0.0.1"});
-	$('#bucket_count').html(count);
+	$('.bucket_count').html(count);
 	
 	var celValue = $('#list').jqGrid('getCell', rowid, 'RetailPrice');
 
@@ -87,7 +87,7 @@ function addToBucket(button){
 }
 
 function genDeleteProductButton(){
-	return "<button class='red_button2' onclick='deleteProductFromDB(this)'>X</button>";
+	return "<div class='cancel_button' onclick='deleteProductFromDB(this)'>X</div>";
 }
 
 function deleteProductFromDB(button){

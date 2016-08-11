@@ -1,4 +1,4 @@
-$('#bucket_count').html($.cookie('bucket_count') || 0);
+$('.bucket_count').html($.cookie('bucket_count') || 0);
 $('#bucket_sum').html($.cookie('bucket_sum') || 0);
 $('#total_sum').html($.cookie('bucket_sum') || 0);
 
@@ -52,7 +52,7 @@ function clear_bucket(){
 	$.removeCookie('bucket_sum', {path: "/", domain: "127.0.0.1"});
 
 	$('#bucket_sum').html(0);
-	$('#bucket_count').html(0);
+	$('.bucket_count').html(0);
 	location.reload();
 }
 
@@ -64,13 +64,13 @@ function updateBucketInfoByBucketList(products_json){
 	});
 
 	$.cookie('bucket_count', count, {path: "/", domain: "127.0.0.1"});
-	$('#bucket_count').html(count);
+	$('.bucket_count').html(count);
 }
 
 function genDeleteButton(cellvalue, options, rowObject){
-	return "<button id='deleteFromBucketBtn_" +
+	return "<div id='deleteFromBucketBtn_" +
 		options['rowId'] +
-		"' class='red_button2' onclick='deleteProductFromBucket(this)'>X</button>";
+		"' class='cancel_button' onclick='deleteProductFromBucket(this)'>x</div>";
 }
 
 

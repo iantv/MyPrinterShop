@@ -6,8 +6,8 @@
 {% block stylesheets %}
     {% stylesheets 
         'bundles/app/css/jqGrid/css/ui.jqgrid.css'
-        'bundles/app/css/jquery-ui/themes/pepper-grinder/jquery-ui.css'
-        'bundles/app/css/custom/jquery-ui.min.css'
+        'bundles/app/css/jquery-ui/themes/base/jquery-ui.css'
+        
         'bundles/app/css/custom/jquery-ui.theme.min.css'
         'bundles/app/css/main_styles.css'
         filter='cssrewrite' %}
@@ -23,43 +23,68 @@
      %}
     <script src="{{ asset_url }}"></script>
 {% endjavascripts %}
+{% block prev_scripts %}
+{% endblock %}
 </head>
 <body>
     <div id="high_head">
-        <ul class="entrance">
-            {% if is_granted('ROLE_ADMIN') %}
-                <li><a href="/admin">Администрирование</a></li>
-                <li><a href="/logout">Выйти</a></li>
-            {% elseif is_granted('ROLE_USER')%}
-                <li><a href="/personal">Личный кабинет</a></li>
-                <li><a href="/logout">Выйти</a></li>
-            {% else %}
-                <li><a href="/register">Регистрация</a></li>
-                <li><a href="/login">Войти</a></li>
-            {% endif %}
-        </ul>
+        <ul id="high_menu">
+            <li>
+                <a href="/">
+                {% image '@AppBundle/Resources/public/images/icons/home_40.png' %}
+                    <img src="{{ asset_url }}" id="bucket_icon"/>{% endimage %}
+                Главная</a>
+            </li>
+            <li>
+                {% if is_granted('ROLE_ADMIN') %}
+                <a href="/admin">
+                {% image '@AppBundle/Resources/public/images/icons/administrator_40.png' %}
+                <img src="{{ asset_url }}" id="bucket_icon"/>{% endimage %}
+                Администрирование</a>
+                {% elseif is_granted('ROLE_USER')%}
+                    <a href="/personal">
+                    {% image '@AppBundle/Resources/public/images/icons/user_40.png' %}
+                    <img src="{{ asset_url }}" id="bucket_icon"/>{% endimage %}
+                    Личный кабинет</a>
+                {% else %}
+                    <a href="/login">
+                    {% image '@AppBundle/Resources/public/images/icons/key_40.png' %}
+                    <img src="{{ asset_url }}" id="register_icon"/>{% endimage %}
+                    Авторизация</a>
+                {% endif %}
+
+                {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
+                <ul class="hide_info">
+                    <li><a href="/logout">
+                        {% image '@AppBundle/Resources/public/images/icons/door_40.png' %}
+                        <img src="{{ asset_url }}" id="register_icon"/>{% endimage %}
+                        Выйти</a>
+                    </li>
+                </ul>
+                {% endif %}
+            </li>
+            <li id="bucket_item">
+                <a href="/bucket">
+                    {% image '@AppBundle/Resources/public/images/icons/shoping_cart_40.png' %}
+                        <img src="{{ asset_url }}" id="bucket_icon"/>
+                    {% endimage %}В корзине
+                    <span class="bucket_count">0</span></a>
+                <ul id='bucket_info' class="hide_info">
+                    <li class="bucket_labels"><a href="/bucket">товаров</a></li>
+                    <li class="bucket_values"><a href="/bucket" class="bucket_count">0</a></li>
+                    <li class="bucket_labels"><a href="/bucket">сумма</a></li>
+                    <li class="bucket_values"><a href="/bucket" id="bucket_sum">0</a></li>
+                </ul>
+            </li>
+        </ul>   
     </div>
-    <div id="header">
-        <div id="site_name_block">
-            <a href="/" class="site_name">{{ site_name }}</a><br>
-            <a href="/" class="site_phrase">все для принтера</a>
-        </div>
-        <div id="search_line"></div>
-        <div id="bucket" onclick="location.replace('/bucket')">
-            {% image '@AppBundle/Resources/public/images/bucket.png' %}
-                <img src="{{ asset_url }}" class="bucket_icon"/>
-            {% endimage %}
-            <table id="bucket_table"'>
-                <tr>
-                    <td class="bucket_labels">Товаров</td>
-                    <td width="100" id="bucket_count" class="bucket_values">0</td>
-                </tr>
-                <tr>
-                    <td class="bucket_labels">Сумма(руб)</td>
-                    <td width="100" id="bucket_sum" class="bucket_values">0</td>
-                </tr>
-            </table>
-        </div>
+    <div id="header_background">
+        <!--div id="center_block">
+            <div id="site_name_block">
+                <a href="/" class="site_name">{{ site_name }}</a><br>
+                <a href="/" class="site_phrase">все для принтера</a>
+            </div>
+        </div-->
     </div>
     <div id="content">
         {% block content %}{% endblock %}

@@ -1,5 +1,11 @@
 {% extends 'base.html.twig' %}
 
+{% block prev_scripts %}
+	{% javascripts '@AppBundle/Resources/public/js/generate_menu.js' %}
+		<script src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+{% endblock %}
+
 {% block content %}
 <div id="menu_block">
 	{{ knp_menu_render('AppBundle:Builder:mainMenu') }}
@@ -18,9 +24,7 @@
 {% endblock %}
 
 {% block scripts %}
-	{% javascripts
-		'@AppBundle/Resources/public/js/jqgrid_create.js'
-		'@AppBundle/Resources/public/js/generate_menu.js' %}
+	{% javascripts '@AppBundle/Resources/public/js/jqgrid_create.js' %}
 			<script src="{{ asset_url }}"></script>
 	{% endjavascripts %}
 {% endblock %}
