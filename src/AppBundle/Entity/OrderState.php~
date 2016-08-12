@@ -27,6 +27,12 @@ class OrderState{
      * @ORM\OneToMany(targetEntity="Order", mappedBy="state")
      */
     private $Orders;
+
+    /**
+     * @ORM\Column(type="decimal", scale=0)
+     */
+    private $level;
+
     /**
      * Constructor
      */

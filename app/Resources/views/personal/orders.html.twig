@@ -18,7 +18,15 @@
 		<div class="order_elem">
 			<div class="order_header">Заказ <b>#</b><b id="order_id">{{ orderElem['id'] }}</b> от <b id="order_date">{{ orderElem['date'] }}</b></div>
 			<div class="order_content">
-				<b>Статус: </b><span> {{ orderElem['state'] }}</span><p>
+				<b>Статус: </b>
+				{% if orderElem['levelState'] == 0 %}
+					<span class='status_0'> 
+				{% elseif  orderElem['levelState'] == 1 %}
+					<span class='status_1'>
+				{% elseif  orderElem['levelState'] == 2 %}
+					<span class='status_2'>
+				{% endif %}
+					{{ orderElem['state'] }}</span><p>
 				<b>Сумма к оплате: </b> {{ orderElem['sum'] }} руб.<p>
 				<b>Состав заказа: </b>
 				<div class="product_list">
@@ -32,7 +40,6 @@
 			</div>
 		</div>
 	{% endfor %}
-
 	<div id="dialog"></div>
 {% endblock %}
 

@@ -27,6 +27,12 @@ class OrderState{
      * @ORM\OneToMany(targetEntity="Order", mappedBy="state")
      */
     private $Orders;
+
+    /**
+     * @ORM\Column(type="decimal", scale=0)
+     */
+    private $level;
+
     /**
      * Constructor
      */
@@ -101,5 +107,29 @@ class OrderState{
     public function getOrders()
     {
         return $this->Orders;
+    }
+
+    /**
+     * Set level
+     *
+     * @param string $level
+     *
+     * @return OrderState
+     */
+    public function setLevel($level)
+    {
+        $this->level = $level;
+
+        return $this;
+    }
+
+    /**
+     * Get level
+     *
+     * @return string
+     */
+    public function getLevel()
+    {
+        return $this->level;
     }
 }

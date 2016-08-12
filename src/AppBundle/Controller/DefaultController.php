@@ -73,7 +73,8 @@ class DefaultController extends Controller
                 'productList' => $order->getProductList(),
                 'sum'  => $order->getTotalSum(),
                 'date' => $order->getOrderDate()->format('Y-m-d H:i:s'),
-                'state' => $order->getState()->getName()
+                'state' => $order->getState()->getName(),
+                'levelState' => $order->getState()->getLevel()
             ];
         }
 
