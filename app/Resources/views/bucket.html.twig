@@ -34,6 +34,7 @@
 {% endblock %}
 
 {% block scripts %}
+	{{ parent() }}
 	{% javascripts
 		'@AppBundle/Resources/public/js/jqgrid_bucket_create.js' 
 		%}

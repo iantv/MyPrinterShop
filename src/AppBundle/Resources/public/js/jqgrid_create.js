@@ -1,6 +1,4 @@
 var deleteProductFlagFromDB = false;
-$('.bucket_count').html($.cookie('bucket_count') || 0);
-$('#bucket_sum').html($.cookie('bucket_sum') || 0);
 
 $(document).ready(function(){
 	var lastSel;

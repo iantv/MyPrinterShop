@@ -7,7 +7,6 @@
     {% stylesheets 
         'bundles/app/css/jqGrid/css/ui.jqgrid.css'
         'bundles/app/css/jquery-ui/themes/base/jquery-ui.css'
-        
         'bundles/app/css/custom/jquery-ui.theme.min.css'
         'bundles/app/css/main_styles.css'
         filter='cssrewrite' %}
@@ -100,7 +99,11 @@
     {% endif %}
 
     {% block scripts %}
-       
+       <script type="text/javascript">
+            $('.bucket_count').html($.cookie('bucket_count') || 0);
+            $('#bucket_sum').html($.cookie('bucket_sum') || 0);
+            $('#total_sum').html($.cookie('bucket_sum') || 0);
+       </script>
     {% endblock %}
 </script>
 </body>
