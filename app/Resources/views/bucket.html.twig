@@ -35,9 +35,7 @@
 
 {% block scripts %}
 	{{ parent() }}
-	{% javascripts
-		'@AppBundle/Resources/public/js/jqgrid_bucket_create.js' 
-		%}
+	{% javascripts '@AppBundle/Resources/public/js/jqgrid_bucket_create.js' %}
 		<script src="{{ asset_url }}"></script>
 	{% endjavascripts %}
 	<script>

@@ -112,6 +112,21 @@ class DefaultController extends Controller
     }
 
     /**
+     * @Route("/cancel_order", name="cancel_order")
+     */
+    public function cancelOrder(Request $request){
+        $em = $this->getDoctrine()->getManager();
+        $order = $this->getDoctrine()->getRepository('AppBundle:Order')
+                       ->find($_GET['id']);
+        $state = $this->getDoctrine()->getRepository('AppBundle:OrderState')
+                      ->findOneByName('Заказ отменен клиентом');
+        $order->setState($state);
+        $em->persist($order);
+        $em->flush();          
+        return new Response('ok');
+    }
+
+    /**
      * @Route("/category/{categoryId}", name="category")
      */
     public function showCategoryAction($categoryId)

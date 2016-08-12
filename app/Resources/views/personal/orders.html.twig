@@ -16,9 +16,9 @@
 	<span class="cur_page">{{ curPage }}</span><p>
 	{% for orderElem in orders %}
 		<div class="order_elem">
-			<div class="order_header">Заказ <b>#{{ orderElem['id'] }}</b> от <b>{{ orderElem['date'] }}</b></div>
+			<div class="order_header">Заказ <b>#</b><b id="order_id">{{ orderElem['id'] }}</b> от <b id="order_date">{{ orderElem['date'] }}</b></div>
 			<div class="order_content">
-				<b>Статус: </b> {{ orderElem['state'] }}<p>
+				<b>Статус: </b><span> {{ orderElem['state'] }}</span><p>
 				<b>Сумма к оплате: </b> {{ orderElem['sum'] }} руб.<p>
 				<b>Состав заказа: </b>
 				<div class="product_list">
@@ -26,10 +26,14 @@
 				</div>
 			</div>
 			<div class="order_navig">
-				<span class="cancel_button">Отменить заказ</span>
+				{% if not (orderElem['state'] starts with 'Заказ отменен') %}
+					<span class="cancel_button" onclick="confirmCancelOrder(this)">Отменить заказ</span>
+				{% endif %}
 			</div>
 		</div>
 	{% endfor %}
+
+	<div id="dialog"></div>
 {% endblock %}
 
 {% block scripts %}
@@ -48,5 +52,58 @@
 					);
 			});
 		});
+
+		function confirmCancelOrder(btn){
+			var parent = $(btn).parent().parent();
+			var orderId = parent.children(".order_header").children("#order_id").html();
+			var orderDate = parent.children(".order_header").children("#order_date").html();
+			$('#dialog').attr('title', 'Подтвердите действие: отмена заказа');
+			$('#dialog').html(
+				'Вы уверены, что хотите отменить заказ <b>#' + orderId + '</b> от <b>' + orderDate + '</b>?'
+			);
+
+			$('#dialog').dialog({
+        		modal: true,
+        		buttons: {
+        				"Да" : function (){
+        					$(this).dialog('close');
+        					cancelOrder(btn, orderId, orderDate);
+        				},
+        				'Отмена': function(){
+        					$(this).dialog('close');
+        				}
+        			}
+        	});
+		}
+
+		function cancelOrder(btn, orderId, orderDate){
+			$.ajax(
+				"{{ path('cancel_order') }}", {
+				data: { 'id': orderId },
+				success: function(data){
+					$('#dialog').attr('title', 'Отмена заказа');
+					$('#dialog').html(
+						'Заказ <b>#' + orderId + '</b> от <b>' + orderDate + '</b> отменен'
+					);
+					$('#dialog').dialog({
+						modal: true, buttons: {
+							"Ок": function(){
+								location.reload('/orders');
+							}
+						}
+					});
+				},
+				error: function(){
+					$(parent).css('display', 'none');
+					$('#dialog').attr('title', 'Возникла ошибка');
+					$('#dialog').html(
+						'Заказ <b>#' + orderId + '</b> от <b>' + orderDate + '</b> не удалось отменить.<br> Попробуйте позже'
+					);
+					$('#dialog').dialog({
+						modal: true, buttons: {}
+					});
+				}
+			});
+		}
 	</script>
 {% endblock %}
