@@ -10,4 +10,12 @@ namespace AppBundle\Repository;
  */
 class CategoryRepository extends \Doctrine\ORM\EntityRepository
 {
+	public function findAllOrderedByName()
+    {
+        return $this->getEntityManager()
+		            ->createQuery(
+		                'SELECT p FROM AppBundle:Category p ORDER BY p.Name'
+		            )
+		            ->getResult();
+    } 
 }
