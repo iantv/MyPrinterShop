@@ -2,7 +2,8 @@
 
 {% block maincontent %}
 	<div class="person_content">
-		<h3 id="h_user_name">{{ app.user.username }} </h3>
+		<span class="cur_page">Личный кабинет </span><p>
+		<label>	Пользователь: </label>{{ app.user.username }}<p>
 		<label>	e-mail: </label>{{ app.user.email }}
 	</div>
 {% endblock %}

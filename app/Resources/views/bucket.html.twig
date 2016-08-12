@@ -1,5 +1,15 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+	{{ parent() }}
+    	<style type="text/css">
+    		.cur_page{
+    			font-size: 20px;
+    			color: #2c4359;
+    		}
+    	</style>
+{% endblock %}
+
 {% block content %}
 	<div id="grid_block">
 		<span class="cur_page">{{ curPage }}</span><p>

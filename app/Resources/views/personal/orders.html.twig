@@ -8,6 +8,7 @@
 {% endblock %}
 
 {% block maincontent %}
+	<span class="cur_page">{{ curPage }}</span><p>
 	{% for orderElem in orders %}
 		<div class="order_elem">
 			<div class="order_header">Заказ <b>#{{ orderElem['id'] }}</b> от <b>{{ orderElem['date'] }}</b></div>
