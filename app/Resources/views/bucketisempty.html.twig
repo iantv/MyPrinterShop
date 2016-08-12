@@ -1,9 +1,20 @@
 {% extends 'base.html.twig' %}
 
+{% block stylesheets %}
+	{{ parent() }}
+	<style type="text/css">
+		.ui-state-highlight{
+			padding: 10px;
+		}
+	</style>
+{% endblock %}
+
 {% block content %}
-	<div id="grid_block">
-		<h4 class="cur_page">{{ curPage }}</h4>
-		<span>Добавьте товары из <a href="/">каталога</a></span>
+	<div>
+		<span class="cur_page">{{ curPage }}</span><p>
+		<div class="ui-state-highlight">
+			<span>Добавьте товары из <a href="/">каталога</a></span>
+		</div>
 		<!--<button onclick="clear_bucket()"> Очистить корзину </button>-->
     </div>
 {% endblock %}

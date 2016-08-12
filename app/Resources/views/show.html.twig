@@ -11,12 +11,11 @@
 	{{ knp_menu_render('AppBundle:Builder:mainMenu') }}
 </div>
 <div id="grid_block">
-	<h4>
 	{% for pathElem in path %}
 		<a class="path_link" href="{{ pathElem['url'] }}">{{ pathElem['name'] }}</a> >
 	{% endfor %}
-		<span class="cur_page" >{{ curPage }}</span>
-	</h4>
+		<span class="cur_page" >{{ curPage }}</span><p>
+
 	<div id="pager"></div>
 	<table id="list"><tr><td></td></tr></table>
 	<div id="pager"></div>

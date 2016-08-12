@@ -19,7 +19,7 @@ class Builder implements ContainerAwareInterface
 		$menu->addChild('Все продукты', array('route' => "homepage"));
 
 		$em = $this->container->get('doctrine')->getManager();
-		$categoryArr = $em->getRepository('AppBundle:Category')->findAllOrderedByName();//findBy(['Name' => 'DESC']);
+		$categoryArr = $em->getRepository('AppBundle:Category')->findAllOrderedByName();
 
 		foreach ($categoryArr as $category) {
 			$menu->addChild(
