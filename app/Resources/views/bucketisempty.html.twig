@@ -6,11 +6,18 @@
 		.ui-state-highlight{
 			padding: 10px;
 		}
+		.cur_page{
+			font-size: 20px;
+			color: #2c4359;
+		}
+		.content_block{
+			padding: 10px;
+		}
 	</style>
 {% endblock %}
 
 {% block content %}
-	<div>
+	<div class="content_block">
 		<span class="cur_page">{{ curPage }}</span><p>
 		<div class="ui-state-highlight">
 			<span>Добавьте товары из <a href="/">каталога</a></span>
