@@ -62,6 +62,7 @@ class DefaultController extends Controller
             throw $this->createAccessDeniedException();
         }
         
+        $pageName = 'Мои заказы';
         $orders = [];
         $userId = $this->getUser()->getId();
         $rep = $this->getDoctrine()->getRepository('AppBundle:Order');
@@ -69,10 +70,13 @@ class DefaultController extends Controller
             $orders = $rep->findAllByUserIdOrderedByDate($userId);
         } elseif (strnatcasecmp($selection, 'canceled') == 0){
             $orders = $rep->findCanceledOrdersByUserId($userId);
+            $pageName = 'Отмененные заказы';
         } elseif (strnatcasecmp($selection, 'opened') == 0){
             $orders = $rep->findOpenedOrdersByUserId($userId);
+            $pageName = 'Открытые заказы';
         } elseif (strnatcasecmp($selection, 'bought') == 0){
             $orders = $rep->findBoughtOrdersByUserId($userId);
+            $pageName = 'Выкупленные заказы';
         }
 
         $res = [];
@@ -87,7 +91,7 @@ class DefaultController extends Controller
             ];
         }
 
-        $arr = $this->genArrayForTwigRender([],'Мои заказы');
+        $arr = $this->genArrayForTwigRender([], $pageName);
         $arr['orders'] = $res;
 
         return $this->render('personal/orders.html.twig', $arr);
