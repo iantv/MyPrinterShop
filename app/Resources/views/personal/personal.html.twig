@@ -3,8 +3,27 @@
 {% block maincontent %}
 	<div class="person_content">
 		<span class="cur_page">Личный кабинет </span><p>
-		<label>	Пользователь: </label>{{ app.user.username }}<p>
-		<label>	e-mail: </label>{{ app.user.email }}
+		<!--label>	Пользователь: </label>{{ app.user.username }}<p>
+		<label>	e-mail: </label>{{ app.user.email }}-->
+		<table id="profile_table">
+			<tr>
+				<td class="label_profile">Ваш логин:</td>
+				<td>{{ app.user.username }}</td>
+			</tr>
+			<tr>
+				<td class="label_profile">Ваш e-mail:</td>
+				<td>{{ app.user.email }}</td>
+			</tr>
+			<tr>
+				<td colspan="2" id="profile_navig">
+					<a id="edit" href="#">
+						{% image '@AppBundle/Resources/public/images/icons/pencil_40.png' %}
+                    	<img src="{{ asset_url }}" id="edit_icon"/>{% endimage %}
+						Редактировать
+					</a>
+				</td>
+			</tr>
+		</table>
 	</div>
 {% endblock %}
 

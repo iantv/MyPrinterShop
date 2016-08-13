@@ -54,6 +54,11 @@
 
                 {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
                 <ul class="hide_info">
+                    <li><a href="/orders">
+                        {% image '@AppBundle/Resources/public/images/icons/list_40.png' %}
+                        <img src="{{ asset_url }}" id="register_icon"/>{% endimage %}
+                        Мои заказы</a>
+                    </li>
                     <li><a href="/logout">
                         {% image '@AppBundle/Resources/public/images/icons/door_40.png' %}
                         <img src="{{ asset_url }}" id="register_icon"/>{% endimage %}
