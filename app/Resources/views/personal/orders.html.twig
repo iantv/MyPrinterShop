@@ -19,11 +19,11 @@
 			<div class="order_header">Заказ <b>#</b><b id="order_id">{{ orderElem['id'] }}</b> от <b id="order_date">{{ orderElem['date'] }}</b></div>
 			<div class="order_content">
 				<b>Статус: </b>
-				{% if orderElem['levelState'] == 0 %}
+				{% if orderElem['levelState'] <= 1 %}
 					<span class='status_0'> 
-				{% elseif  orderElem['levelState'] == 1 %}
-					<span class='status_1'>
 				{% elseif  orderElem['levelState'] == 2 %}
+					<span class='status_1'>
+				{% elseif  orderElem['levelState'] == 3 %}
 					<span class='status_2'>
 				{% endif %}
 					{{ orderElem['state'] }}</span><p>

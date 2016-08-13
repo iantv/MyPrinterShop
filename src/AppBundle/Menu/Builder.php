@@ -44,12 +44,12 @@ class Builder implements ContainerAwareInterface
 		$menu = $factory->createItem('Profile');
 		$menu->setChildrenAttributes(['id' => 'menu']);
 
-		$menu->addChild('Мой профиль', array('route' => 'personal'));
-		$menu->addChild('Мои заказы', array('route' => 'orders'));
-		$menu['Мои заказы']->addChild('Все заказы', array('route' => 'homepage'));
-		$menu['Мои заказы']->addChild('Открытые заказы', array('route' => 'homepage'));
-		$menu['Мои заказы']->addChild('Выкупленные заказы', array('route' => 'homepage'));
-		$menu['Мои заказы']->addChild('Отмененные заказы', array('route' => 'homepage'));
+		$menu->addChild('Мой профиль', ['route' => 'personal']);
+		$menu->addChild('Мои заказы', ['route' => 'orders']);
+		$menu['Мои заказы']->addChild('Все заказы', ['route' => 'orders']);
+		$menu['Мои заказы']->addChild('Открытые заказы', ['route' => 'orders', 'routeParameters' => ['selection' => 'opened']]);
+		$menu['Мои заказы']->addChild('Выкупленные заказы', ['route' => 'orders', 'routeParameters' => ['selection' => 'bought']]);
+		$menu['Мои заказы']->addChild('Отмененные заказы', ['route' => 'orders', 'routeParameters' => ['selection' => 'canceled']]);
 
 		return $menu;
 	}

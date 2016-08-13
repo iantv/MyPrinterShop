@@ -55,17 +55,26 @@ class DefaultController extends Controller
     }
 
     /**
-     * @Route("/orders", name="orders")
+     * @Route("/orders/{selection}", name="orders")
      */
-    public function ordersAction(Request $request)
-    {
+    public function orderSelectionAction($selection = 'all'){
         if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_FULLY')) {
             throw $this->createAccessDeniedException();
         }
-
-        $orders = $this->getDoctrine()->getRepository('AppBundle:Order')
-                       ->findAllByUserId($this->getUser()->getId());
         
+        $orders = [];
+        $userId = $this->getUser()->getId();
+        $rep = $this->getDoctrine()->getRepository('AppBundle:Order');
+        if (strnatcasecmp($selection, 'all') == 0){
+            $orders = $rep->findAllByUserIdOrderedByDate($userId);
+        } elseif (strnatcasecmp($selection, 'canceled') == 0){
+            $orders = $rep->findCanceledOrdersByUserId($userId);
+        } elseif (strnatcasecmp($selection, 'opened') == 0){
+            $orders = $rep->findOpenedOrdersByUserId($userId);
+        } elseif (strnatcasecmp($selection, 'bought') == 0){
+            $orders = $rep->findBoughtOrdersByUserId($userId);
+        }
+
         $res = [];
         foreach ($orders as $order) {
             $res[] = [

@@ -43,7 +43,6 @@ class Order{
 	 */
 	private $state;
 
-
     /**
      * Get id
      *
