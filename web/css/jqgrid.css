@@ -1,0 +1,26 @@
+#grid_block{
+	float: left;
+	display: inline-block;
+	position: relative;
+	z-index: 0;
+	margin-top: 10px;
+}
+
+.ui-jqgrid tr.jqgrow td {
+	padding: 20px;
+	white-space: normal !important; 
+}
+
+.ui-jqgrid tr.ui-row-ltr td {
+    border-right-style: none;
+    border-left-style: none;
+}
+
+.price_class{
+	font-size: 20px;
+}
+
+.product_name_class{
+	font-size: 14px;
+	font-weight: bold;
+}
