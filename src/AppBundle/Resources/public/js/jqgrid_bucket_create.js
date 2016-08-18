@@ -64,9 +64,9 @@ function updateBucketInfoByBucketList(products_json){
 }
 
 function genDeleteButton(cellvalue, options, rowObject){
-	return "<div id='deleteFromBucketBtn_" +
+	return "<button id='deleteFromBucketBtn_" +
 		options['rowId'] +
-		"' class='cancel_button' onclick='deleteProductFromBucket(this)'>x</div>";
+		"' class='neutral_button square_button' onclick='deleteProductFromBucket(this)'><font size='5'>x</font></button>";
 }
 
 

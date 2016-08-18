@@ -6,6 +6,7 @@ body{
 	background: white; 
 	font-family: Arial;
 	background: #ccc;
+	font-size: 14px;
 }
 
 #left_side,
@@ -44,6 +45,23 @@ body{
 .pozitive_button:hover{
 	background-color: #3399ff;
 	color: #fff;
+}
+
+.neutral_button{
+	color: #262673;
+	background-color: rgba(0, 0, 0, 0);
+	border: none;
+}
+
+.neutral_button:hover{
+	font-weight: bold;
+}
+
+.square_button{
+	font-size: 20px;
+	width: 26px;
+	display: block;
+	text-align: center;
 }
 
 /* base header */
@@ -206,24 +224,6 @@ body{
 
 .path_link:hover{
 	border-bottom: 1px dotted #db4865;
-}
-
-.red_button{
-	background-color: #db4865;
-	border: 0px;
-	color:white;
-	padding: 10px 30px;
-	font-weight: bold;
-}
-
-.red_button2{
-	background-color: #db4865;
-	border: 0px;
-	color:white;
-	font-weight: bold;
-	width: 30px;
-	height: 30px;
-	border-radius: 5px;
 }
 
 */
