@@ -21,7 +21,7 @@
 	{% if is_granted('ROLE_ADMIN') %}
 		<!--button class="green_button center_position">Оформить заказ</button-->
 	{% elseif is_granted('ROLE_USER') %}
-		<button class="green_button center_position" id="create_order">Оформить заказ</button>
+		<button class="pozitive_button center_self" id="create_order">Оформить заказ</button>
 	{% else %}
 		<button onclick="location.assign('/register')" class="pozitive_button" >Зарегистироваться</button>
 	{% endif %}
