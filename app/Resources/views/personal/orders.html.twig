@@ -2,14 +2,9 @@
 
 {% block stylesheets %}
 	{{ parent() }}
-	{% stylesheets 'bundles/app/css/orders.css' filter='cssrewrite' %}
-        <link rel="stylesheet" href="{{ asset_url }}" />
-    {% endstylesheets %}
-    <style type="text/css">
-    	.cancel_button{
-    		padding: 5px 20px;
-    	}
-    </style>
+	{% stylesheets 'css/orders.css' filter='cssrewrite' %}
+		<link rel="stylesheet" href="{{ asset_url }}" />
+	{% endstylesheets %}
 {% endblock %}
 
 {% block maincontent %}
@@ -35,7 +30,7 @@
 			</div>
 			<div class="order_navig">
 				{% if not (orderElem['state'] starts with 'Заказ отменен') %}
-					<span class="cancel_button" onclick="confirmCancelOrder(this)">Отменить заказ</span>
+					<button class="pozitive_button" onclick="confirmCancelOrder(this)">Отменить заказ</button>
 				{% endif %}
 			</div>
 		</div>
@@ -53,8 +48,8 @@
 			product_list.forEach(function(item, i, arr){
 				product_list_div.append(
 					++i  + '. <a href="/product/' + item['id'] + '" >' + item['Name'] + '</a> '
-					 + '<span class="price"> '
-					 + item['Count'] + 'шт. x ' + item['RetailPrice'] + 'руб. | ' + item['Sum'] + 'руб. '
+					 + '- <span class="price"> '
+					 + item['Count'] + 'шт. x ' + item['RetailPrice'] + 'руб. = ' + item['Sum'] + 'руб. '
 					 + '</span><p>'
 					);
 			});

@@ -11,18 +11,9 @@ body{
 
 #left_side,
 #right_side{
-	width: 50px;
+	display: table-cell;
+	width: 100px;
 	background: #ccc;
-}
-
-#left_side{
-	display: table-cell;
-	width: 100px;
-}
-
-#right_side{
-	display: table-cell;
-	width: 100px;
 }
 
 #content{
@@ -70,6 +61,8 @@ body{
 	display: block;
 	background: #262673;
 	height: 250px;
+	width: 100%;
+	min-width: 1270px; 
 }
 
 /* base high head */

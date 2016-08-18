@@ -1,7 +1,6 @@
 #menu_block{
 	float: left;
 	display: inline-block;
-	margin-right: 20px;
 	z-index: 1;
 	position: relative;
 }

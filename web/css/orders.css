@@ -1,0 +1,46 @@
+.order_elem{
+	display: block;
+	/*border: 1px solid #ccc;*/
+	margin-bottom: 30px;
+
+}
+
+.order_header{
+	display: block;
+	padding: 6px;
+	padding-left: 20px;
+	border-bottom: 2px solid #33cc33;
+	font-size: 16px;
+	color: #262673;
+}
+
+.order_content{
+	padding: 20px;
+}
+
+.status_0,
+.status_1,
+.status_2{
+	font-weight: bold;
+}
+
+.status_0{
+	color: green;
+}
+
+.status_1{
+	color: orange;
+}
+
+.status_2{
+	color: red;
+}
+
+.product_list a:link, a:visited{
+	color: #262673;
+	text-decoration: none;
+}
+
+.product_list a:hover, a:active{
+	color: #007fff;
+}
