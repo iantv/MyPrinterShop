@@ -1,10 +1,15 @@
 {% extends 'personal/menu.html.twig' %}
 
+{% block stylesheets %}
+	{{ parent() }}
+	{% stylesheets 'css/personal.css' filter='cssrewrite' %}
+		<link rel="stylesheet" href="{{ asset_url }}" />
+	{% endstylesheets %}
+{% endblock %}
+
 {% block maincontent %}
 	<div class="person_content">
-		<span class="cur_page">Личный кабинет </span><p>
-		<!--label>	Пользователь: </label>{{ app.user.username }}<p>
-		<label>	e-mail: </label>{{ app.user.email }}-->
+		<span class="cur_page">Личный кабинет</span><p>
 		<table id="profile_table">
 			<tr>
 				<td class="label_profile">Ваш логин:</td>
@@ -16,11 +21,11 @@
 			</tr>
 			<tr>
 				<td colspan="2" id="profile_navig">
-					<a id="edit" href="#">
+					<buttom class="pozitive_button" href="#">
 						{% image '@AppBundle/Resources/public/images/icons/pencil_40.png' %}
-                    	<img src="{{ asset_url }}" id="edit_icon"/>{% endimage %}
+						<img src="{{ asset_url }}" id="edit_icon"/>{% endimage %}
 						Редактировать
-					</a>
+					</button>
 				</td>
 			</tr>
 		</table>

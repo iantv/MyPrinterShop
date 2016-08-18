@@ -1,0 +1,32 @@
+#profile_table{
+	/*border: 1px solid red;*/
+	color: #333;
+}
+
+.label_profile{
+	font-weight: bold;
+}
+
+#edit_icon{
+	width: 20px;
+	height: 20px;
+	-webkit-filter: invert(80%);
+	filter: invert(80%);
+	position: relative;
+	float: left;
+	padding-right: 10px;
+}
+
+#profile_navig{
+	padding-top: 20px;
+}
+
+.pozitive_button{
+	/*height: 30px;*/
+	vertical-align: middle;
+	display: block;
+	padding-top: 4px;
+	padding-bottom: 4px;
+	box-sizing: border-box;
+	overflow: hidden;
+}
