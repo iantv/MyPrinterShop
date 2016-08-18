@@ -1,0 +1,44 @@
+.cur_page{
+	font-size: 20px;
+	color: #2c4359;
+}
+
+input.count_of_product_class{
+	font-size: 14px;
+	height: 20px;
+	width: 60px;
+	padding-left: 10px;
+}
+
+input[type=number]::-webkit-inner-spin-button{ 
+    background-size: contain;
+    width: 10px;
+    height: 8px;
+    padding: 10px 4px;
+}
+
+.total_block{
+	display: block;
+	margin-left: 600px;
+	
+}
+
+.total{
+	font-size: 16px;
+	color: #333;
+	float: left;
+	padding-top: 20px;
+	padding-bottom: 20px;
+	display: inline-block;
+}
+
+#total_sum{
+	font-size: 20px;
+	color: #333;
+	display: inline-block;
+	margin-left: 10px;
+	padding: 20px;
+	width: 150px;
+	float: left;
+	text-align: center;
+}

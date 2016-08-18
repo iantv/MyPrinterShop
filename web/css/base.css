@@ -191,42 +191,6 @@ body{
 	background: #007fff;
 }
 /*
-
-#header {
-	width: 100%;
-	height: 50px;
-	background-color: #93c3cd;
-	display: table;
-}
-
-#header img {
-	height: 50px;
-	float: left;
-}
-
-.site_name_block{
-	display: table-cell;
-	min-width: 200px;
-	max-height: 50px;
-	margin-right: 20px;
-	margin-left: 20px;
-	text-align: center;
-}
-
-.site_name {
-	font-size: 20px;
-	font-weight: bold;
-	color: #2c4359;
-	text-decoration: none;
-}
-
-.site_phrase {
-	font-size: 14px;
-	font-weight: normal;
-	color: white;
-	text-decoration: none;
-}
-
 .path_link, .cur_subcategory{
 	font-size: 12px;
 	color: #2c4359;
@@ -242,74 +206,6 @@ body{
 
 .path_link:hover{
 	border-bottom: 1px dotted #db4865;
-}
-
-.entrance{
-	text-align: right;
-	margin-right: 20px;
-}
-
-.entrance li{
-	display: inline;
-}
-
-.tohome{
-	font-size: 14px;
-	color: #999;
-}
-
-.entrance li > a, .tohome a {
-	font-size: 14px;
-	color: #2c4359;
-	padding-right: 10px;
-	padding-right: 10px;
-	text-decoration: none;
-}
-
-.entrance li > a:hover, .tohome > a:hover{
-	text-decoration: underline;
-}
-
-.search_line{
-	width: 100%;
-	height: 50px;
-	display: table-cell;
-	position: relative;
-}
-
-/* Bucket CSS *  /
-.bucket{
-	background-color: #fff;
-	border: 1px solid #93c3cd;
-	height: 50px;	
-	width: 260px;
-	text-align: justify-all;
-	display: table-cell;
-}
-
-.bucket a{
-	text-decoration: none;
-	color: #2c4359;
-	font-size: 14px;
-}
-
-.bucket_values{
-	text-align: right;
-	color: #db4865;
-	margin-left: 20px;
-	padding-top: 5px;
-}
-
-.bucket_labels{
-	text-align: left;
-	float: left;
-	padding-top: 5px;
-}
-
-.bucket_icon{
-	float: left;
-	margin-right: 10px;
-	margin-right: 10px;
 }
 
 .red_button{
@@ -330,54 +226,4 @@ body{
 	border-radius: 5px;
 }
 
-.count_of_product_class{
-	font-size: 12px;
-}
-
-input.count_of_product_class{
-	font-size: 12px;
-	height: 20px;
-	width: 60px;
-	padding-left:10px;
-	width: 60px;
-}
-
-input[type=number]::-webkit-inner-spin-button, 
-input[type=number]::-webkit-outer-spin-button {  
-	-webkit-appearance: none;
-}
-
-input[type=number]:hover::-webkit-inner-spin-button { 
-    background: #FFF url('../images/arrows.png') no-repeat;
-    background-size: contain;
-    width: 10px;
-    height: 8px;
-    padding: 10px 4px;
-    position: relative;
-}
-
-.total_block{
-	display: block;
-	margin-left: 600px;
-	
-}
-
-.total{
-	font-size: 16px;
-	color: #2c4359;
-	float: left;
-	padding-top: 20px;
-	padding-bottom: 20px;
-	display: inline-block;
-}
-
-#total_sum{
-	font-size: 20px;
-	color: #2c4359;
-	display: inline-block;
-	margin-left: 10px;
-	padding: 20px;
-	width: 150px;
-	float: left;
-	text-align: center;
-}*/
+*/

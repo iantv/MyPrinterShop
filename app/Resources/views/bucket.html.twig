@@ -2,12 +2,9 @@
 
 {% block stylesheets %}
 	{{ parent() }}
-    	<style type="text/css">
-    		.cur_page{
-    			font-size: 20px;
-    			color: #2c4359;
-    		}
-    	</style>
+    {% stylesheets 'css/bucket.css' filter='cssrewrite' %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+    {% endstylesheets %}
 {% endblock %}
 
 {% block content %}
