@@ -1,4 +1,5 @@
-html, body {
+html, 
+body{
 	margin: 0;
 	padding: 0;
 	font-size: 12px;
@@ -28,8 +29,167 @@ html, body {
 	background: #fff;
 	display: table;
 	width: 100%;
+	min-width: 1270px;
 }
 
+/* buttons */
+
+.pozitive_button{
+	background-color: #007fff;
+	border: 1px solid #003eff;
+	color: #fff;
+	padding: 10px 20px;
+}
+
+.pozitive_button:hover{
+	background-color: #3399ff;
+	color: #fff;
+}
+
+/* base header */
+
+#header_background{
+	display: block;
+	background: #262673;
+	height: 250px;
+}
+
+/* base high head */
+
+#high_head{
+	display: inline-block;
+	height: 30px;
+	background: #00001a;
+	position: fixed;
+	z-index: 2;
+	width: 100%;
+}
+
+#high_menu{
+	display: block;
+	overflow: hidden;
+	margin: 0;
+	list-style-type: none;
+	box-sizing: border-box;
+}
+
+#high_menu li{
+	height: 30px;
+}
+
+#high_menu > li{
+	float: left;
+}
+
+#high_menu a{
+	height: 100%;
+}
+
+#high_menu > li > a{
+	color: #eee;
+	text-decoration: none;
+	
+	font-size: 14px;
+	padding-top: 5px;
+	padding-left: 20px;
+	padding-right: 20px;
+
+	box-sizing: border-box;
+	height: 30px;
+	display: block;
+}
+
+#high_menu > li > a:hover{
+	background: #007fff;
+}
+
+#high_menu > li{
+	padding: 0;
+	height: 30px;
+}
+
+#highmenu_icon{
+	height: 20px;
+	width: 20px;
+	float: left;
+	margin-right: 8px;
+	-webkit-filter: invert(100%);
+	filter: invert(100%);
+}
+
+.hide_info{
+	display: none;
+	background: #00001a;
+	position: absolute;
+	border-top: 2px solid #007fff;
+	width: 200px;
+	/*padding-left: 0px;*/
+	padding: 0px;
+	list-style-type: none;
+	box-sizing: border-box;
+}
+
+.highmenu_item:hover .hide_info{
+	display: block;
+}
+
+.hide_info > li{
+	display: block;
+}
+
+#bucket_info.hide_info > li {
+	display: inline-block;
+}
+
+.hide_info > li > a{
+	text-decoration: none;
+	font-size: 14px;
+	color: #eee;
+	display: block;
+	padding-top: 5px;
+	padding-left: 10px;
+	box-sizing: border-box;
+}
+
+.hide_info > li > a:hover{
+	background: #007fff;
+}
+
+.bucket_labels,
+.bucket_values{
+	font-size: 14px;
+}
+
+.bucket_labels{
+	float: left;
+	display: inline-block;
+	width: 100px;
+}
+
+.bucket_values{
+	width: 100px;
+	display: inline-block;
+	text-align: right;
+}
+
+.bucket_labels > a,
+.bucket_values > a{
+	display: block;
+	width: 100%;
+}
+
+.bucket_labels > a{
+	padding-left: 10px;
+}
+
+.bucket_values > a{
+	padding-right: 10px;
+	color: lightyellow;
+}
+
+#bucket_info:hover a[href="/bucket"]{
+	background: #007fff;
+}
 /*
 
 #header {
@@ -158,17 +318,6 @@ html, body {
 	color:white;
 	padding: 10px 30px;
 	font-weight: bold;
-}
-
-.green_button, .green_button a{
-	background-color: #33CC66;
-	border: 0px;
-	border-top: 1px solid #33CC66;
-	color:white;
-	min-width: 20px;
-	padding: 10px 30px;
-	font-weight: bold;
-	text-decoration: none;
 }
 
 .red_button2{

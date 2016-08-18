@@ -20,7 +20,7 @@ $(document).ready(function(){
 			{ name: 'id', width: 50, hidden: false, editable:false },
 			{ name: "Category", width: 150, hidden: true, editable:true },
 			{ name: "SubCategory", width: 150, hidden: true, editable:true },
-			{ name: "Name", width: 400, classes: "product_name_class", editable:true, edittype:'text' },
+			{ name: "Name", width: 300, classes: "product_name_class", editable:true, edittype:'text' },
 			{ name: "Count", width: 70, align: "center", classes: "count_of_product_class", editable:true },
 			{ name: "RetailPrice", width: 120, align: "center", classes: "price_class", formatter: "number", editable:true},
 			{ name: "ToBucket", width: 180, align: "center", formatter: genToBucketButton, hidden: toBuy, editable:false },
@@ -57,10 +57,10 @@ $(document).ready(function(){
 
 function genToBucketButton(cellvalue, options, rowObject){
 	var products = getJSONProductsFromBucketList();
-	var buttonName = products[rowObject['id']] ? 'В корзине (' + products[rowObject['id']] + ')' : 'Купить';
-	return "<div class='green_button' id='addToBucketBtn_" + options['rowId'] +
-			"' onclick='addToBucket(this)'>" + 
-			buttonName + "</div>";
+	var buttonName = products[rowObject['id']] ? 'В корзине (' + products[rowObject['id']] + ')' : 'КУПИТЬ';
+	return "<button class='pozitive_button' id='addToBucketBtn_" + options['rowId'] +
+			"' onclick='addToBucket(this)'><font size='2'>" + 
+			buttonName + "</font></button>";
 }
 
 function addToBucket(button){
@@ -85,7 +85,7 @@ function addToBucket(button){
 }
 
 function genDeleteProductButton(){
-	return "<div class='cancel_button' onclick='deleteProductFromDB(this)'>X</div>";
+	return "<div class='negative_button' onclick='deleteProductFromDB(this)'>X</div>";
 }
 
 function deleteProductFromDB(button){
