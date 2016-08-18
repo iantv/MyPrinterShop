@@ -22,6 +22,7 @@ body{
 	display: table;
 	width: 100%;
 	min-width: 1270px;
+	min-height: 400px;
 }
 
 /* buttons */
