@@ -3,37 +3,37 @@
 <head>
 	<title>Интернет - магазин | Войти в личный кабинет</title>
 	{% stylesheets 
-		'bundles/app/css/main_styles.css'
-		'bundles/app/css/form.css'
+		'css/base.css'
+		'css/form.css'
 		filter='cssrewrite' %}
 		<link rel="stylesheet" href="{{ asset_url }}" />
 	{% endstylesheets %}
 </head>
 <body>
-	<form id="form" action="{{ path('user_login') }}" method="post">
-		<!--div id="high_head"-->
-			<ul id="high_menu">
-	            <li>
-	                <a href="/">
-	                {% image '@AppBundle/Resources/public/images/icons/home_40.png' %}
-	                    <img src="{{ asset_url }}" id="bucket_icon"/>{% endimage %}
-	                Главная</a>
-	            </li>
-	        </ul>
-        <!--/div-->
-		<div class="input_and_label_block">
-		    	<label for="username" class="form_label">Логин</label><br>
-		    	<input type="text" id="username" name="_username" value="{{ last_username }}" /><p>
-		    	
-		    	<label for="password" class="form_label">Пароль</label><br>
-		    	<input type="password" id="password" name="_password" />
-		    {% if error %}
-			    <div class="error_msg">Некорректный ввод данных</div>
-			{% endif %}
-		    <p>
-		    <button type="submit" class="green_button">Войти</button><p>
-	    </div>
-	    <div class="entrance"><ul><li><a href="/register">Регистрация</a></li></ul></div>
-	</form>
+	{% include 'baseheader.html.twig' %}
+	<div id="content">
+		<div id="left_side"></div>
+			{% block content %}
+			<div class="content_block">
+				<span class="cur_page">Авторизация</span><p>
+				<form id="form" action="{{ path('user_login') }}" method="post">
+					<div class="input_and_label_block">
+							<label for="username" class="form_label">Логин</label><br>
+							<input type="text" id="username" name="_username" value="{{ last_username }}" /><p>
+							
+							<label for="password" class="form_label">Пароль</label><br>
+							<input type="password" id="password" name="_password" />
+						{% if error %}
+							<div class="error_msg">Некорректный ввод данных</div>
+						{% endif %}
+						<p>
+						<button type="submit" class="pozitive_button center_self">Войти</button><p>
+					</div>
+					<div class="entrance"><a href="/register">Регистрация</a></div>
+				</form>
+			</div>
+			{% endblock %}
+		<div id="right_side"></div>
+	</div>
 </body>
 </html>

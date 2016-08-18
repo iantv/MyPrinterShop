@@ -28,71 +28,7 @@
 {% endblock %}
 </head>
 <body>
-    <div id="high_head">
-        <ul id="high_menu">
-            <li>
-                <a href="/">
-                {% image '@AppBundle/Resources/public/images/icons/home_40.png' %}
-                    <img src="{{ asset_url }}" id="highmenu_icon"/>{% endimage %}
-                Главная</a>
-            </li>
-            <li class="highmenu_item">
-                {% if is_granted('ROLE_ADMIN') %}
-                    <a href="/admin">
-                    {% image '@AppBundle/Resources/public/images/icons/administrator_40.png' %}
-                    <img src="{{ asset_url }}" id="highmenu_icon"/>{% endimage %}
-                    Администрирование</a>
-                {% elseif is_granted('ROLE_USER')%}
-                    <a href="/personal">
-                    {% image '@AppBundle/Resources/public/images/icons/user_40.png' %}
-                    <img src="{{ asset_url }}" id="highmenu_icon"/>{% endimage %}
-                    Личный кабинет</a>
-                {% else %}
-                    <a href="/login">
-                    {% image '@AppBundle/Resources/public/images/icons/key_40.png' %}
-                    <img src="{{ asset_url }}" id="highmenu_icon"/>{% endimage %}
-                    Авторизация</a>
-                {% endif %}
-
-                {% if is_granted('ROLE_ADMIN') or is_granted('ROLE_USER') %}
-                <ul class="hide_info">
-                    <li><a href="/orders">
-                        {% image '@AppBundle/Resources/public/images/icons/list_40.png' %}
-                        <img src="{{ asset_url }}" id="highmenu_icon"/>{% endimage %}
-                        Мои заказы</a>
-                    </li>
-                    <li><a href="/logout">
-                        {% image '@AppBundle/Resources/public/images/icons/door_40.png' %}
-                        <img src="{{ asset_url }}" id="highmenu_icon"/>{% endimage %}
-                        Выйти</a>
-                    </li>
-                </ul>
-                {% endif %}
-            </li>
-            <li id="bucket_item" class="highmenu_item">
-                <a href="/bucket">
-                    {% image '@AppBundle/Resources/public/images/icons/shoping_cart_40.png' %}
-                        <img src="{{ asset_url }}" id="highmenu_icon"/>
-                    {% endimage %}В корзине
-                    <span class="bucket_count">0</span></a>
-                <ul id='bucket_info' class="hide_info">
-                    <li class="bucket_labels"><a href="/bucket">товаров</a></li>
-                    <li class="bucket_values"><a href="/bucket" class="bucket_count">0</a></li>
-                    <li class="bucket_labels"><a href="/bucket">сумма</a></li>
-                    <li class="bucket_values"><a href="/bucket" id="bucket_sum">0</a></li>
-                </ul>
-            </li>
-        </ul>   
-    </div>
-    <div id="header_background">
-        <!--div id="center_block">
-            <div id="site_name_block">
-                <a href="/" class="site_name">{{ site_name }}</a><br>
-                <a href="/" class="site_phrase">все для принтера</a>
-            </div>
-        </div-->
-    </div>
-    
+    {% include 'baseheader.html.twig' %}
     <div id="content">
         <div id="left_side"></div>
         {% block content %}{% endblock %}

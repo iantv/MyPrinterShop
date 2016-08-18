@@ -1,24 +1,12 @@
-html, body{
-	background-color: #ddd; //#93c3cd;
-	width: 100%;
-	height: 100%;
-	
-}
-
 .form_label, .required{
 	font-size: 14px;
 	color: #2c4359;
 }
 
 #form{
-	position: absolute;
-	top:20%;
-	left:37%;
 	background-color: white;
-	border: 1px solid black;
 	width: 300px;
 	text-align: center;
-	padding: 24px;
 }
 
 .label_block{
@@ -32,7 +20,8 @@ html, body{
 }
 
 .entrance{
-	border-top: #333 1px solid;
+	padding-top: 20px;
+	border-top: #999 1px solid;
 }
 
 .error_msg{
@@ -43,7 +32,11 @@ input {
 	width: 100%;
 }
 
-.green_button{
-	display: block;
-	margin: 0 auto;
+.cur_page{
+	font-size: 20px;
+	color: #2c4359;
+}
+
+.content_block{
+	padding: 24px;
 }
