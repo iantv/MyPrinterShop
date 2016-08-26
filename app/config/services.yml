@@ -29,3 +29,8 @@ services:
         arguments: [~, AppBundle\Entity\User, ~]
         calls: 
             - [ setUserManager, [ '@fos_user.user_manager' ]]
+    app.admin.orders:
+        class: AppBundle\Admin\OrderAdmin
+        arguments: [~, AppBundle\Entity\Order, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: Order, group: Orders }

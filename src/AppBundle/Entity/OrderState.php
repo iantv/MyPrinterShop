@@ -41,6 +41,10 @@ class OrderState{
         $this->Orders = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    public function __toString(){
+        return $this->Name;
+    }
+
     /**
      * Get id
      *
