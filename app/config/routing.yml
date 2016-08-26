@@ -1,9 +1,6 @@
 app:
     resource: "@AppBundle/Controller/"
     type:     annotation
-user_registration:
-    path:     /register
-    defaults: { _controller: AppBundle:Registration:register }
 logout:
     path: /logout
 admin_area:
@@ -13,3 +10,5 @@ _sonata_admin:
     resource: .
     type: sonata_admin
     prefix: /admin
+fos_user:
+    resource: "@FOSUserBundle/Resources/config/routing/all.xml"

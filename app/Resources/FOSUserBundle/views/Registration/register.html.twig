@@ -1,0 +1,7 @@
+{% extends "FOSUserBundle::layout.html.twig" %}
+
+{% block fos_user_content %}
+<span class="cur_page center_self">Регистрация</span><p>
+{% include "FOSUserBundle:Registration:register_content.html.twig" %}
+<div><a href="/login">Вход</a></div>
+{% endblock fos_user_content %}

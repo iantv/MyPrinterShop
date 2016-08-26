@@ -115,21 +115,6 @@ sonata_block:
         sonata.admin.block.admin_list:
             contexts: [admin]
 
-sonata_admin:
-    dashboard:
-        groups:
-            Database:
-                #on_top: true
-                label:               ~ 
-                label_catalogue:      ~
-                items:
-                    - admin.category #sonata.news.admin.post
-                    - admin.subcategory
-                    - admin.product
-            TestGroup:
-                #on_top: true
-                provider:        'MyBundle:MyMenuProvider:getMyMenu'
-                icon:            '<i class="fa fa-edit"></i>'
                     #- route:        blog_home
                     #  label:        Blog
                     #- route:        blog_article
@@ -137,4 +122,8 @@ sonata_admin:
                     #  label:        Article
     #templates:
      #   knp_menu_template:           ApplicationAdminBundle:Menu:custom_knp_menu.html.twig
-
+fos_user:
+    db_driver: orm
+    firewall_name: main
+    user_class: AppBundle\Entity\User
+    #resource: "@FOSUserBundle/Resources/config/routing/all.xml"

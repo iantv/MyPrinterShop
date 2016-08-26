@@ -11,14 +11,19 @@ services:
         class: AppBundle\Admin\CategoryAdmin
         arguments: [~, AppBundle\Entity\Category, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: Category }
+            - { name: sonata.admin, manager_type: orm, label: Category, group: ProductCategories }
     admin.subcategory:
         class: AppBundle\Admin\SubCategoryAdmin
         arguments: [~, AppBundle\Entity\SubCategory, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: SubCategory }
+            - { name: sonata.admin, manager_type: orm, label: SubCategory, group: ProductCategories }
     admin.product:
         class: AppBundle\Admin\ProductAdmin
         arguments: [~, AppBundle\Entity\Product, ~]
         tags:
-            - { name: sonata.admin, manager_type: orm, label: Product }
+            - { name: sonata.admin, manager_type: orm, label: Product, group: ProductCategories }
+    admin.user:
+        class: AppBundle\Admin\UserAdmin
+        arguments: [~, AppBundle\Entity\User, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: User, group: UsersManagement }

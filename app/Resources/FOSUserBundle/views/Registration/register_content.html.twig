@@ -1,0 +1,10 @@
+{% trans_default_domain 'FOSUserBundle' %}
+
+{{ form_start(form, {'method': 'post', 'action': path('fos_user_registration_register'), 'attr': {'id': 'form'}}) }}
+    {{ form_start(form) }}
+	{{ form_row(form.username, { 'label': 'Логин' }) }}
+	{{ form_row(form.email, { 'label': 'Адрес электронной почты (e-mail)' }) }}
+	{{ form_row(form.plainPassword.first, { 'label': 'Пароль' }) }}
+	{{ form_row(form.plainPassword.second, { 'label': 'Пароль (ещё раз)'}) }}
+   	<input class="pozitive_button center_self" type="submit" value="Регистрация" />
+{{ form_end(form) }}
