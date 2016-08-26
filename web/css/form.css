@@ -1,4 +1,4 @@
-.form_label, .required{
+label{
 	font-size: 14px;
 	color: #2c4359;
 }
@@ -6,30 +6,12 @@
 #form{
 	background-color: white;
 	width: 300px;
-	text-align: center;
-}
-
-.label_block{
-	margin-top: 4px;
-	float: left;
-}
-
-.input_and_label_block{
-	margin-top: 24px;
-	text-align: left;
-}
-
-.entrance{
-	padding-top: 20px;
-	border-top: #999 1px solid;
+	margin-bottom: 24px;
+	border-bottom: #999 1px solid;
 }
 
 .error_msg{
 	color: red;
-}
-
-input {
-	width: 100%;
 }
 
 .cur_page{
@@ -39,4 +21,13 @@ input {
 
 .content_block{
 	padding: 24px;
+}
+
+input{
+	width: 100%;
+	margin-bottom: 14px;
+}
+
+#remember_me{
+	width: auto;
 }
