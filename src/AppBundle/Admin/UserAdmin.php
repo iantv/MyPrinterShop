@@ -6,17 +6,27 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Form\FormMapper;
 
+use FOS\UserBundle\Model\UserManagerInterface;
+
 class UserAdmin extends AbstractAdmin
 {
 	protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
-        	->with('User Data')
-	        	->add('username', 'text')
+        	->with('General')
+	           	->add('username', 'text')
 	        	->add('email', 'email')
-	        	->add('plainPassword', 'repeated')
+	        	->add('plainPassword', 'text')
         	->end()
-        	;
+
+            ->with('Management')
+                /*->add('roles', 'sonata_security_roles', array( 'multiple' => true))*/
+                ->add('locked', null, ['required' => false])
+                ->add('expired', null, ['required' => false])
+                ->add('enabled', null, ['required' => false])
+                ->add('credentialsExpired', null, ['required' => false])
+            ->end()
+            ;
     }
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
@@ -29,30 +39,37 @@ class UserAdmin extends AbstractAdmin
     {
         $listMapper
         	->addIdentifier('username')
-        	->add('password')
+        	/*->add('password')*/
         	->add('email')
+            ->add('locked')
+            ->add('expired')
+            ->add('enabled')
+            ->add('credentialsExpired')
+            ->add('last_login', 'datetime')
         	;
     }
 
     public function getDashboardActions(){
     	$actions = parent::getDashboardActions();
-    	//unset($actions['create']);
-
-    	/*$actions['import'] = [
-    		'label' => 'Import',
-    		'url' => $this->generateUrl('import'),
-    		'icon'	=> 'import',
-    		'translation_domain' => 'SonataAdminBundle',
-    		'template' => 'SonataAdminBundle:CRUD:dashboard__action.html.twig'
-    	];*/
-
     	return $actions;
     }
 
-    public function prePersist($user){
-    	$encoder = $this->container->get('security.password_encoder');
-		$encoded = $encoder->encodePassword($user, $user->getPlainpassword());
+    public function preUpdate($user)
+    {
+        $this->getUserManager()->updateCanonicalFields($user);
+        $this->getUserManager()->updatePassword($user);
+    }
 
-		$user->setPassword($encoded);
-	}
+    public function setUserManager(UserManagerInterface $userManager)
+    {
+        $this->userManager = $userManager;
+    }
+
+    /**
+     * @return UserManagerInterface
+     */
+    public function getUserManager()
+    {
+        return $this->userManager;
+    }
 }

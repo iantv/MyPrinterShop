@@ -126,4 +126,3 @@ fos_user:
     db_driver: orm
     firewall_name: main
     user_class: AppBundle\Entity\User
-    #resource: "@FOSUserBundle/Resources/config/routing/all.xml"
