@@ -9,6 +9,7 @@ use Doctrine\Common\Collections\ArrayCollection;
  * @ORM\Table(name="app_orders")
  */
 class Order{
+
 	/**
      * @ORM\Column(type="integer")
      * @ORM\Id
@@ -23,7 +24,7 @@ class Order{
 	private $user;
 
 	/**
-     * @ORM\Column(name="product_list", type="string", length=5000)
+     * @ORM\OneToMany(targetEntity="OrderElem", mappedBy="order")
      */
 	private $productList;
 
@@ -42,7 +43,6 @@ class Order{
 	 * @ORM\JoinColumn(name="state_id", referencedColumnName="id")
 	 */
 	private $state;
-
 
     /**
      * Get id
@@ -172,5 +172,36 @@ class Order{
     public function getOrderDate()
     {
         return $this->orderDate;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->productList = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add productList
+     *
+     * @param \AppBundle\Entity\OrderElem $productList
+     *
+     * @return Order
+     */
+    public function addProductList(\AppBundle\Entity\OrderElem $productList)
+    {
+        $this->productList[] = $productList;
+
+        return $this;
+    }
+
+    /**
+     * Remove productList
+     *
+     * @param \AppBundle\Entity\OrderElem $productList
+     */
+    public function removeProductList(\AppBundle\Entity\OrderElem $productList)
+    {
+        $this->productList->removeElement($productList);
     }
 }

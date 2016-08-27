@@ -1,0 +1,47 @@
+<?php 
+namespace AppBundle\Entity;
+
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity(repositoryClass="AppBundle\Entity\OrderElemsRepository")
+ * @ORM\Table(name="app_orderelems")
+ */
+class OrderElems{
+
+	/**
+     * @var int
+     *
+     * @ORM\Column(name="id", type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+	private $id;
+
+	/**
+     * @ORM\ManyToOne(targetEntity="Order", inversedBy="id")
+     * @ORM\JoinColumn(name="order_id", referencedColumnName="id")
+     */
+	private $orderId;
+
+	/**
+	 * @ORM\Column(type="string", length=100)
+	 */
+	private $productName;
+
+	/**
+     * @ORM\Column(type="decimal", scale=0)
+     */
+	private $price;
+
+	/**
+     * @ORM\Column(type="decimal", scale=0)
+     */
+	private $count;
+
+	/**
+     * @ORM\Column(type="decimal", scale=0)
+     */
+	private $sum;
+}

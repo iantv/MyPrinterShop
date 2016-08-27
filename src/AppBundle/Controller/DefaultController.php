@@ -16,6 +16,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use AppBundle\Entity;
 
 use AppBundle\Entity\Order;
+use AppBundle\Entity\OrderElem;
 use AppBundle\Entity\OrderState;
 use AppBundle\Entity\User;
 
@@ -104,19 +105,33 @@ class DefaultController extends Controller
     {
         $user = $this->getDoctrine()->getRepository('AppBundle:User')
                      ->find($this->getUser()->getId());
+        
         $state = $this->getDoctrine()->getRepository('AppBundle:OrderState')
                       ->findOneByName('Заказ принят');
 
+        $em = $this->getDoctrine()->getManager();
         $order = new Order();
-        
-        $order->setProductList($_GET['order']);
         $order->setTotalSum(intval($_COOKIE['bucket_sum']));
         $order->setOrderDate(new \DateTime("now"));
         $order->setState($state);
         $order->setUser($user);
-
-        $em = $this->getDoctrine()->getManager();
         $em->persist($order);
+
+        foreach (json_decode($_GET['order']) as $val) {
+
+            $orderElem = new OrderElem();
+            $orderElem->setProductId($val->id);
+
+            $orderElem->setProductName($val->Name);
+            $orderElem->setPrice($val->RetailPrice);
+            $orderElem->setCount($val->Count);
+            $orderElem->setSum($val->Sum);
+            $orderElem->setOrder($order);
+
+            $em->persist($orderElem);
+        }
+
+        
         $em->flush();
 
         return new JsonResponse([

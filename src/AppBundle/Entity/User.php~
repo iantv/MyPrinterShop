@@ -8,49 +8,27 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
+use FOS\UserBundle\Model\User as BaseUser;
+
 /**
  * @ORM\Entity
- * @ORM\Table(name="app_users")
+ * @ORM\Table(name="fos_users")
  * @ORM\Entity(repositoryClass="AppBundle\Entity\UserRepository")
- * @UniqueEntity(fields="email", message="Email already taken")
- * @UniqueEntity(fields="username", message="Username already taken")
  */
-class User implements UserInterface
+class User extends BaseUser
 {
     /**
      * @ORM\Id
      * @ORM\Column(type="integer")
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
-
-    /**
-     * @ORM\Column(type="string", length=60, unique=true)
-     * @Assert\NotBlank()
-     * @Assert\Email()
-     */
-    private $email;
-
-    /**
-     * @ORM\Column(type="string", length=25, unique=true)
-     * @Assert\NotBlank()
-     */
-    private $username;
+    protected $id;
 
     /**
      * @Assert\NotBlank()
      * @Assert\Length(max=767)
-
      */
-    private $plainPassword;
-
-    /**
-     * The below length depends on the "algorithm" you use for encoding
-     * the password, but this works well with bcrypt.
-     *
-     * @ORM\Column(type="string", length=64)
-     */
-    private $password;
+    protected $plainPassword;
 
     /**
      * @ORM\OneToMany(targetEntity="Order", mappedBy="user")
@@ -132,6 +110,7 @@ class User implements UserInterface
      */
     public function __construct()
     {
+        parent::__construct();
         $this->Orders = new \Doctrine\Common\Collections\ArrayCollection();
     }
 

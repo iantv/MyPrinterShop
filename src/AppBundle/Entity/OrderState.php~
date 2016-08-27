@@ -41,6 +41,10 @@ class OrderState{
         $this->Orders = new \Doctrine\Common\Collections\ArrayCollection();
     }
 
+    public function __toString(){
+        return $this->Name;
+    }
+
     /**
      * Get id
      *
@@ -107,5 +111,29 @@ class OrderState{
     public function getOrders()
     {
         return $this->Orders;
+    }
+
+    /**
+     * Set level
+     *
+     * @param string $level
+     *
+     * @return OrderState
+     */
+    public function setLevel($level)
+    {
+        $this->level = $level;
+
+        return $this;
+    }
+
+    /**
+     * Get level
+     *
+     * @return string
+     */
+    public function getLevel()
+    {
+        return $this->level;
     }
 }
