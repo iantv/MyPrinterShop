@@ -82,9 +82,19 @@ class DefaultController extends Controller
 
         $res = [];
         foreach ($orders as $order) {
+            $pres = [];
+            foreach ($order->getProductList() as $productElem){
+                $pres[] = 
+                    '{ "id": '.$productElem->getProductId().
+                    ', "Name": "'.$productElem->getProductName().'"'.
+                    ', "RetailPrice": "'.$productElem->getPrice().'"'.
+                    ', "Count": '.$productElem->getCount().
+                    ', "Sum": '.$productElem->getSum().' }'
+                ;
+            }
             $res[] = [
                 'id' => $order->getId(),
-                'productList' => $order->getProductList(),
+                'productList' => '['.implode(",", $pres).']',
                 'sum'  => $order->getTotalSum(),
                 'date' => $order->getOrderDate()->format('Y-m-d H:i:s'),
                 'state' => $order->getState()->getName(),
