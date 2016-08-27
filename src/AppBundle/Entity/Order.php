@@ -44,6 +44,10 @@ class Order{
 	 */
 	private $state;
 
+    public function __toString(){
+        return '#'.$this->id; //Used in admin when listing orderelems
+    }
+
     /**
      * Get id
      *

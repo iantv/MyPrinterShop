@@ -34,3 +34,8 @@ services:
         arguments: [~, AppBundle\Entity\Order, ~]
         tags:
             - { name: sonata.admin, manager_type: orm, label: Order, group: Orders }
+    app.admin.orderelem:
+        class: AppBundle\Admin\OrderElemAdmin
+        arguments: [~, AppBundle\Entity\OrderElem, ~]
+        tags:
+            - { name: sonata.admin, manager_type: orm, label: OrderElem, group: Orders }

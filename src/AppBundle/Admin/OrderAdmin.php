@@ -43,6 +43,7 @@ class OrderAdmin extends AbstractAdmin
         	->addIdentifier('state')
         	->add('totalSum')
         	->add('orderDate', 'date')
+            ->add('productList')
         ;
     }
 }
