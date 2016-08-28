@@ -92,6 +92,7 @@ class DefaultController extends Controller
                     ', "Sum": '.$productElem->getSum().' }'
                 ;
             }
+
             $res[] = [
                 'id' => $order->getId(),
                 'productList' => '['.implode(",", $pres).']',

@@ -123,6 +123,9 @@ class OrderElem{
     {
         $this->count = $count;
 
+        $oldSum = $this->sum;
+        $this->sum = $count*$this->price;
+        $this->order->setTotalSum($this->order->getTotalSum() - $oldSum + $this->sum);
         return $this;
     }
 

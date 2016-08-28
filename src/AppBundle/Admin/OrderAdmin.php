@@ -15,13 +15,16 @@ class OrderAdmin extends AbstractAdmin
         $formMapper
         	->add('user', 'entity', [
         		'class' 	   => 'AppBundle\Entity\User',
-        		'choice_label' => 'username'
+        		'choice_label' => 'username',
+                'disabled'     => true
         	])
         	->add('state', 'entity', [
         		'class' 	   => 'AppBundle\Entity\OrderState',
         		'choice_label' => 'name'	
         	])
-        	->add('totalSum', 'number')
+        	->add('totalSum', 'number', [
+                'disabled' => true
+            ])
         	->add('orderDate', 'datetime')
         	;
     }

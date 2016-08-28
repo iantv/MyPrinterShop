@@ -18,9 +18,9 @@ class OrderElemAdmin extends AbstractAdmin
         	->add('productName', 'text', [ 'disabled' => true ])
         	->add('price', 'number', ['disabled' => true ])
         	->add('count', 'number')
-        	->add('sum', 'number', [
+        	/*->add('sum', 'number', [
         		'label' => 'Sum (Attention! If you edited previous field \'Count\' please check and edit next field \'Sum\'!)'
-        	])
+        	])*/
         	;
     }
 
@@ -39,7 +39,7 @@ class OrderElemAdmin extends AbstractAdmin
         $listMapper
         	->add('order')
         	->add('productId')
-        	->add('productName')
+        	->addIdentifier('productName')
         	->add('price')
         	->add('count')
         	->add('sum')
