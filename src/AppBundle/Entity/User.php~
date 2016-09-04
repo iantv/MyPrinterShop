@@ -35,6 +35,11 @@ class User extends BaseUser
      */
     private $Orders;
 
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $phoneNumber;
+
     // other properties and methods
 
     public function getEmail()

@@ -35,6 +35,11 @@ class User extends BaseUser
      */
     private $Orders;
 
+    /**
+     * @ORM\Column(type="string")
+     */
+    private $phoneNumber;
+
     // other properties and methods
 
     public function getEmail()
@@ -146,5 +151,29 @@ class User extends BaseUser
     public function getOrders()
     {
         return $this->Orders;
+    }
+
+    /**
+     * Set phoneNumber
+     *
+     * @param string $phoneNumber
+     *
+     * @return User
+     */
+    public function setPhoneNumber($phoneNumber)
+    {
+        $this->phoneNumber = $phoneNumber;
+
+        return $this;
+    }
+
+    /**
+     * Get phoneNumber
+     *
+     * @return string
+     */
+    public function getPhoneNumber()
+    {
+        return $this->phoneNumber;
     }
 }
