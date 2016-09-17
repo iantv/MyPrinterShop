@@ -31,11 +31,16 @@
 				</div>
 				
 				{% set mapid = 'googleMap' ~ orderElem['id'] %}
-				<div id="{{ mapid }}" class="gmap" style="width:380px;height:500px;">
-					<div style="display:none;">
-						<div id="endDeliveryPoint">{{ orderElem['endDeliveryPoint'] }}</div>
-					<div>
+				<div id="{{ mapid }}" style="width:380px;height:500px;">
+					
 				</div>
+				{% set mapinfo = 'googleMapInfo' ~ orderElem['id'] %}
+				<div id="{{ mapinfo }}" class="gmap" style="display:none;">
+					<div id="endDeliveryPoint">{{ orderElem['endDeliveryPoint'] }}</div>
+					<div id="currentDeliveryPoint">{{ orderElem['currentDeliveryPoint'] }}</div>
+					<div id="deliveryDate">{{ orderElem['deliveryDate'] }}</div>
+					<div id="deliveryState">{{ orderElem['deliveryState'] }}</div>
+				<div>
 			</div>
 			<div class="order_navig">
 				{% if not (orderElem['state'] starts with 'Заказ отменен') %}
@@ -49,41 +54,10 @@
 
 {% block scripts %}
 	{{ parent() }}
-	<script type="text/javascript">
-		function initialize() {
-			var Vdk = new google.maps.LatLng(43.117,131.9);
-			var mapOptions = {
-				center: Vdk,
-				zoom: 12,
-				mapTypeId: google.maps.MapTypeId.ROADMAP
-			};
-			var map = [];
-			var markers = [];
-
-			$('.gmap').each(function(index){
-				alert($(this).attr('id'));
-				map[index] = new google.maps.Map(document.getElementById($(this).attr('id')), mapOptions);	
-				
-				var endDeliveryPoint = JSON.parse($('#endDeliveryPoint').html());
-				var infoWindow = new google.maps.InfoWindow({
-					content: 'Пункт выдачи: <br>' + endDeliveryPoint['address']
-				});
-
-				markers[index] = new google.maps.Marker({
-					position: new google.maps.LatLng(endDeliveryPoint['nothLatitude'], endDeliveryPoint['eastLongitude']),
-					title:'Click to zoom'
-				});
-				markers[index].setMap(map[index]);
-				infoWindow.open(map[index], markers[index]);
-			});
-			/*var marker = new google.maps.Marker({
-				position: mapVdk,
-				title:'Click to zoom'
-			});
-			marker.setMap(map);*/
-		}
-		google.maps.event.addDomListener(window, 'load', initialize);
-	</script>
+	{% javascripts '@AppBundle/Resources/public/js/create_gmaps.js' %}
+        <script src="{{ asset_url }}"></script>
+    {% endjavascripts %}
+    
 	<script type="text/javascript">
 		$('.product_list').each(function(){
 			var product_list = JSON.parse($(this).html());
