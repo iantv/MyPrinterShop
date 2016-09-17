@@ -24,7 +24,7 @@ class DeliveryState{
 	private $name;
 
     /**
-     * @ORM\OneToMany(targetEntity="Order", mappedBy="deiveryState")
+     * @ORM\OneToMany(targetEntity="Order", mappedBy="deliveryState")
      */
     private $orders;
     
