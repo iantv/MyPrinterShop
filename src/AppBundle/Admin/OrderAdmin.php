@@ -26,6 +26,18 @@ class OrderAdmin extends AbstractAdmin
                 'disabled' => true
             ])
         	->add('orderDate', 'datetime')
+            ->add('endDeliveryPoint', 'entity', [
+                'class'        => 'AppBundle\Entity\DeliveryPoint',
+                'choice_label' => 'address',
+            ])
+            ->add('currentDeliveryPoint', 'entity', [
+                'class'        => 'AppBundle\Entity\DeliveryPoint',
+                'choice_label' => 'address',
+            ])
+            ->add('deliveryState', 'entity', [
+                'class'        => 'AppBundle\Entity\DeliveryState',
+                'choice_label' => 'name',
+            ])
         	;
     }
 

@@ -44,6 +44,33 @@ class Order{
 	 */
 	private $state;
 
+    public function __toString(){
+        return '#'.$this->id; //Used in admin when listing orderelems
+    }
+
+    /**
+     * @ORM\ManyToOne(targetEntity="DeliveryPoint", inversedBy="orders")
+     * @ORM\JoinColumn(name="end_delivery_id", referencedColumnName="id")
+     */
+    private $endDeliveryPoint;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="DeliveryPoint", inversedBy="tempOrders")
+     * @ORM\JoinColumn(name="current_delivery_id", referencedColumnName="id")
+     */
+    private $currentDeliveryPoint;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="DeliveryState", inversedBy="orders")
+     * @ORM\JoinColumn(name="delivery_state_id", referencedColumnName="id")
+     */
+    private $deliveryState;
+
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $deliveryDate;
+
     /**
      * Get id
      *
@@ -203,5 +230,101 @@ class Order{
     public function removeProductList(\AppBundle\Entity\OrderElem $productList)
     {
         $this->productList->removeElement($productList);
+    }
+
+    /**
+     * Set deliveryDate
+     *
+     * @param \DateTime $deliveryDate
+     *
+     * @return Order
+     */
+    public function setDeliveryDate($deliveryDate)
+    {
+        $this->deliveryDate = $deliveryDate;
+
+        return $this;
+    }
+
+    /**
+     * Get deliveryDate
+     *
+     * @return \DateTime
+     */
+    public function getDeliveryDate()
+    {
+        return $this->deliveryDate;
+    }
+
+    /**
+     * Set endDeliveryPoint
+     *
+     * @param \AppBundle\Entity\DeliveryPoint $endDeliveryPoint
+     *
+     * @return Order
+     */
+    public function setEndDeliveryPoint(\AppBundle\Entity\DeliveryPoint $endDeliveryPoint = null)
+    {
+        $this->endDeliveryPoint = $endDeliveryPoint;
+
+        return $this;
+    }
+
+    /**
+     * Get endDeliveryPoint
+     *
+     * @return \AppBundle\Entity\DeliveryPoint
+     */
+    public function getEndDeliveryPoint()
+    {
+        return $this->endDeliveryPoint;
+    }
+
+    /**
+     * Set currentDeliveryPoint
+     *
+     * @param \AppBundle\Entity\DeliveryPoint $currentDeliveryPoint
+     *
+     * @return Order
+     */
+    public function setCurrentDeliveryPoint(\AppBundle\Entity\DeliveryPoint $currentDeliveryPoint = null)
+    {
+        $this->currentDeliveryPoint = $currentDeliveryPoint;
+
+        return $this;
+    }
+
+    /**
+     * Get currentDeliveryPoint
+     *
+     * @return \AppBundle\Entity\DeliveryPoint
+     */
+    public function getCurrentDeliveryPoint()
+    {
+        return $this->currentDeliveryPoint;
+    }
+
+    /**
+     * Set deliveryState
+     *
+     * @param \AppBundle\Entity\DeliveryState $deliveryState
+     *
+     * @return Order
+     */
+    public function setDeliveryState(\AppBundle\Entity\DeliveryState $deliveryState = null)
+    {
+        $this->deliveryState = $deliveryState;
+        $this->deliveryDate = new \DateTime("now");
+        return $this;
+    }
+
+    /**
+     * Get deliveryState
+     *
+     * @return \AppBundle\Entity\DeliveryState
+     */
+    public function getDeliveryState()
+    {
+        return $this->deliveryState;
     }
 }

@@ -99,7 +99,11 @@ class DefaultController extends Controller
                 'sum'  => $order->getTotalSum(),
                 'date' => $order->getOrderDate()->format('Y-m-d H:i:s'),
                 'state' => $order->getState()->getName(),
-                'levelState' => $order->getState()->getLevel()
+                'levelState' => $order->getState()->getLevel(),
+                'endDeliveryPoint' => $order->getEndDeliveryPoint()->getFieldsValue(),
+                'currentDeliveryPoint' => $order->getCurrentDeliveryPoint()->getFieldsValue(),
+                'deliveryState' => $order->getDeliveryState()->getName(),
+                'deliveryDate' => $order->getDeliveryDate()->format('Y-m-d H:i:s')
             ];
         }
 

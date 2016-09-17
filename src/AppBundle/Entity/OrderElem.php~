@@ -50,6 +50,10 @@ class OrderElem{
      */
 	private $sum;
 
+    public function __toString(){
+        return "(".$this->id.")".$this->productName.": ".$this->price."x".$this->count."=".$this->sum;
+    }
+
     /**
      * Get id
      *
@@ -118,7 +122,7 @@ class OrderElem{
     public function setCount($count)
     {
         $this->count = $count;
-
+        
         return $this;
     }
 
