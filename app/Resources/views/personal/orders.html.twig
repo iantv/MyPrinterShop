@@ -54,10 +54,14 @@
 
 {% block scripts %}
 	{{ parent() }}
+	<script type="text/javascript">
+		var endDeliveryMarker = "{{ asset('bundles/app/images/end_delivery_marker.png') }}";
+		var curDeliveryMarker = "{{ asset('bundles/app/images/delivery_marker.png') }}";
+	</script>
 	{% javascripts '@AppBundle/Resources/public/js/create_gmaps.js' %}
         <script src="{{ asset_url }}"></script>
     {% endjavascripts %}
-    
+
 	<script type="text/javascript">
 		$('.product_list').each(function(){
 			var product_list = JSON.parse($(this).html());

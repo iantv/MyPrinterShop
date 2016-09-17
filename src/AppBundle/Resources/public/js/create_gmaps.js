@@ -17,24 +17,32 @@ function initialize() {
 		var deliveryState = $('#deliveryState').html();
 		var deliveryDate = $('#deliveryDate').html();
 		
+		/*	!!!DO LEGEND NEAR EVERY MAP!!!
+
 		var infoWindow = new google.maps.InfoWindow({
 			content: 'Пункт выдачи: <br>' + endDeliveryPoint['address']
-		});
+		});*/
 
+		/*var infoWindow = new google.maps.InfoWindow({
+			content: ': <br>' + currentDeliveryPoint['address'] 
+		});*/
 		
 		markers[2*index] = new google.maps.Marker({
 			position: new google.maps.LatLng(endDeliveryPoint['nothLatitude'], endDeliveryPoint['eastLongitude']),
-			title:'Click to zoom'
+			title:'Click to zoom',
+			icon: endDeliveryMarker
 		});
 		markers[2*index].setMap(map[index]);
 
 		markers[2*index + 1] = new google.maps.Marker({
 			position: new google.maps.LatLng(currentDeliveryPoint['nothLatitude'], currentDeliveryPoint['eastLongitude']),
-			title:'Click to zoom'
+			title:'Click to zoom',
+			icon: curDeliveryMarker,
+			//animation:google.maps.Animation.BOUNCE
 		});
 		markers[2*index + 1].setMap(map[index]);
 
-		infoWindow.open(map[index], markers[2*index]);
+		//infoWindow.open(map[index], markers[2*index]);
 	});
 }
 google.maps.event.addDomListener(window, 'load', initialize);
