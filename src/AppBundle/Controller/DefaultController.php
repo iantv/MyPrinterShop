@@ -123,13 +123,22 @@ class DefaultController extends Controller
         
         $state = $this->getDoctrine()->getRepository('AppBundle:OrderState')
                       ->findOneByName('Заказ принят');
-
+        $dprep = $this->getDoctrine()->getRepository('AppBundle:DeliveryPoint');                      
+        
+        $curDelPoint = $dprep->find(1);
+        $endDelPoint = $dprep->find($_GET['endDeliveryPoint']);
+        $delState = $this->getDoctrine()->getRepository('AppBundle:DeliveryState')->find(1);
         $em = $this->getDoctrine()->getManager();
+
         $order = new Order();
         $order->setTotalSum(intval($_COOKIE['bucket_sum']));
         $order->setOrderDate(new \DateTime("now"));
         $order->setState($state);
         $order->setUser($user);
+        $order->setEndDeliveryPoint($endDelPoint);
+        $order->setCurrentDeliveryPoint($curDelPoint);
+        $order->setDeliveryState($delState);
+
         $em->persist($order);
 
         foreach (json_decode($_GET['order']) as $val) {
@@ -261,8 +270,18 @@ class DefaultController extends Controller
             ];
         }
 
-        return $this->render('bucket.html.twig', 
-            $this->genArrayForTwigRender([], 'Моя корзина', $result));
+        $DeliveryPoints = $this->getDoctrine()->getRepository('AppBundle:DeliveryPoint')->findAll();
+
+        $vars = $this->genArrayForTwigRender([], 'Моя корзина', $result);
+        $address = [];
+        foreach ($DeliveryPoints as $dp) {
+            $address[] = [
+                'id' => $dp->getId(),
+                'address' => $dp->getAddress()
+            ];
+        }
+        $vars['addresses'] = $address;/*json_encode($address, JSON_UNESCAPED_UNICODE);*/
+        return $this->render('bucket.html.twig', $vars);
     }
 
     private function genProductInfo($category, $subcategory, $product){
