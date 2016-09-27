@@ -1,7 +1,7 @@
 var Vdk = new google.maps.LatLng(43.117,131.9);
 var mapOptions = {
 	center: Vdk,
-	zoom: 12,
+	zoom: 11,
 	mapTypeId: google.maps.MapTypeId.ROADMAP
 };
 var map = [];
@@ -20,16 +20,6 @@ function init(){
 	var currentDeliveryPoint = JSON.parse($('#currentDeliveryPoint' + mapOrderId).html());
 	var deliveryState = $('#deliveryState' + mapOrderId).html();
 	var deliveryDate = $('#deliveryDate' + mapOrderId).html();
-	
-	/*	!!!DO LEGEND NEAR EVERY MAP!!! */
-/*
-	var infoWindow = new google.maps.InfoWindow({
-		content: 'Пункт выдачи: <br>' + endDeliveryPoint['address']
-	});*/
-
-	/*var infoWindow = new google.maps.InfoWindow({
-		content: ': <br>' + currentDeliveryPoint['address'] 
-	});*/
 	
 	markers[2*index] = new google.maps.Marker({
 		position: new google.maps.LatLng(endDeliveryPoint['nothLatitude'], endDeliveryPoint['eastLongitude']),
@@ -51,4 +41,12 @@ google.maps.event.addDomListener(window, 'load', init);
 function showOrderOnMap(orderId){
 	mapOrderId = orderId;
 	init();
+	$('#showOrderOnMapBtn_' + orderId).css('display', 'none');
+	$('#hideOrderOnMapBtn_' + orderId).css('display', 'inline-block');
+}
+
+function hideOrderOnMap(orderId){
+	$('#googleMap' + mapOrderId).css('display', 'none');
+	$('#hideOrderOnMapBtn_' + orderId).css('display', 'none');
+	$('#showOrderOnMapBtn_' + orderId).css('display', 'inline-block');
 }

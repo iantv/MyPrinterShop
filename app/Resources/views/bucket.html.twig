@@ -5,6 +5,14 @@
     {% stylesheets 'css/bucket.css' filter='cssrewrite' %}
         <link rel="stylesheet" href="{{ asset_url }}" />
     {% endstylesheets %}
+    <style type="text/css">
+    	#address{
+    		display: block;
+    		width: 100%;
+    		height: 30px;
+    		margin-top: 70px;
+    	}
+    </style>
 {% endblock %}
 
 {% block content %}
@@ -18,12 +26,14 @@
 			<div id="total_sum"></div>
 			<span class='total'>рублей</span>
 		</div><p>
-
-		<select id="delivery_point">
-			{% for addrElem in addresses %}
-				<option value="{{ addrElem['id'] }}">{{ addrElem['address'] }}</option>
-			{% endfor %}
-		</select>
+		<div id="address">
+			<label for="delivery_point" class="simple_text">Адрес пункта самовывоза:<label>
+			<select id="delivery_point">
+				{% for addrElem in addresses %}
+					<option value="{{ addrElem['id'] }}">{{ addrElem['address'] }}</option>
+				{% endfor %}
+			</select><span></span>
+		</div><p>
 	{% if is_granted('ROLE_ADMIN') %}
 		<!--button class="green_button center_position">Оформить заказ</button-->
 	{% elseif is_granted('ROLE_USER') %}

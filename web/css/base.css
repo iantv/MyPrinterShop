@@ -9,6 +9,10 @@ body{
 	font-size: 14px;
 }
 
+.simple_text{
+	color: #333;
+}
+
 #left_side,
 #right_side{
 	display: table-cell;

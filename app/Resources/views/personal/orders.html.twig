@@ -47,7 +47,8 @@
 					<button class="pozitive_button" onclick="confirmCancelOrder(this)">Отменить заказ</button>
 				{% endif %}
 				{% if orderElem['state'] == 'Заказ доставляется' %}
-					<button class="pozitive_button" onclick="showOrderOnMap({{ orderElem['id'] }})">Посмотреть на карте</button>
+					<button id="{{ 'showOrderOnMapBtn_' ~ orderElem['id'] }}" class="pozitive_button" onclick="showOrderOnMap({{ orderElem['id'] }})">Посмотреть на карте</button>
+					<button id="{{ 'hideOrderOnMapBtn_' ~ orderElem['id'] }}" class="pozitive_button" onclick="hideOrderOnMap({{ orderElem['id'] }})" style="display: none;">Скрыть карту</button>
 				{% endif %}
 			</div>
 		</div>
