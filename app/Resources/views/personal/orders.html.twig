@@ -36,10 +36,10 @@
 				</div>
 				{% set mapinfo = 'googleMapInfo' ~ orderElem['id'] %}
 				<div id="{{ mapinfo }}" class="gmap" style="display:none;">
-					<div id="endDeliveryPoint">{{ orderElem['endDeliveryPoint'] }}</div>
-					<div id="currentDeliveryPoint">{{ orderElem['currentDeliveryPoint'] }}</div>
-					<div id="deliveryDate">{{ orderElem['deliveryDate'] }}</div>
-					<div id="deliveryState">{{ orderElem['deliveryState'] }}</div>
+					<div id="{{ 'endDeliveryPoint' ~ orderElem['id'] }}" >{{ orderElem['endDeliveryPoint'] }}</div>
+					<div id="{{ 'currentDeliveryPoint' ~ orderElem['id'] }}">{{ orderElem['currentDeliveryPoint'] }}</div>
+					<div id="{{ 'deliveryDate' ~ orderElem['id'] }}">{{ orderElem['deliveryDate'] }}</div>
+					<div id="{{ 'deliveryState' ~ orderElem['id'] }}">{{ orderElem['deliveryState'] }}</div>
 				<div>
 			</div>
 			<div class="order_navig">

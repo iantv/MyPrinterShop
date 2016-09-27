@@ -9,13 +9,13 @@ function initialize() {
 	var markers = [];
 
 	$('.gmap').each(function(index){
+		var orderId = $(this).attr('id').substr(13);
+		map[index] = new google.maps.Map(document.getElementById('googleMap' + orderId), mapOptions);	
 		
-		map[index] = new google.maps.Map(document.getElementById('googleMap' + $(this).attr('id').substr(13)), mapOptions);	
-		
-		var endDeliveryPoint = JSON.parse($('#endDeliveryPoint').html());
-		var currentDeliveryPoint = JSON.parse($('#currentDeliveryPoint').html());
-		var deliveryState = $('#deliveryState').html();
-		var deliveryDate = $('#deliveryDate').html();
+		var endDeliveryPoint = JSON.parse($('#endDeliveryPoint' + orderId).html());
+		var currentDeliveryPoint = JSON.parse($('#currentDeliveryPoint' + orderId).html());
+		var deliveryState = $('#deliveryState' + orderId).html();
+		var deliveryDate = $('#deliveryDate' + orderId).html();
 		
 		/*	!!!DO LEGEND NEAR EVERY MAP!!!
 
