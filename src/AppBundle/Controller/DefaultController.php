@@ -103,7 +103,8 @@ class DefaultController extends Controller
                 'endDeliveryPoint' => $order->getEndDeliveryPoint()->getFieldsValue(),
                 'currentDeliveryPoint' => $order->getCurrentDeliveryPoint()->getFieldsValue(),
                 'deliveryState' => $order->getDeliveryState()->getName(),
-                'deliveryDate' => $order->getDeliveryDate()->format('Y-m-d H:i:s')
+                'deliveryDate' => $order->getDeliveryDate()->format('Y-m-d H:i:s'),
+                'address' => $order->getEndDeliveryPoint()->getAddress()
             ];
         }
 

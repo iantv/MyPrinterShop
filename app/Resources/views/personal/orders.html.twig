@@ -24,10 +24,12 @@
 				{% endif %}
 					{{ orderElem['state'] }}</span><p>
 				<b>Сумма к оплате: </b> {{ orderElem['sum'] }} руб.<p>
+				<b>Адрес точки самовывоза: </b> {{ orderElem['address'] }}<p>
 				<b>Состав заказа: </b>
 				<div class="product_list">
 					{{ orderElem['productList'] }}
 				</div>
+
 				{% if orderElem['state'] == 'Заказ доставляется' %}
 					{% set mapid = 'googleMap' ~ orderElem['id'] %}
 					<div id="{{ mapid }}" style="width:380px;height:500px;display:none">
